@@ -343,7 +343,7 @@ select option{background:#1a2535;color:var(--chalk);}
   <button class="tab" onclick="showTab('pick',this)">✏️ My Pick</button>
   <button class="tab" onclick="showTab('history',this)">📖 History</button>
   <button class="tab" onclick="showTab('remind',this)">📱 Remind</button>
-  <button class="tab" id="admin-tab" onclick="showTab('admin',this)" style="display:none">⚙️ Admin</button>
+  <button class="tab" id="admin-tab" onclick="showTab('admin',this)">⚙️ Admin</button>
 </div>
 
 <div class="wrap">
@@ -943,7 +943,6 @@ function adminLogin() {
   state.adminPin = pin;
   document.getElementById('admin-login-section').style.display = 'none';
   document.getElementById('admin-panel').style.display = 'block';
-  document.getElementById('admin-tab').style.display = 'block';
 
   // Pre-fill config
   document.getElementById('cfg-week').value = state.currentWeek;
