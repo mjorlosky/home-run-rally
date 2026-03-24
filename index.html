@@ -17,41 +17,35 @@
   --skel:rgba(255,255,255,0.06);
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--chalk);min-height:100vh;overflow-x:hidden;}
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -10%,rgba(214,59,48,0.12),transparent),
-    repeating-linear-gradient(45deg,transparent,transparent 34px,rgba(255,255,255,0.018) 34px,rgba(255,255,255,0.018) 35px),
-    repeating-linear-gradient(-45deg,transparent,transparent 34px,rgba(255,255,255,0.018) 34px,rgba(255,255,255,0.018) 35px);
-}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(214,59,48,0.12),transparent),repeating-linear-gradient(45deg,transparent,transparent 34px,rgba(255,255,255,0.018) 34px,rgba(255,255,255,0.018) 35px),repeating-linear-gradient(-45deg,transparent,transparent 34px,rgba(255,255,255,0.018) 34px,rgba(255,255,255,0.018) 35px);}
 
-/* ── Header ── */
+/* Header */
 header{position:relative;overflow:hidden;background:linear-gradient(160deg,#8b1a12 0%,var(--red) 45%,#a8201a 100%);border-bottom:3px solid var(--gold);padding:28px 0 22px;text-align:center;}
 header::before{content:'⚾';position:absolute;font-size:200px;right:-40px;top:-40px;opacity:0.06;transform:rotate(20deg);line-height:1;}
 header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:-30px;opacity:0.05;transform:rotate(-15deg);}
 .logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,9vw,72px);letter-spacing:4px;line-height:1;color:#fff;text-shadow:4px 4px 0 rgba(0,0,0,0.35);}
 .logo em{color:var(--gold);font-style:normal;}
 .tagline{font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.7;margin-top:6px;}
-.pot-pill{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#1a1200;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;padding:7px 24px;border-radius:999px;margin-top:14px;box-shadow:0 4px 20px rgba(240,180,41,0.4);transition:opacity .3s;}
+.pot-pill{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#1a1200;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;padding:7px 24px;border-radius:999px;margin-top:14px;box-shadow:0 4px 20px rgba(240,180,41,0.4);}
 .header-meta{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:10px;flex-wrap:wrap;}
 .season-badge{font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.55;}
 .week-badge{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:3px 12px;opacity:.8;}
 .week-badge em{color:var(--gold);font-style:normal;font-weight:700;}
 
-/* ── Auth banner ── */
+/* Auth banner */
 #auth-banner{background:linear-gradient(90deg,rgba(240,180,41,0.12),rgba(240,180,41,0.06));border-bottom:1px solid rgba(240,180,41,0.2);padding:8px 20px;display:flex;align-items:center;justify-content:space-between;font-size:13px;gap:12px;flex-wrap:wrap;}
 .auth-name{font-weight:700;color:var(--gold);}
 .btn-signout{background:none;border:1px solid rgba(240,180,41,0.4);border-radius:6px;color:var(--gold);font-size:12px;letter-spacing:1px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;}
 .btn-signout:hover{background:rgba(240,180,41,0.1);}
 
-/* ── Tabs ── */
+/* Tabs */
 .tabs{display:flex;background:rgba(0,0,0,0.35);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;backdrop-filter:blur(12px);overflow-x:auto;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
 .tab{flex:1;min-width:80px;padding:13px 6px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;text-align:center;cursor:pointer;border:none;background:none;color:rgba(255,255,255,0.4);border-bottom:3px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap;}
 .tab.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(240,180,41,0.05);}
 .tab:hover:not(.active){color:rgba(255,255,255,0.75);}
 
-/* ── Layout ── */
+/* Layout */
 .wrap{max-width:860px;margin:0 auto;padding:0 16px;}
 .panel{display:none;padding:28px 0 60px;animation:up .25s ease;}
 .panel.active{display:block;}
@@ -59,7 +53,7 @@ header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:
 .sh{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
 .sh::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ── Skeleton loader ── */
+/* Skeleton */
 .skel{background:var(--skel);border-radius:8px;animation:pulse 1.5s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .skel-row{display:grid;grid-template-columns:44px 1fr 60px 60px 72px;gap:8px;padding:14px 16px;border-top:1px solid var(--border);align-items:center;}
@@ -67,23 +61,23 @@ header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:
 .skel-bar{height:14px;border-radius:4px;}
 .skel-sm{height:10px;border-radius:4px;margin-top:6px;width:60%;}
 
-/* ── Standings ── */
+/* Standings */
 .standings-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.5);}
 .s-head{background:var(--grass);display:grid;grid-template-columns:44px 1fr 60px 60px 72px;padding:10px 16px;gap:8px;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:2px;color:rgba(240,180,41,0.8);}
 .s-row{display:grid;grid-template-columns:44px 1fr 60px 60px 72px;padding:14px 16px;gap:8px;align-items:center;border-top:1px solid var(--border);transition:background .15s;}
 .s-row:hover{background:rgba(255,255,255,0.03);}
 .s-row.s-leader{background:rgba(240,180,41,0.06);}
 .s-rank{font-family:'Bebas Neue',sans-serif;font-size:22px;text-align:center;color:var(--muted);}
-.s-rank.rk1{color:var(--gold);}
-.s-rank.rk2{color:#b8b8b8;}
-.s-rank.rk3{color:#cd7f32;}
+.s-rank.rk1{color:var(--gold);}.s-rank.rk2{color:#b8b8b8;}.s-rank.rk3{color:#cd7f32;}
 .s-name{font-weight:700;font-size:15px;}
 .s-pick{font-size:11px;color:var(--muted);margin-top:2px;}
+.s-pick.pick-hidden{color:rgba(240,235,224,0.25);font-style:italic;}
+.s-pick.pick-own{color:var(--gold);}
 .s-pts{font-family:'Bebas Neue',sans-serif;font-size:26px;text-align:center;color:var(--gold);}
 .s-owes{font-size:13px;font-weight:700;text-align:center;color:#ff7c7c;}
 .s-pct{font-size:12px;color:var(--muted);text-align:center;}
 
-/* ── Week picks ── */
+/* Week picks */
 .week-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
 .week-nav-btns{display:flex;align-items:center;gap:12px;}
 .wbtn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--chalk);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
@@ -93,23 +87,30 @@ header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:
 .week-dl{font-size:12px;color:var(--muted);}
 .week-dl.urgent{color:#ff9494;font-weight:700;}
 .picks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;}
+
+/* Pick card */
 .pick-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:5px;border-top:3px solid var(--border);transition:transform .15s;}
 .pick-card:hover{transform:translateY(-2px);}
 .pick-card.pc-homer{border-top-color:var(--gold);background:rgba(240,180,41,0.07);}
 .pick-card.pc-miss{border-top-color:var(--red);}
-.pc-gamer{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.pick-card.pc-own{border-top-color:var(--gold);box-shadow:0 0 0 1px rgba(240,180,41,0.3);}
+.pc-gamer{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:5px;}
+.pc-own-badge{font-size:9px;background:var(--gold);color:#1a1200;border-radius:3px;padding:1px 5px;font-weight:700;letter-spacing:.5px;}
 .pc-player{font-weight:700;font-size:15px;line-height:1.3;}
+.pc-player.hidden{color:rgba(240,235,224,0.3);font-style:italic;font-weight:400;font-size:13px;}
+.pc-status{font-size:11px;color:var(--muted);margin-top:2px;}
+.pc-status.status-picked{color:#4fc66a;}
+.pc-status.status-not-picked{color:#ff7c7c;}
 .pc-result{font-size:12px;font-weight:700;margin-top:4px;}
-.res-homer{color:#4fc66a;}
-.res-miss{color:#ff7c7c;}
-.res-pending{color:var(--muted);}
+.res-homer{color:#4fc66a;}.res-miss{color:#ff7c7c;}.res-pending{color:var(--muted);}
 .miss-bar{background:rgba(214,59,48,0.1);border:1px solid rgba(214,59,48,0.3);border-radius:10px;padding:12px 16px;margin-top:14px;font-size:13px;color:#ff9a9a;}
 .miss-bar strong{color:var(--gold);}
+.deadline-note{font-size:12px;color:var(--muted);text-align:center;margin-top:12px;padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border);}
 
-/* ── Forms ── */
+/* Forms */
 .form-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px;max-width:460px;margin:0 auto;box-shadow:0 12px 40px rgba(0,0,0,0.4);}
 .form-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;border-bottom:2px solid var(--gold);padding-bottom:10px;margin-bottom:22px;color:var(--chalk);}
-.fg{margin-bottom:16px;}
+.fg{margin-bottom:16px;position:relative;}
 label{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
 input,select{width:100%;padding:12px 14px;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:9px;color:var(--chalk);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s;-webkit-appearance:none;}
 input:focus,select:focus{border-color:var(--gold);}
@@ -129,9 +130,27 @@ select option{background:#1a2535;color:var(--chalk);}
 .alert-ok{background:rgba(30,138,62,0.15);border:1px solid rgba(30,138,62,0.4);color:#6ddd8e;}
 .alert-err{background:rgba(214,59,48,0.12);border:1px solid rgba(214,59,48,0.35);color:#ff9090;}
 .pick-preview{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:12px;font-size:13px;font-family:monospace;color:var(--muted);word-break:break-all;cursor:pointer;}
-.pick-preview:hover::after{content:' (tap to copy)';font-size:11px;opacity:.6;}
 
-/* ── Admin ── */
+/* Autocomplete dropdown */
+.autocomplete-list{position:absolute;top:100%;left:0;right:0;z-index:500;background:#1a2a3f;border:1px solid var(--gold);border-top:none;border-radius:0 0 9px 9px;max-height:220px;overflow-y:auto;scrollbar-width:thin;}
+.autocomplete-list:empty{display:none;}
+.ac-item{padding:10px 14px;font-size:14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .1s;}
+.ac-item:last-child{border:none;}
+.ac-item:hover,.ac-item.ac-active{background:rgba(240,180,41,0.15);color:var(--gold);}
+.ac-item mark{background:none;color:var(--gold);font-weight:700;}
+.ac-hint{font-size:11px;color:var(--muted);padding:6px 14px;font-style:italic;}
+
+/* History */
+.history-controls{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.history-controls label{margin:0;font-size:12px;letter-spacing:1px;white-space:nowrap;}
+.history-controls select{max-width:180px;padding:8px 12px;font-size:13px;}
+.history-table{width:100%;border-collapse:collapse;font-size:14px;}
+.history-table th{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1.5px;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);}
+.history-table td{padding:10px 12px;border-bottom:1px solid var(--border);}
+.history-table tr:last-child td{border:none;}
+.ht-homer{color:#4fc66a;font-weight:700;}.ht-miss{color:#ff7c7c;}.ht-pending{color:var(--muted);}
+
+/* Admin */
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media(max-width:560px){.admin-grid{grid-template-columns:1fr;}}
 .admin-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
@@ -141,29 +160,18 @@ select option{background:#1a2535;color:var(--chalk);}
 .score-result{background:var(--surface2);border-radius:8px;padding:12px;margin-top:12px;font-size:13px;max-height:220px;overflow-y:auto;}
 .sr-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);}
 .sr-row:last-child{border:none;}
-.sr-homer{color:#4fc66a;font-weight:700;}
-.sr-miss{color:#ff7c7c;}
+.sr-homer{color:#4fc66a;font-weight:700;}.sr-miss{color:#ff7c7c;}
 .erase-warn{font-size:12px;color:#ff9494;margin-top:8px;line-height:1.5;}
 
-/* ── Reminders ── */
+/* Reminders */
 .rem-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
 .rem-head{background:rgba(255,255,255,0.04);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;}
 .rem-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;color:var(--gold);}
 .btn-copy{padding:5px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:6px;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer;transition:all .2s;}
-.btn-copy:hover{background:var(--gold-dim);}
-.btn-copy.copied{background:var(--green);color:#fff;}
+.btn-copy:hover{background:var(--gold-dim);}.btn-copy.copied{background:var(--green);color:#fff;}
 .rem-body{padding:14px 16px;font-size:13px;line-height:1.75;white-space:pre-wrap;color:rgba(240,235,224,0.8);}
 
-/* ── History ── */
-.history-table{width:100%;border-collapse:collapse;font-size:14px;}
-.history-table th{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1.5px;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);}
-.history-table td{padding:10px 12px;border-bottom:1px solid var(--border);}
-.history-table tr:last-child td{border:none;}
-.ht-homer{color:#4fc66a;font-weight:700;}
-.ht-miss{color:#ff7c7c;}
-.ht-pending{color:var(--muted);}
-
-/* ── Spinner ── */
+/* Spinner */
 .spinner{width:32px;height:32px;border-radius:50%;margin:32px auto;border:3px solid var(--border);border-top-color:var(--gold);animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -201,7 +209,7 @@ select option{background:#1a2535;color:var(--chalk);}
 
 <div class="wrap">
 
-<!-- ═══ STANDINGS ═══ -->
+<!-- STANDINGS -->
 <div id="tab-standings" class="panel active">
   <br>
   <div class="sh">STANDINGS</div>
@@ -213,7 +221,6 @@ select option{background:#1a2535;color:var(--chalk);}
       <div style="text-align:center">WIN%</div>
     </div>
     <div id="standings-body">
-      <!-- Skeleton rows shown immediately while data loads -->
       <div class="skel-row"><div class="skel skel-circle"></div><div><div class="skel skel-bar" style="width:70%"></div><div class="skel skel-sm"></div></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div></div>
       <div class="skel-row"><div class="skel skel-circle"></div><div><div class="skel skel-bar" style="width:55%"></div><div class="skel skel-sm"></div></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div></div>
       <div class="skel-row"><div class="skel skel-circle"></div><div><div class="skel skel-bar" style="width:65%"></div><div class="skel skel-sm"></div></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div></div>
@@ -227,7 +234,7 @@ select option{background:#1a2535;color:var(--chalk);}
   <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:14px" id="standings-footer"> </p>
 </div>
 
-<!-- ═══ WEEK PICKS ═══ -->
+<!-- WEEK PICKS -->
 <div id="tab-week" class="panel">
   <br>
   <div class="week-bar">
@@ -249,9 +256,10 @@ select option{background:#1a2535;color:var(--chalk);}
   <div class="miss-bar" id="miss-bar" style="display:none">
     <strong>💸 No homer this week:</strong> <span id="miss-names"></span>
   </div>
+  <div class="deadline-note" id="deadline-note" style="display:none"></div>
 </div>
 
-<!-- ═══ MY PICK ═══ -->
+<!-- MY PICK -->
 <div id="tab-pick" class="panel">
   <br>
   <div id="pick-login-section">
@@ -265,8 +273,7 @@ select option{background:#1a2535;color:var(--chalk);}
         </div>
         <div class="fg">
           <label>Your PIN</label>
-          <input type="password" id="login-pin" placeholder="Enter your PIN" maxlength="10"
-                 onkeydown="if(event.key==='Enter') login()">
+          <input type="password" id="login-pin" placeholder="Enter your PIN" maxlength="10" onkeydown="if(event.key==='Enter')login()">
         </div>
         <button class="btn btn-primary" id="login-btn" onclick="login()">⚾ SIGN IN</button>
         <div class="alert alert-err" id="login-err"></div>
@@ -274,17 +281,18 @@ select option{background:#1a2535;color:var(--chalk);}
     </div>
   </div>
   <div id="pick-submit-section" style="display:none">
-    <div class="sh" id="pick-sh">SUBMIT PICK</div>
+    <div class="sh">SUBMIT PICK</div>
     <div class="form-card">
       <div class="form-title" id="pick-form-title">My Pick</div>
       <div class="fg">
         <label>Week</label>
         <select id="pick-week-sel"></select>
       </div>
-      <div class="fg">
-        <label>Player (First + Last Name)</label>
+      <div class="fg" id="player-fg">
+        <label>Player <span id="player-label-hint" style="font-size:10px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400"></span></label>
         <input type="text" id="pick-player-input" placeholder="e.g. Shohei Ohtani" autocomplete="off"
-               onkeydown="if(event.key==='Enter') submitPick()">
+               oninput="onPlayerInput()" onkeydown="onPlayerKeydown(event)">
+        <div class="autocomplete-list" id="ac-list"></div>
       </div>
       <button class="btn btn-primary" id="submit-btn" onclick="submitPick()">⚾ LOCK IN PICK</button>
       <button class="btn btn-gold" id="change-btn" style="margin-top:10px" onclick="changePick()">✏️ CHANGE MY PICK</button>
@@ -295,17 +303,22 @@ select option{background:#1a2535;color:var(--chalk);}
   </div>
 </div>
 
-<!-- ═══ HISTORY ═══ -->
+<!-- HISTORY -->
 <div id="tab-history" class="panel">
   <br>
   <div id="hist-login-note">
-    <div class="sh">MY PICKS HISTORY</div>
+    <div class="sh">PICKS HISTORY</div>
     <div class="form-card" style="max-width:380px;margin:0 auto">
-      <p style="font-size:14px;color:var(--muted)">Sign in on the "My Pick" tab to view your pick history.</p>
+      <p style="font-size:14px;color:var(--muted)">Sign in on the "My Pick" tab to view pick history.</p>
     </div>
   </div>
   <div id="hist-content" style="display:none">
-    <div class="sh">MY PICKS HISTORY</div>
+    <div class="sh">PICKS HISTORY</div>
+    <div class="history-controls">
+      <label>VIEWING:</label>
+      <select id="hist-player-sel" onchange="loadHistory()"></select>
+      <span id="hist-viewing-note" style="font-size:12px;color:var(--muted)"></span>
+    </div>
     <div class="standings-card">
       <table class="history-table">
         <thead><tr><th>Week</th><th>Player Picked</th><th>Result</th></tr></thead>
@@ -315,18 +328,18 @@ select option{background:#1a2535;color:var(--chalk);}
   </div>
 </div>
 
-<!-- ═══ REMINDERS ═══ -->
+<!-- REMINDERS -->
 <div id="tab-remind" class="panel">
   <br>
   <div class="sh">iMESSAGE TEMPLATES</div>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Tap Copy and paste into your group chat. All templates pull live data.</p>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Tap Copy and paste into your group chat.</p>
   <div class="rem-card"><div class="rem-head"><div class="rem-title">🚨 PICKS DUE</div><button class="btn-copy" onclick="copyRem(this,'rem1')">Copy</button></div><div class="rem-body" id="rem1">Loading…</div></div>
   <div class="rem-card"><div class="rem-head"><div class="rem-title">📊 STANDINGS UPDATE</div><button class="btn-copy" onclick="copyRem(this,'rem2')">Copy</button></div><div class="rem-body" id="rem2">Loading…</div></div>
   <div class="rem-card"><div class="rem-head"><div class="rem-title">💸 NO HOMER SHAME</div><button class="btn-copy" onclick="copyRem(this,'rem3')">Copy</button></div><div class="rem-body" id="rem3">Loading…</div></div>
   <div class="rem-card"><div class="rem-head"><div class="rem-title">🎉 GONE YARD!</div><button class="btn-copy" onclick="copyRem(this,'rem4')">Copy</button></div><div class="rem-body" id="rem4">Loading…</div></div>
 </div>
 
-<!-- ═══ ADMIN ═══ -->
+<!-- ADMIN -->
 <div id="tab-admin" class="panel">
   <br>
   <div id="admin-login-section">
@@ -335,8 +348,7 @@ select option{background:#1a2535;color:var(--chalk);}
       <div class="form-title">⚙️ Admin Access</div>
       <div class="fg">
         <label>Commissioner PIN</label>
-        <input type="password" id="admin-pin-input" placeholder="Commissioner PIN"
-               onkeydown="if(event.key==='Enter') adminLogin()">
+        <input type="password" id="admin-pin-input" placeholder="Commissioner PIN" onkeydown="if(event.key==='Enter')adminLogin()">
       </div>
       <button class="btn btn-primary" onclick="adminLogin()">UNLOCK ADMIN</button>
       <div class="alert alert-err" id="admin-login-err"></div>
@@ -345,7 +357,6 @@ select option{background:#1a2535;color:var(--chalk);}
   <div id="admin-panel" style="display:none">
     <div class="sh">COMMISSIONER PANEL</div>
     <div class="admin-grid">
-
       <div class="admin-card">
         <h3>🤖 Auto-Score Week</h3>
         <select id="score-week-sel"></select>
@@ -353,7 +364,6 @@ select option{background:#1a2535;color:var(--chalk);}
         <div class="score-result" id="score-result" style="display:none"></div>
         <div class="alert alert-err" id="score-err"></div>
       </div>
-
       <div class="admin-card">
         <h3>🗑️ Erase Week Scores</h3>
         <select id="erase-week-sel"></select>
@@ -362,7 +372,6 @@ select option{background:#1a2535;color:var(--chalk);}
         <div class="alert alert-ok" id="erase-ok"></div>
         <div class="alert alert-err" id="erase-err"></div>
       </div>
-
       <div class="admin-card">
         <h3>✏️ Override Pick</h3>
         <select id="ov-name-sel"></select>
@@ -372,7 +381,6 @@ select option{background:#1a2535;color:var(--chalk);}
         <div class="alert alert-ok" id="ov-ok"></div>
         <div class="alert alert-err" id="ov-err"></div>
       </div>
-
       <div class="admin-card">
         <h3>🎯 Override Score</h3>
         <select id="os-name-sel"></select>
@@ -382,7 +390,6 @@ select option{background:#1a2535;color:var(--chalk);}
         <div class="alert alert-ok" id="os-ok"></div>
         <div class="alert alert-err" id="os-err"></div>
       </div>
-
       <div class="admin-card">
         <h3>👤 Manage Players</h3>
         <input type="text" id="ap-name" placeholder="Player name">
@@ -394,7 +401,6 @@ select option{background:#1a2535;color:var(--chalk);}
         <div class="alert alert-ok" id="ap-ok"></div>
         <div class="alert alert-err" id="ap-err"></div>
       </div>
-
       <div class="admin-card">
         <h3>💰 Pot Override</h3>
         <label>Pot ($)</label>
@@ -404,7 +410,6 @@ select option{background:#1a2535;color:var(--chalk);}
         <div class="alert alert-ok" id="cfg-ok"></div>
         <div class="alert alert-err" id="cfg-err"></div>
       </div>
-
     </div>
   </div>
 </div>
@@ -412,19 +417,23 @@ select option{background:#1a2535;color:var(--chalk);}
 </div><!-- /wrap -->
 <script>
 // ─────────────────────────────────────────
-// CONFIG — your Apps Script URL
+// CONFIG
 // ─────────────────────────────────────────
-const API = 'https://script.google.com/macros/s/AKfycbymTL_97C4hsp0gwYpQYQwdtY8aMpaFr-y-Cel7q2FMWjphT7P5az52ouZVn129njBo6Q/exec';
+const API = 'https://script.google.com/macros/s/AKfycbwkek2Txc1LLWpej96S17aUJpt_wcmicrHLiRlq37tgCkfZoqnbcLf_tzzkMo1ifIt_1w/exec';
 
 let state = {
   standings: [], currentWeek: 0, pot: 0,
   deadlines: {}, playerNames: [],
+  currentDeadlinePassed: false,
   user: null, adminPin: null,
 };
-let weekCache = {};
-let viewWeek  = null;
+let weekCache  = {};
+let viewWeek   = null;
+let mlbRoster  = []; // cached player names for autocomplete
 
-// ── API ──────────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// API
+// ─────────────────────────────────────────
 async function api(action, params = {}, btn = null) {
   if (btn) { btn.disabled = true; btn.classList.add('btn-loading'); }
   try {
@@ -439,31 +448,130 @@ async function api(action, params = {}, btn = null) {
   }
 }
 
-// ── Tabs ─────────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// MLB ROSTER — for player name autocomplete
+// Fetches from the public MLB Stats API (no key needed).
+// Falls back gracefully if unavailable.
+// ─────────────────────────────────────────
+async function loadMlbRoster() {
+  try {
+    const season = new Date().getFullYear();
+    const url = `https://statsapi.mlb.com/api/v1/sports/1/players?season=${season}&fields=people,fullName,primaryPosition,currentTeam,active`;
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('MLB API unreachable');
+    const data = await r.json();
+    mlbRoster = (data.people || [])
+      .filter(p => p.active !== false)
+      .map(p => p.fullName)
+      .filter(Boolean)
+      .sort();
+    document.getElementById('player-label-hint').textContent = `(${mlbRoster.length} players loaded)`;
+  } catch(e) {
+    // Silently fail — user can still type manually
+    document.getElementById('player-label-hint').textContent = '(type any name)';
+  }
+}
+
+// ─────────────────────────────────────────
+// AUTOCOMPLETE
+// ─────────────────────────────────────────
+let acIndex = -1;
+
+function onPlayerInput() {
+  const val = document.getElementById('pick-player-input').value.trim();
+  const list = document.getElementById('ac-list');
+  acIndex = -1;
+
+  if (val.length < 2 || !mlbRoster.length) { list.innerHTML = ''; return; }
+
+  const lower = val.toLowerCase();
+  const matches = mlbRoster
+    .filter(n => n.toLowerCase().includes(lower))
+    .slice(0, 8);
+
+  if (!matches.length) { list.innerHTML = ''; return; }
+
+  list.innerHTML = matches.map((name, i) => {
+    // Bold the matching portion
+    const idx = name.toLowerCase().indexOf(lower);
+    const highlighted = name.slice(0, idx)
+      + '<mark>' + name.slice(idx, idx + val.length) + '</mark>'
+      + name.slice(idx + val.length);
+    return `<div class="ac-item" data-name="${name}" onmousedown="selectAcItem('${name.replace(/'/g,"\\'")}',event)">${highlighted}</div>`;
+  }).join('');
+}
+
+function selectAcItem(name, e) {
+  if (e) e.preventDefault(); // prevent blur before click fires
+  document.getElementById('pick-player-input').value = name;
+  document.getElementById('ac-list').innerHTML = '';
+  acIndex = -1;
+}
+
+function onPlayerKeydown(e) {
+  const list = document.getElementById('ac-list');
+  const items = list.querySelectorAll('.ac-item');
+  if (!items.length) return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    acIndex = Math.min(acIndex + 1, items.length - 1);
+    items.forEach((el, i) => el.classList.toggle('ac-active', i === acIndex));
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    acIndex = Math.max(acIndex - 1, -1);
+    items.forEach((el, i) => el.classList.toggle('ac-active', i === acIndex));
+  } else if (e.key === 'Enter' && acIndex >= 0) {
+    e.preventDefault();
+    selectAcItem(items[acIndex].dataset.name, null);
+  } else if (e.key === 'Escape') {
+    list.innerHTML = '';
+    acIndex = -1;
+  } else if (e.key === 'Enter' && acIndex < 0) {
+    submitPick();
+  }
+}
+
+// Close autocomplete when clicking outside
+document.addEventListener('click', e => {
+  if (!e.target.closest('#player-fg')) {
+    document.getElementById('ac-list').innerHTML = '';
+    acIndex = -1;
+  }
+});
+
+// ─────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────
 function showTab(name, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   if (btn) btn.classList.add('active');
-  if (name === 'week')   { viewWeek = viewWeek || state.currentWeek || 1; renderWeekPicks(); }
+  if (name === 'week')    { viewWeek = viewWeek || state.currentWeek || 1; renderWeekPicks(); }
   if (name === 'history' && state.user) loadHistory();
-  if (name === 'remind') buildReminders();
+  if (name === 'remind')  buildReminders();
 }
 
-// ── Boot ─────────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// BOOT
+// ─────────────────────────────────────────
 async function boot() {
-  // Restore session before network call so sign-in state is immediate
   const saved = sessionStorage.getItem('hrr_user');
   if (saved) { try { state.user = JSON.parse(saved); showLoggedIn(); } catch(e){} }
 
+  // Load MLB roster for autocomplete (fire and forget)
+  loadMlbRoster();
+
   try {
     const data = await api('getStandings');
-    state.standings   = data.standings;
-    state.currentWeek = data.currentWeek;
-    state.pot         = data.pot;
-    state.deadlines   = data.deadlines || {};
-    state.playerNames = data.standings.map(s => s.name);
-    viewWeek          = data.currentWeek;
+    state.standings             = data.standings;
+    state.currentWeek           = data.currentWeek;
+    state.pot                   = data.pot;
+    state.deadlines             = data.deadlines || {};
+    state.currentDeadlinePassed = data.currentDeadlinePassed || false;
+    state.playerNames           = data.standings.map(s => s.name);
+    viewWeek                    = data.currentWeek;
 
     document.getElementById('pot-display').textContent = `💰 POT: $${data.pot}`;
     updateWeekBadge(data.currentWeek);
@@ -480,7 +588,6 @@ async function boot() {
   }
 }
 
-// ── Week badge / footer ──────────────────────────────────────
 function updateWeekBadge(w) {
   const dl = state.deadlines[w];
   let label = `Week <em>${w}</em>`;
@@ -495,7 +602,9 @@ function updateWeekBadge(w) {
   }
 }
 
-// ── Selects ──────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// SELECTS
+// ─────────────────────────────────────────
 function populateWeekSelects() {
   ['pick-week-sel','score-week-sel','ov-week-sel','os-week-sel','erase-week-sel'].forEach(id => {
     const el = document.getElementById(id);
@@ -509,7 +618,6 @@ function populateWeekSelects() {
       el.appendChild(o);
     }
   });
-  // Player name select for login
   const lnSel = document.getElementById('login-name');
   lnSel.innerHTML = '<option value="">— select name —</option>';
   state.playerNames.forEach(n => {
@@ -528,25 +636,73 @@ function populateNameSelects() {
       el.appendChild(o);
     });
   });
+  // History player selector
+  const histSel = document.getElementById('hist-player-sel');
+  if (histSel) {
+    histSel.innerHTML = '';
+    state.playerNames.forEach(n => {
+      const o = document.createElement('option'); o.value=n; o.textContent=n;
+      if (state.user && n === state.user.name) o.selected = true;
+      histSel.appendChild(o);
+    });
+  }
 }
 
-// ── Standings ────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// STANDINGS — deadline-gated pick display
+// ─────────────────────────────────────────
 function renderStandings() {
   const body = document.getElementById('standings-body');
   body.innerHTML = '';
+  const isDeadlinePassed = state.currentDeadlinePassed;
+  const myName = state.user?.name?.toLowerCase();
+
   state.standings.forEach((p, i) => {
     const rank   = i + 1;
     const rkCls  = rank===1?'rk1':rank===2?'rk2':rank===3?'rk3':'';
     const rkIcon = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
     const pct    = p.played ? Math.round(p.winPct*100)+'%' : '—';
-    const pick   = p.thisWeekPick || '?';
+    const isMe   = myName && p.name.toLowerCase() === myName;
     const sc     = p.thisWeekScored;
-    const pickLabel = sc===1 ? `⚡ ${pick}` : sc===0 ? `💸 ${pick}` : pick;
+
+    // Build the pick label with deadline gating
+    let pickHtml, pickClass = 's-pick';
+    if (sc === 1) {
+      pickHtml = `⚡ ${p.thisWeekPick || '?'}`;
+    } else if (sc === 0) {
+      pickHtml = `💸 ${p.thisWeekPick || '?'}`;
+    } else if (!p.hasPickedThisWeek) {
+      pickHtml = '— not picked';
+      pickClass += ' pick-hidden';
+    } else if (isMe && !isDeadlinePassed) {
+      // Logged-in user sees their own pick even before deadline
+      // (the server sends __HIDDEN__ for others, but we need to fetch own pick separately)
+      // We'll mark it and the standings fetch for own pick happens via getStandings which
+      // returns __HIDDEN__ for others. We use the stored user pick if available.
+      const ownPick = state.myCurrentPick;
+      if (ownPick) {
+        pickHtml = `🔒 ${ownPick} (your pick)`;
+        pickClass += ' pick-own';
+      } else {
+        pickHtml = '✓ Picked';
+        pickClass += ' pick-own';
+      }
+    } else if (isDeadlinePassed) {
+      pickHtml = p.thisWeekPick || '—';
+    } else {
+      // Others before deadline — just show "✓ Picked"
+      pickHtml = '✓ Picked';
+      pickClass += ' pick-hidden';
+    }
+
     const row = document.createElement('div');
     row.className = 's-row'+(rank===1?' s-leader':'');
     row.innerHTML = `
       <div class="s-rank ${rkCls}">${rkIcon}</div>
-      <div><div class="s-name">${p.name}</div><div class="s-pick">Wk ${state.currentWeek}: ${pickLabel}</div></div>
+      <div>
+        <div class="s-name">${p.name}</div>
+        <div class="${pickClass}">Wk ${state.currentWeek}: ${pickHtml}</div>
+      </div>
       <div class="s-pts">${p.pts}</div>
       <div class="s-owes">$${p.owes}</div>
       <div class="s-pct">${pct}</div>`;
@@ -554,7 +710,9 @@ function renderStandings() {
   });
 }
 
-// ── Week picks ───────────────────────────────────────────────
+// ─────────────────────────────────────────
+// WEEK PICKS — gated view
+// ─────────────────────────────────────────
 async function renderWeekPicks() {
   const w = viewWeek || state.currentWeek || 1;
   document.getElementById('wk-label').textContent = `Week ${w}`;
@@ -564,12 +722,23 @@ async function renderWeekPicks() {
   grid.innerHTML = '<div class="spinner"></div>';
 
   try {
-    const data = weekCache[w] || await api('getWeekPicks', { week: w });
+    // Use gated endpoint when we have a logged-in user so they can see their own pick
+    let data;
+    if (state.user) {
+      data = await api('getWeekPicksGated', {
+        week: w,
+        viewerName: state.user.name,
+        viewerPin: state.user.pin,
+      });
+    } else {
+      data = await api('getWeekPicksGated', { week: w });
+    }
     weekCache[w] = data;
 
-    // Deadline / range
+    // Deadline display
     const dlEl    = document.getElementById('wk-deadline');
     const rangeEl = document.getElementById('wk-range');
+    const noteEl  = document.getElementById('deadline-note');
     const dl      = data.deadline;
     if (dl) {
       const dlDate = new Date(dl);
@@ -578,34 +747,64 @@ async function renderWeekPicks() {
       dlEl.textContent = `Deadline: ${dlDate.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}`;
       dlEl.className   = 'week-dl' + (diff>0&&days<=2?' urgent':'');
       if (diff>0&&days<=2) dlEl.textContent += ` (${days}d left!)`;
-      if (diff<0)           dlEl.textContent += ' · Closed';
+      if (diff<0) dlEl.textContent += ' · Closed';
       const prevDl = state.deadlines[w-1];
       rangeEl.textContent = prevDl
         ? `${new Date(prevDl).toLocaleDateString('en-US',{month:'short',day:'numeric'})} → ${dlDate.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`
         : '';
-    } else { dlEl.textContent=''; rangeEl.textContent=''; }
+      // Deadline note
+      if (!data.deadlinePassed && diff > 0) {
+        noteEl.style.display = 'block';
+        noteEl.textContent = state.user
+          ? `🔒 Your pick is visible to you. Others' picks are hidden until the deadline passes.`
+          : `🔒 Sign in to see your own pick. All picks reveal after the deadline.`;
+      } else {
+        noteEl.style.display = 'none';
+      }
+    } else { dlEl.textContent=''; rangeEl.textContent=''; noteEl.style.display='none'; }
 
-    grid.innerHTML='';
-    const pickMap={};
-    data.picks.forEach(p => { pickMap[p.name]=p.player; });
-    let missers=[];
+    grid.innerHTML = '';
+    const pickMap = {};
+    data.picks.forEach(p => { pickMap[p.name] = p; });
+    let missers = [];
 
     state.playerNames.forEach(name => {
-      const player = pickMap[name]||null;
-      const scored = data.scores[name]??null;
-      let cls='pc-pending',rCls='res-pending',rTxt='⏳ Pending';
-      if (scored===1){cls='pc-homer';rCls='res-homer';rTxt='⚡ HOMER!';}
-      if (scored===0){cls='pc-miss'; rCls='res-miss'; rTxt='💸 No homer';missers.push(name);}
-      const card=document.createElement('div');
-      card.className=`pick-card ${cls}`;
-      card.innerHTML=`<div class="pc-gamer">${name}</div><div class="pc-player">${player||'—'}</div><div class="pc-result ${rCls}">${rTxt}</div>`;
+      const entry  = pickMap[name];
+      const scored = data.scores[name] ?? null;
+      const isOwn  = state.user && name.toLowerCase() === state.user.name.toLowerCase();
+      const hidden = entry?.player === '__HIDDEN__';
+
+      let cardCls = 'pc-pending', rCls = 'res-pending', rTxt = '⏳ Pending';
+      if (scored===1) { cardCls='pc-homer'; rCls='res-homer'; rTxt='⚡ HOMER!'; }
+      if (scored===0) { cardCls='pc-miss';  rCls='res-miss';  rTxt='💸 No homer'; missers.push(name); }
+      if (isOwn && scored===null) cardCls = 'pc-own';
+
+      const playerDisplay = !entry
+        ? `<span class="pc-player hidden">— not picked</span>`
+        : hidden
+          ? `<span class="pc-player hidden">✓ Picked</span>`
+          : `<span class="pc-player">${entry.player}</span>`;
+
+      const statusLine = !entry
+        ? `<div class="pc-status status-not-picked">No pick yet</div>`
+        : hidden
+          ? `<div class="pc-status">🔒 Hidden until deadline</div>`
+          : '';
+
+      const card = document.createElement('div');
+      card.className = `pick-card ${cardCls}`;
+      card.innerHTML = `
+        <div class="pc-gamer">${name}${isOwn?'<span class="pc-own-badge">YOU</span>':''}</div>
+        ${playerDisplay}
+        ${statusLine}
+        <div class="pc-result ${rCls}">${scored !== null ? rTxt : (entry ? (hidden ? '' : rTxt) : rTxt)}</div>`;
       grid.appendChild(card);
     });
 
-    const mb=document.getElementById('miss-bar');
-    if(missers.length&&Object.keys(data.scores).length){
+    const mb = document.getElementById('miss-bar');
+    if (missers.length && Object.keys(data.scores).length) {
       mb.style.display='block';
-      document.getElementById('miss-names').textContent=missers.join(', ');
+      document.getElementById('miss-names').textContent = missers.join(', ');
     } else { mb.style.display='none'; }
 
   } catch(e) {
@@ -615,25 +814,31 @@ async function renderWeekPicks() {
 
 function changeWeek(dir) {
   viewWeek = Math.max(1, Math.min(32, (viewWeek||state.currentWeek||1)+dir));
+  delete weekCache[viewWeek]; // always refetch on manual nav
   renderWeekPicks();
 }
 
-// ── Auth ─────────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────
 async function login() {
   const name = document.getElementById('login-name').value;
   const pin  = document.getElementById('login-pin').value.trim();
   const err  = document.getElementById('login-err');
   const btn  = document.getElementById('login-btn');
   err.classList.remove('show');
-  if (!name)  { showAlert(err,'Select your name'); return; }
-  if (!pin)   { showAlert(err,'Enter your PIN'); return; }
+  if (!name) { showAlert(err,'Select your name'); return; }
+  if (!pin)  { showAlert(err,'Enter your PIN'); return; }
   try {
-    await api('getPlayerPicks', { name, pin }, btn);
+    const data = await api('getPlayerPicks', { name, pin }, btn);
     state.user = { name, pin };
+    // Store their current week pick for standings display
+    const myPick = data.picks.find(p => p.week === state.currentWeek);
+    state.myCurrentPick = myPick?.player || null;
     sessionStorage.setItem('hrr_user', JSON.stringify(state.user));
     showLoggedIn();
+    renderStandings(); // re-render now that we know the viewer
   } catch(e) {
-    // Surface the exact error (wrong PIN, not found, network, etc.)
     showAlert(err, e.message.includes('Wrong PIN') ? '🔒 Wrong PIN — try again.' : e.message);
   }
 }
@@ -646,10 +851,18 @@ function showLoggedIn() {
   document.getElementById('hist-login-note').style.display     = 'none';
   document.getElementById('hist-content').style.display        = 'block';
   document.getElementById('pick-form-title').textContent = `${state.user.name}'s Pick`;
+  // Set history selector to own name
+  const histSel = document.getElementById('hist-player-sel');
+  if (histSel) {
+    Array.from(histSel.options).forEach(o => { o.selected = o.value === state.user.name; });
+  }
+  // Update history viewing note
+  updateHistNote(state.user.name);
 }
 
 function signOut() {
   state.user = null;
+  state.myCurrentPick = null;
   sessionStorage.removeItem('hrr_user');
   document.getElementById('auth-banner').style.display         = 'none';
   document.getElementById('pick-login-section').style.display  = 'block';
@@ -657,9 +870,12 @@ function signOut() {
   document.getElementById('hist-login-note').style.display     = 'block';
   document.getElementById('hist-content').style.display        = 'none';
   document.getElementById('login-pin').value = '';
+  renderStandings();
 }
 
-// ── Pick submission ───────────────────────────────────────────
+// ─────────────────────────────────────────
+// PICK SUBMISSION
+// ─────────────────────────────────────────
 async function submitPick() { await doPickAction('submitPick', document.getElementById('submit-btn')); }
 async function changePick()  { await doPickAction('changePick', document.getElementById('change-btn')); }
 
@@ -669,59 +885,118 @@ async function doPickAction(action, btn) {
   const okEl   = document.getElementById('pick-ok');
   const errEl  = document.getElementById('pick-err');
   okEl.classList.remove('show'); errEl.classList.remove('show');
+  document.getElementById('ac-list').innerHTML = '';
   if (!player) { showAlert(errEl,'Enter a player name'); return; }
+
+  // Soft validation: warn if name not found in roster, but still allow submit
+  if (mlbRoster.length && !mlbRoster.some(n => n.toLowerCase() === player.toLowerCase())) {
+    const close = mlbRoster.filter(n => n.toLowerCase().includes(player.toLowerCase().split(' ').pop()));
+    if (close.length && action === 'submitPick') {
+      const msg = `"${player}" not found in MLB roster. Did you mean: ${close.slice(0,3).join(', ')}? Hit Lock In again to submit anyway.`;
+      showAlert(errEl, '⚠️ ' + msg);
+      // Allow second press to override
+      errEl.dataset.override = '1';
+      return;
+    }
+  }
+  errEl.dataset.override = '';
+
   try {
     const data = await api(action, { name:state.user.name, pin:state.user.pin, week, player }, btn);
     showAlert(okEl, `✅ ${data.message}`);
+    if (+week === state.currentWeek) state.myCurrentPick = player;
     const prev = document.getElementById('pick-preview');
     prev.style.display = 'block';
     prev.textContent = `📣 ${state.user.name}'s Week ${week} pick: ${player} ⚾  (tap to copy)`;
     prev.dataset.text = `📣 ${state.user.name}'s Week ${week} pick: ${player} ⚾`;
     delete weekCache[+week];
+    renderStandings();
   } catch(e) { showAlert(errEl, e.message); }
 }
 
 function copyPickPreview() {
   const el = document.getElementById('pick-preview');
   navigator.clipboard.writeText(el.dataset.text || el.textContent).then(() => {
-    el.textContent = '✅ Copied to clipboard!';
-    setTimeout(() => { el.textContent = el.dataset.text + '  (tap to copy)'; }, 2000);
+    el.textContent = '✅ Copied!';
+    setTimeout(() => { el.textContent = (el.dataset.text||'') + '  (tap to copy)'; }, 1800);
   });
 }
 
-// ── History ───────────────────────────────────────────────────
-async function loadHistory() {
-  if (!state.user) return;
-  const body = document.getElementById('history-body');
-  body.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:24px"><div class="spinner" style="margin:0 auto"></div></td></tr>';
-  try {
-    const data = await api('getPlayerPicks', { name:state.user.name, pin:state.user.pin });
-    body.innerHTML = '';
-    const pickMap={};
-    data.picks.forEach(p => { pickMap[p.week]=p.player; });
-    for (let w=1;w<=32;w++) {
-      const player=pickMap[w];
-      if (!player) continue;
-      const s=data.scores[w]??null;
-      const rCls=s===1?'ht-homer':s===0?'ht-miss':'ht-pending';
-      const rTxt=s===1?'⚡ Homer':s===0?'💸 Miss':'⏳ Pending';
-      const tr=document.createElement('tr');
-      tr.innerHTML=`<td>Week ${w}</td><td>${player}</td><td class="${rCls}">${rTxt}</td>`;
-      body.appendChild(tr);
-    }
-    if (!body.children.length)
-      body.innerHTML='<tr><td colspan="3" style="color:var(--muted);padding:16px">No picks submitted yet.</td></tr>';
-  } catch(e) {
-    body.innerHTML=`<tr><td colspan="3" style="color:#ff9090;padding:16px">⚠️ ${e.message}</td></tr>`;
+// ─────────────────────────────────────────
+// HISTORY — with player switcher
+// ─────────────────────────────────────────
+function updateHistNote(targetName) {
+  const noteEl = document.getElementById('hist-viewing-note');
+  if (!noteEl) return;
+  if (state.user && targetName === state.user.name) {
+    noteEl.textContent = '(your full history)';
+  } else {
+    noteEl.textContent = '(past deadlines only)';
   }
 }
 
-// ── Reminders ────────────────────────────────────────────────
+async function loadHistory() {
+  if (!state.user) return;
+  const histSel    = document.getElementById('hist-player-sel');
+  const targetName = histSel?.value || state.user.name;
+  const body       = document.getElementById('history-body');
+  updateHistNote(targetName);
+
+  body.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:24px"><div class="spinner" style="margin:0 auto"></div></td></tr>';
+
+  try {
+    let picks, scores;
+
+    if (targetName === state.user.name) {
+      // Own history — full, includes future picks if submitted
+      const data = await api('getPlayerPicks', { name:state.user.name, pin:state.user.pin });
+      picks  = data.picks;
+      scores = data.scores;
+    } else {
+      // Another player — only past-deadline picks
+      const data = await api('getPlayerPicksPublic', {
+        targetName,
+        viewerName: state.user.name,
+        viewerPin:  state.user.pin,
+      });
+      picks  = data.picks;
+      scores = data.scores;
+    }
+
+    body.innerHTML = '';
+    const pickMap = {};
+    picks.forEach(p => { pickMap[p.week] = p.player; });
+
+    for (let w = 1; w <= 32; w++) {
+      const player = pickMap[w];
+      if (!player) continue;
+      const s    = scores[w] ?? null;
+      const rCls = s===1?'ht-homer':s===0?'ht-miss':'ht-pending';
+      const rTxt = s===1?'⚡ Homer':s===0?'💸 Miss':'⏳ Pending';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>Week ${w}</td><td>${player}</td><td class="${rCls}">${rTxt}</td>`;
+      body.appendChild(tr);
+    }
+
+    if (!body.children.length) {
+      const msg = targetName === state.user.name
+        ? 'No picks submitted yet.'
+        : `No past-deadline picks found for ${targetName}.`;
+      body.innerHTML = `<tr><td colspan="3" style="color:var(--muted);padding:16px">${msg}</td></tr>`;
+    }
+  } catch(e) {
+    body.innerHTML = `<tr><td colspan="3" style="color:#ff9090;padding:16px">⚠️ ${e.message}</td></tr>`;
+  }
+}
+
+// ─────────────────────────────────────────
+// REMINDERS
+// ─────────────────────────────────────────
 async function buildReminders() {
   const w=state.currentWeek, pot=state.pot;
-  let weekData=weekCache[w];
+  let weekData = weekCache[w];
   if (!weekData) {
-    try { weekData=await api('getWeekPicks',{week:w}); weekCache[w]=weekData; } catch(e){}
+    try { weekData = await api('getWeekPicksGated', { week:w }); weekCache[w]=weekData; } catch(e){}
   }
   const dl=state.deadlines[w];
   const dlStr=dl?new Date(dl).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}):'—';
@@ -729,7 +1004,7 @@ async function buildReminders() {
   const missing=state.playerNames.filter(n=>!submitted.has(n));
   const scores=weekData?.scores||{};
   const pickMap={};
-  (weekData?.picks||[]).forEach(p=>{pickMap[p.name]=p.player;});
+  (weekData?.picks||[]).forEach(p=>{ if(p.player!=='__HIDDEN__') pickMap[p.name]=p.player; });
   const homerers=state.playerNames.filter(n=>scores[n]===1);
   const missers=state.playerNames.filter(n=>scores[n]===0);
   const homerLines=homerers.length?homerers.map(n=>`• ${n} → ${pickMap[n]||'?'} ⚡`).join('\n'):'• (none yet)';
@@ -737,53 +1012,15 @@ async function buildReminders() {
   const rankEmoji=['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣'];
   const sLines=state.standings.map((p,i)=>`${rankEmoji[i]||`${i+1}.`} ${p.name} — ${p.pts} pts (owes $${p.owes})`).join('\n');
 
-  document.getElementById('rem1').textContent=
-`⚾ HOME RUN RALLY — PICKS DUE ⚾
-
-Week ${w} deadline: ${dlStr}
-
-${missing.length===0?'✅ Everyone has picked this week!':`Still need to pick:\n${missing.map(n=>`• ${n}`).join('\n')}`}
-
-Missing a pick = $1 in the pot.
-💰 Current pot: $${pot}
-
-What's your homer this week? 🔨`;
-
-  document.getElementById('rem2').textContent=
-`⚾ HOME RUN RALLY — STANDINGS ⚾
-
-📊 After Week ${w-1}:
-
-${sLines}
-
-💰 Pot: $${pot}
-👑 Who's taking it home?`;
-
-  document.getElementById('rem3').textContent=
-`⚾ RALLY REPORT — Week ${w} Results ⚾
-
-💸 No homer this week:
-${missLines}
-
-${homerers.length?`⚡ Got it right:\n${homerLines}\n\n`:''}Misses add $1 to the pot.
-💰 Pot now: $${pot}`;
-
-  document.getElementById('rem4').textContent=
-`⚾🚀 GONE! GONE! GONE! 🚀⚾
-
-Week ${w} results:
-
-⚡ Correct pickers (no $1 owed):
-${homerLines}
-
-💸 No homer — pay up:
-${missLines}
-
-💰 Pot now: $${pot}
-📊 ${state.standings[0]?.name||'?'} leads with ${state.standings[0]?.pts||0} pts`;
+  document.getElementById('rem1').textContent=`⚾ HOME RUN RALLY — PICKS DUE ⚾\n\nWeek ${w} deadline: ${dlStr}\n\n${missing.length===0?'✅ Everyone has picked this week!':`Still need to pick:\n${missing.map(n=>`• ${n}`).join('\n')}`}\n\nMissing a pick = $1 in the pot.\n💰 Current pot: $${pot}\n\nWhat's your homer this week? 🔨`;
+  document.getElementById('rem2').textContent=`⚾ HOME RUN RALLY — STANDINGS ⚾\n\n📊 After Week ${w-1}:\n\n${sLines}\n\n💰 Pot: $${pot}\n👑 Who's taking it home?`;
+  document.getElementById('rem3').textContent=`⚾ RALLY REPORT — Week ${w} Results ⚾\n\n💸 No homer this week:\n${missLines}\n\n${homerers.length?`⚡ Got it right:\n${homerLines}\n\n`:''}Misses add $1 to the pot.\n💰 Pot now: $${pot}`;
+  document.getElementById('rem4').textContent=`⚾🚀 GONE! GONE! GONE! 🚀⚾\n\nWeek ${w} results:\n\n⚡ Correct pickers (no $1 owed):\n${homerLines}\n\n💸 No homer — pay up:\n${missLines}\n\n💰 Pot now: $${pot}\n📊 ${state.standings[0]?.name||'?'} leads with ${state.standings[0]?.pts||0} pts`;
 }
 
-// ── Admin ─────────────────────────────────────────────────────
+// ─────────────────────────────────────────
+// ADMIN
+// ─────────────────────────────────────────
 function adminLogin() {
   const pin=document.getElementById('admin-pin-input').value.trim();
   const err=document.getElementById('admin-login-err');
@@ -803,9 +1040,7 @@ async function adminScoreWeek() {
   try {
     const data=await api('scoreWeek',{week,pin:state.adminPin},btn);
     resEl.style.display='block';
-    resEl.innerHTML=data.results.map(r=>
-      `<div class="sr-row"><span>${r.name} → ${r.player}</span><span class="${r.homered?'sr-homer':'sr-miss'}">${r.homered?`⚡ ${r.hrs} HR`:'💸 Miss'}</span></div>`
-    ).join('')+`<div style="margin-top:8px;color:var(--gold);font-weight:700">Pot: $${data.newPot} (+$${data.potAdded})</div>`;
+    resEl.innerHTML=data.results.map(r=>`<div class="sr-row"><span>${r.name} → ${r.player}</span><span class="${r.homered?'sr-homer':'sr-miss'}">${r.homered?`⚡ ${r.hrs} HR`:'💸 Miss'}</span></div>`).join('')+`<div style="margin-top:8px;color:var(--gold);font-weight:700">Pot: $${data.newPot} (+$${data.potAdded})</div>`;
     delete weekCache[+week];
     await refreshStandings();
   } catch(e){showAlert(errEl,e.message);}
@@ -826,9 +1061,7 @@ async function adminEraseScores() {
 }
 
 async function adminOverridePick() {
-  const name=document.getElementById('ov-name-sel').value;
-  const week=document.getElementById('ov-week-sel').value;
-  const player=document.getElementById('ov-player-input').value.trim();
+  const name=document.getElementById('ov-name-sel').value, week=document.getElementById('ov-week-sel').value, player=document.getElementById('ov-player-input').value.trim();
   const ok=document.getElementById('ov-ok'),err=document.getElementById('ov-err');
   ok.classList.remove('show'); err.classList.remove('show');
   try { const data=await api('overridePick',{pin:state.adminPin,name,week,player}); showAlert(ok,data.message); delete weekCache[+week]; }
@@ -836,9 +1069,7 @@ async function adminOverridePick() {
 }
 
 async function adminOverrideScore() {
-  const name=document.getElementById('os-name-sel').value;
-  const week=document.getElementById('os-week-sel').value;
-  const scored=document.getElementById('os-scored-sel').value;
+  const name=document.getElementById('os-name-sel').value, week=document.getElementById('os-week-sel').value, scored=document.getElementById('os-scored-sel').value;
   const ok=document.getElementById('os-ok'),err=document.getElementById('os-err');
   ok.classList.remove('show'); err.classList.remove('show');
   try { const data=await api('overrideScore',{pin:state.adminPin,name,week,scored}); showAlert(ok,data.message); delete weekCache[+week]; await refreshStandings(); }
@@ -846,8 +1077,7 @@ async function adminOverrideScore() {
 }
 
 async function adminAddPlayer() {
-  const name=document.getElementById('ap-name').value.trim();
-  const pin=document.getElementById('ap-pin').value.trim();
+  const name=document.getElementById('ap-name').value.trim(), pin=document.getElementById('ap-pin').value.trim();
   const ok=document.getElementById('ap-ok'),err=document.getElementById('ap-err');
   ok.classList.remove('show'); err.classList.remove('show');
   try { const data=await api('addPlayer',{pin:state.adminPin,name,playerPin:pin}); showAlert(ok,data.message); state.playerNames.push(name); populateNameSelects(); populateWeekSelects(); }
@@ -879,21 +1109,19 @@ async function refreshStandings() {
   const fresh=await api('getStandings');
   state.standings=fresh.standings; state.pot=fresh.pot;
   state.currentWeek=fresh.currentWeek; state.deadlines=fresh.deadlines||{};
+  state.currentDeadlinePassed=fresh.currentDeadlinePassed||false;
   document.getElementById('pot-display').textContent=`💰 POT: $${fresh.pot}`;
   updateWeekBadge(fresh.currentWeek);
   renderStandings();
 }
 
-// ── Reminders copy ────────────────────────────────────────────
 function copyRem(btn,id) {
   navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{
-    const orig=btn.textContent;
-    btn.textContent='✓ Copied!'; btn.classList.add('copied');
+    const orig=btn.textContent; btn.textContent='✓ Copied!'; btn.classList.add('copied');
     setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied');},2200);
   });
 }
 
-// ── Alert util ────────────────────────────────────────────────
 function showAlert(el,msg){
   el.textContent=msg; el.classList.add('show');
   setTimeout(()=>el.classList.remove('show'),7000);
