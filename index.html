@@ -14,13 +14,12 @@
   --gold:#f0b429;--gold-dim:#c8922a;
   --green:#1e8a3e;--green2:#2db352;
   --chalk:#f0ebe0;--muted:rgba(240,235,224,0.45);--muted2:rgba(240,235,224,0.25);
-  --grass:#1a3d1a;--skel:rgba(255,255,255,0.06);
-  --late:#e07c2a;
+  --grass:#1a3d1a;--skel:rgba(255,255,255,0.06);--late:#e07c2a;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--chalk);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(214,59,48,0.12),transparent),repeating-linear-gradient(45deg,transparent,transparent 34px,rgba(255,255,255,0.018) 34px,rgba(255,255,255,0.018) 35px),repeating-linear-gradient(-45deg,transparent,transparent 34px,rgba(255,255,255,0.018) 34px,rgba(255,255,255,0.018) 35px);}
 
-/* ── Header ── */
+/* Header */
 header{position:relative;overflow:hidden;background:linear-gradient(160deg,#8b1a12 0%,var(--red) 45%,#a8201a 100%);border-bottom:3px solid var(--gold);padding:28px 0 22px;text-align:center;}
 header::before{content:'⚾';position:absolute;font-size:200px;right:-40px;top:-40px;opacity:0.06;transform:rotate(20deg);line-height:1;}
 header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:-30px;opacity:0.05;transform:rotate(-15deg);}
@@ -33,20 +32,20 @@ header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:
 .week-badge{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:3px 12px;opacity:.8;}
 .week-badge em{color:var(--gold);font-style:normal;font-weight:700;}
 
-/* ── Auth banner ── */
+/* Auth */
 #auth-banner{background:linear-gradient(90deg,rgba(240,180,41,0.12),rgba(240,180,41,0.06));border-bottom:1px solid rgba(240,180,41,0.2);padding:8px 20px;display:flex;align-items:center;justify-content:space-between;font-size:13px;gap:12px;flex-wrap:wrap;}
 .auth-name{font-weight:700;color:var(--gold);}
 .btn-signout{background:none;border:1px solid rgba(240,180,41,0.4);border-radius:6px;color:var(--gold);font-size:12px;letter-spacing:1px;padding:4px 10px;cursor:pointer;}
 .btn-signout:hover{background:rgba(240,180,41,0.1);}
 
-/* ── Tabs ── */
+/* Tabs */
 .tabs{display:flex;background:rgba(0,0,0,0.35);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;backdrop-filter:blur(12px);overflow-x:auto;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
 .tab{flex:1;min-width:80px;padding:13px 6px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;text-align:center;cursor:pointer;border:none;background:none;color:rgba(255,255,255,0.4);border-bottom:3px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap;}
 .tab.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(240,180,41,0.05);}
 .tab:hover:not(.active){color:rgba(255,255,255,0.75);}
 
-/* ── Layout ── */
+/* Layout */
 .wrap{max-width:900px;margin:0 auto;padding:0 16px;}
 .panel{display:none;padding:28px 0 60px;animation:up .25s ease;}
 .panel.active{display:block;}
@@ -54,7 +53,7 @@ header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:
 .sh{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
 .sh::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ── Skeleton ── */
+/* Skeleton */
 .skel{background:var(--skel);border-radius:8px;animation:pulse 1.5s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .skel-row{display:grid;grid-template-columns:44px 1fr 56px 56px 60px 64px;gap:8px;padding:14px 16px;border-top:1px solid var(--border);align-items:center;}
@@ -62,7 +61,7 @@ header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:
 .skel-bar{height:14px;border-radius:4px;}
 .skel-sm{height:10px;border-radius:4px;margin-top:6px;width:60%;}
 
-/* ── Standings ── */
+/* Standings */
 .standings-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.5);}
 .s-head{background:var(--grass);display:grid;grid-template-columns:44px 1fr 56px 56px 60px 64px;padding:10px 16px;gap:8px;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;color:rgba(240,180,41,0.8);}
 .s-row{display:grid;grid-template-columns:44px 1fr 56px 56px 60px 64px;padding:13px 16px;gap:8px;align-items:center;border-top:1px solid var(--border);transition:background .15s;}
@@ -83,13 +82,16 @@ header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:
 .streak-cold{background:rgba(214,59,48,0.2);color:#ff7c7c;}
 .streak-none{color:var(--muted2);font-size:11px;}
 
-/* ── Week picks ── */
+/* Week picks */
 .week-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
 .week-nav-btns{display:flex;align-items:center;gap:12px;}
 .wbtn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--chalk);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .wbtn:hover{background:rgba(255,255,255,0.12);}
 .week-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);letter-spacing:1px;}
-.current-week-tag{font-size:10px;letter-spacing:1px;text-transform:uppercase;background:var(--gold);color:#1a1200;border-radius:4px;padding:2px 6px;font-weight:700;margin-left:6px;vertical-align:middle;}
+.week-tag{font-size:10px;letter-spacing:1px;text-transform:uppercase;border-radius:4px;padding:2px 7px;font-weight:700;margin-left:6px;vertical-align:middle;}
+.week-tag-current{background:var(--gold);color:#1a1200;}
+.week-tag-next{background:rgba(30,138,62,0.8);color:#fff;}
+.week-tag-past{background:rgba(255,255,255,0.1);color:var(--muted);}
 .week-dl{font-size:12px;color:var(--muted);}
 .week-dl.urgent{color:#ff9494;font-weight:700;}
 .picks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;}
@@ -109,15 +111,16 @@ header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:
 .miss-bar strong{color:var(--gold);}
 .deadline-note{font-size:12px;color:var(--muted);text-align:center;margin-top:12px;padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border);}
 
-/* ── Forms ── */
-.form-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px;max-width:520px;margin:0 auto;box-shadow:0 12px 40px rgba(0,0,0,0.4);}
+/* Forms */
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px;max-width:540px;margin:0 auto;box-shadow:0 12px 40px rgba(0,0,0,0.4);}
 .form-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;border-bottom:2px solid var(--gold);padding-bottom:10px;margin-bottom:22px;color:var(--chalk);}
 .fg{margin-bottom:16px;position:relative;}
 label{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
-input,select{width:100%;padding:12px 14px;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:9px;color:var(--chalk);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s;-webkit-appearance:none;}
-input:focus,select:focus{border-color:var(--gold);}
-input::placeholder{color:var(--muted);}
+input,select,textarea{width:100%;padding:12px 14px;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:9px;color:var(--chalk);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);}
+input::placeholder,textarea::placeholder{color:var(--muted);}
 select option{background:#1a2535;color:var(--chalk);}
+textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
 .btn{width:100%;padding:15px;border:none;border-radius:9px;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;transition:all .2s;margin-top:6px;position:relative;}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;}
 .btn-primary{background:var(--red);color:#fff;box-shadow:0 4px 16px rgba(214,59,48,0.4);}
@@ -127,6 +130,8 @@ select option{background:#1a2535;color:var(--chalk);}
 .btn-danger{background:#7a1a14;color:#ffaaaa;border:1px solid rgba(214,59,48,0.4);}
 .btn-danger:not(:disabled):hover{background:#a82d24;color:#fff;}
 .btn-sm{padding:8px 16px;font-size:14px;width:auto;margin-top:0;}
+.btn-ghost{background:rgba(255,255,255,0.06);color:var(--chalk);border:1px solid var(--border);}
+.btn-ghost:not(:disabled):hover{background:rgba(255,255,255,0.1);}
 .btn-loading::after{content:'';position:absolute;right:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
 .alert{border-radius:9px;padding:13px 16px;font-size:14px;margin-top:14px;font-weight:500;display:none;}
 .alert.show{display:block;}
@@ -135,37 +140,35 @@ select option{background:#1a2535;color:var(--chalk);}
 .alert-warn{background:rgba(224,124,42,0.12);border:1px solid rgba(224,124,42,0.4);color:var(--late);}
 .pick-preview{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:12px;font-size:13px;font-family:monospace;color:var(--muted);word-break:break-all;cursor:pointer;}
 
-/* ── Autocomplete ── */
-.autocomplete-list{position:absolute;top:100%;left:0;right:0;z-index:500;background:#192839;border:1px solid rgba(240,180,41,0.5);border-top:none;border-radius:0 0 9px 9px;max-height:240px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+/* Autocomplete */
+.autocomplete-list{position:absolute;top:100%;left:0;right:0;z-index:500;background:#192839;border:1px solid rgba(240,180,41,0.5);border-top:none;border-radius:0 0 9px 9px;max-height:240px;overflow-y:auto;scrollbar-width:thin;}
 .autocomplete-list:empty{display:none;}
 .ac-item{padding:9px 14px;font-size:14px;cursor:pointer;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;transition:background .1s;}
 .ac-item:last-child{border:none;}
 .ac-item:hover,.ac-item.ac-active{background:rgba(240,180,41,0.12);}
 .ac-name mark{background:none;color:var(--gold);font-weight:700;}
 .ac-hr{font-size:11px;color:var(--muted);white-space:nowrap;}
-.ac-hint{font-size:11px;color:var(--muted);padding:6px 14px;font-style:italic;}
 
-/* ── Player stats card ── */
+/* Stats card */
 .stats-card{background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:16px;margin-top:12px;animation:up .2s ease;}
 .stats-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .stats-player-name{font-weight:700;font-size:16px;}
-.stats-team{font-size:12px;color:var(--muted);}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
 .stat-box{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:10px 8px;text-align:center;}
 .stat-num{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold);line-height:1;}
 .stat-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:3px;}
 .stats-loading{text-align:center;padding:20px;color:var(--muted);font-size:13px;}
+.stats-preseason{background:rgba(224,124,42,0.08);border:1px solid rgba(224,124,42,0.25);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--late);margin-top:8px;text-align:center;}
 .dupe-warning{background:rgba(214,59,48,0.1);border:1px solid rgba(214,59,48,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#ff9090;margin-top:10px;}
 
-/* ── Waiver table ── */
+/* Waiver table */
 .waiver-section{margin-top:24px;}
-.waiver-controls{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.waiver-controls{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
 .waiver-controls label{margin:0;font-size:11px;letter-spacing:1.5px;}
 .sort-btn{padding:5px 12px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
 .sort-btn:hover,.sort-btn.active{background:rgba(240,180,41,0.15);border-color:rgba(240,180,41,0.4);color:var(--gold);}
 .waiver-table{width:100%;border-collapse:collapse;font-size:13px;}
 .waiver-table th{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;color:rgba(240,180,41,0.7);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);cursor:pointer;white-space:nowrap;}
-.waiver-table th:hover{color:var(--gold);}
 .waiver-table th.sorted{color:var(--gold);}
 .waiver-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .waiver-table tr:last-child td{border:none;}
@@ -177,23 +180,26 @@ select option{background:#1a2535;color:var(--chalk);}
 .wv-hr{font-family:'Bebas Neue',sans-serif;font-size:18px;text-align:center;}
 .wv-hr.hot{color:var(--gold);}
 .used-tag{font-size:10px;background:rgba(214,59,48,0.2);color:#ff9090;border-radius:3px;padding:1px 5px;margin-left:4px;}
-.waiver-loading{text-align:center;padding:24px;color:var(--muted);}
+.waiver-loading{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
+.waiver-error{text-align:center;padding:16px;background:rgba(224,124,42,0.08);border:1px solid rgba(224,124,42,0.25);border-radius:8px;font-size:13px;color:var(--late);margin-top:8px;}
+.season-note{font-size:11px;color:var(--muted);text-align:center;margin-top:8px;}
 
-/* ── Queue ── */
+/* Queue */
 .queue-section{margin-top:20px;}
 .queue-list{list-style:none;margin-bottom:12px;}
 .queue-item{display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;gap:10px;}
 .queue-item-pos{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted);min-width:24px;}
 .queue-item-name{flex:1;font-weight:600;font-size:14px;}
 .queue-item-dupe{font-size:11px;color:#ff9090;margin-left:6px;}
+.queue-item-stats{font-size:11px;color:var(--gold);margin-left:8px;opacity:.8;}
 .queue-remove{background:none;border:1px solid rgba(214,59,48,0.3);border-radius:5px;color:#ff9090;font-size:12px;padding:3px 8px;cursor:pointer;transition:all .15s;}
 .queue-remove:hover{background:rgba(214,59,48,0.2);}
 .queue-move{background:none;border:1px solid var(--border);border-radius:5px;color:var(--muted);font-size:12px;padding:3px 6px;cursor:pointer;transition:all .15s;margin-right:4px;}
 .queue-move:hover{border-color:var(--gold);color:var(--gold);}
-.queue-add-row{display:flex;gap:8px;align-items:center;}
+.queue-add-row{display:flex;gap:8px;align-items:center;position:relative;}
 .queue-add-row input{flex:1;}
 
-/* ── History ── */
+/* History */
 .history-controls{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
 .history-controls label{margin:0;font-size:12px;letter-spacing:1px;white-space:nowrap;}
 .history-controls select{max-width:160px;padding:8px 12px;font-size:13px;}
@@ -203,7 +209,27 @@ select option{background:#1a2535;color:var(--chalk);}
 .history-table tr:last-child td{border:none;}
 .ht-homer{color:#4fc66a;font-weight:700;}.ht-miss{color:#ff7c7c;}.ht-pending{color:var(--muted);}
 
-/* ── Admin ── */
+/* Reminders */
+.rem-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px;}
+.rem-head{background:rgba(255,255,255,0.04);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.rem-head-left{display:flex;align-items:center;gap:10px;}
+.rem-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;color:var(--gold);}
+.rem-week-sel{padding:4px 10px;font-size:12px;border-radius:6px;width:auto;background:rgba(255,255,255,0.08);border:1px solid var(--border2);color:var(--chalk);}
+.rem-head-right{display:flex;align-items:center;gap:8px;}
+.btn-copy{padding:5px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:6px;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer;transition:all .2s;}
+.btn-copy:hover{background:var(--gold-dim);}.btn-copy.copied{background:var(--green);color:#fff;}
+.btn-edit{padding:5px 10px;background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border);border-radius:6px;font-size:12px;cursor:pointer;transition:all .15s;}
+.btn-edit:hover{border-color:var(--border2);color:var(--chalk);}
+.rem-body-wrap{padding:14px 16px;}
+.rem-body{font-size:13px;line-height:1.75;white-space:pre-wrap;color:rgba(240,235,224,0.85);display:block;}
+.rem-edit-area{display:none;width:100%;font-size:13px;line-height:1.7;background:rgba(255,255,255,0.04);border:1px solid var(--border2);border-radius:8px;padding:12px;color:var(--chalk);min-height:160px;resize:vertical;}
+.rem-edit-area.visible{display:block;}
+.rem-body.hidden{display:none;}
+.rem-save-row{display:flex;gap:8px;margin-top:8px;}
+.btn-rem-save{padding:7px 16px;font-size:13px;background:var(--gold);color:#1a1200;border:none;border-radius:6px;cursor:pointer;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;}
+.btn-rem-reset{padding:7px 12px;font-size:13px;background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border);border-radius:6px;cursor:pointer;}
+
+/* Admin */
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media(max-width:560px){.admin-grid{grid-template-columns:1fr;}}
 .admin-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
@@ -216,19 +242,10 @@ select option{background:#1a2535;color:var(--chalk);}
 .sr-homer{color:#4fc66a;font-weight:700;}.sr-miss{color:#ff7c7c;}
 .erase-warn{font-size:12px;color:#ff9494;margin-top:8px;line-height:1.5;}
 
-/* ── Reminders ── */
-.rem-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
-.rem-head{background:rgba(255,255,255,0.04);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;}
-.rem-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;color:var(--gold);}
-.btn-copy{padding:5px 14px;background:var(--gold);color:#1a1200;border:none;border-radius:6px;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1px;cursor:pointer;transition:all .2s;}
-.btn-copy:hover{background:var(--gold-dim);}.btn-copy.copied{background:var(--green);color:#fff;}
-.rem-body{padding:14px 16px;font-size:13px;line-height:1.75;white-space:pre-wrap;color:rgba(240,235,224,0.8);}
-
-/* ── Misc ── */
+/* Misc */
 .spinner{width:32px;height:32px;border-radius:50%;margin:32px auto;border:3px solid var(--border);border-top-color:var(--gold);animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .divider{height:1px;background:var(--border);margin:20px 0;}
-.info-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:8px;}
 
 @media(max-width:500px){
   .s-head,.s-row,.skel-row{grid-template-columns:36px 1fr 48px 48px 52px 56px;gap:4px;padding:10px 8px;font-size:11px;}
@@ -265,18 +282,12 @@ select option{background:#1a2535;color:var(--chalk);}
 
 <div class="wrap">
 
-<!-- ═══ STANDINGS ═══ -->
+<!-- STANDINGS -->
 <div id="tab-standings" class="panel active">
   <br>
   <div class="sh">STANDINGS</div>
   <div class="standings-card">
-    <div class="s-head">
-      <div>#</div><div>PLAYER</div>
-      <div style="text-align:center">PTS</div>
-      <div style="text-align:center">OWES</div>
-      <div style="text-align:center">WIN%</div>
-      <div style="text-align:center">STREAK</div>
-    </div>
+    <div class="s-head"><div>#</div><div>PLAYER</div><div style="text-align:center">PTS</div><div style="text-align:center">OWES</div><div style="text-align:center">WIN%</div><div style="text-align:center">STREAK</div></div>
     <div id="standings-body">
       <div class="skel-row"><div class="skel skel-circle"></div><div><div class="skel skel-bar" style="width:70%"></div><div class="skel skel-sm"></div></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div></div>
       <div class="skel-row"><div class="skel skel-circle"></div><div><div class="skel skel-bar" style="width:55%"></div><div class="skel skel-sm"></div></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div><div class="skel skel-bar"></div></div>
@@ -291,7 +302,7 @@ select option{background:#1a2535;color:var(--chalk);}
   <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:14px" id="standings-footer"> </p>
 </div>
 
-<!-- ═══ WEEK ═══ -->
+<!-- WEEK -->
 <div id="tab-week" class="panel">
   <br>
   <div class="week-bar">
@@ -299,7 +310,7 @@ select option{background:#1a2535;color:var(--chalk);}
       <button class="wbtn" onclick="changeWeek(-1)">◀</button>
       <div>
         <span class="week-num" id="wk-label">—</span>
-        <span class="current-week-tag" id="current-week-tag" style="display:none">CURRENT</span>
+        <span class="week-tag" id="wk-status-tag" style="display:none"></span>
       </div>
       <button class="wbtn" onclick="changeWeek(1)">▶</button>
     </div>
@@ -314,7 +325,7 @@ select option{background:#1a2535;color:var(--chalk);}
   <div class="deadline-note" id="deadline-note" style="display:none"></div>
 </div>
 
-<!-- ═══ MY PICK ═══ -->
+<!-- MY PICK -->
 <div id="tab-pick" class="panel">
   <br>
   <div id="pick-login-section">
@@ -322,10 +333,8 @@ select option{background:#1a2535;color:var(--chalk);}
     <div style="max-width:380px;margin:0 auto">
       <div class="form-card">
         <div class="form-title">🔒 Sign In</div>
-        <div class="fg"><label>Your Name</label>
-          <select id="login-name"><option value="">— select name —</option></select></div>
-        <div class="fg"><label>Your PIN</label>
-          <input type="password" id="login-pin" placeholder="Enter your PIN" maxlength="10" onkeydown="if(event.key==='Enter')login()"></div>
+        <div class="fg"><label>Your Name</label><select id="login-name"><option value="">— select name —</option></select></div>
+        <div class="fg"><label>Your PIN</label><input type="password" id="login-pin" placeholder="Enter your PIN" maxlength="10" onkeydown="if(event.key==='Enter')login()"></div>
         <button class="btn btn-primary" id="login-btn" onclick="login()">⚾ SIGN IN</button>
         <div class="alert alert-err" id="login-err"></div>
       </div>
@@ -336,56 +345,47 @@ select option{background:#1a2535;color:var(--chalk);}
     <div class="sh">SUBMIT PICK</div>
     <div class="form-card">
       <div class="form-title" id="pick-form-title">My Pick</div>
-
-      <div class="fg"><label>Week</label>
-        <select id="pick-week-sel" onchange="onWeekChange()"></select></div>
-
+      <div class="fg"><label>Week</label><select id="pick-week-sel" onchange="onWeekChange()"></select></div>
       <div class="fg" id="player-fg">
         <label>Player <span id="player-label-hint" style="font-size:10px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400"></span></label>
         <input type="text" id="pick-player-input" placeholder="Search player…" autocomplete="off"
                oninput="onPlayerInput()" onkeydown="onPlayerKeydown(event)" onfocus="onPlayerInput()">
         <div class="autocomplete-list" id="ac-list"></div>
       </div>
-
-      <!-- Stats card shown after player selected -->
       <div id="stats-card-wrap" style="display:none"></div>
-      <!-- Dupe warning -->
       <div id="dupe-warning" class="dupe-warning" style="display:none"></div>
-
-      <!-- Single submit/change button — label changes based on context -->
       <button class="btn btn-primary" id="pick-action-btn" onclick="doSavePick()">⚾ SAVE PICK</button>
-
       <div class="alert alert-ok" id="pick-ok"></div>
       <div class="alert alert-warn" id="pick-warn"></div>
       <div class="alert alert-err" id="pick-err"></div>
       <div class="pick-preview" id="pick-preview" style="display:none" onclick="copyPickPreview()"></div>
 
-      <!-- Waiver wire / homer leaderboard -->
+      <!-- Waiver wire -->
       <div class="waiver-section">
         <div class="divider"></div>
         <div class="sh" style="font-size:16px">⚡ HR LEADERS — PICK FROM LIST</div>
         <div class="waiver-controls">
           <label>SORT BY:</label>
-          <button class="sort-btn active" id="sort-7" onclick="sortWaiver(7,this)">Last 7 days</button>
-          <button class="sort-btn" id="sort-15" onclick="sortWaiver(15,this)">Last 15</button>
-          <button class="sort-btn" id="sort-30" onclick="sortWaiver(30,this)">Last 30</button>
+          <button class="sort-btn active" id="sort-7" onclick="sortWaiver(7,this)">Last 7d</button>
+          <button class="sort-btn" id="sort-15" onclick="sortWaiver(15,this)">Last 15d</button>
+          <button class="sort-btn" id="sort-30" onclick="sortWaiver(30,this)">Last 30d</button>
           <button class="sort-btn" id="sort-yr" onclick="sortWaiver(0,this)">Season</button>
         </div>
-        <div id="waiver-table-wrap"><div class="waiver-loading">Loading HR leaders…</div></div>
+        <div id="waiver-table-wrap"><div class="waiver-loading"><div class="spinner"></div></div></div>
       </div>
 
-      <!-- Pick Queue -->
+      <!-- Queue -->
       <div class="divider"></div>
       <div class="queue-section">
         <div class="sh" style="font-size:16px">📋 PICK QUEUE</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Add future picks in order. If you miss a week's deadline, the next player in your queue auto-submits.</p>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Add future picks in order. If you miss a week's deadline, the top pick auto-submits.</p>
         <ul class="queue-list" id="queue-list"></ul>
         <div class="queue-add-row">
           <input type="text" id="queue-add-input" placeholder="Add player to queue…" autocomplete="off"
-                 oninput="onQueueInput()" onkeydown="if(event.key==='Enter')addToQueue()">
+                 oninput="onQueueInput()" onkeydown="onQueueKeydown(event)">
           <button class="btn btn-gold btn-sm" onclick="addToQueue()">ADD</button>
+          <div class="autocomplete-list" id="queue-ac-list" style="position:absolute;top:100%;left:0;right:60px;z-index:500"></div>
         </div>
-        <div class="autocomplete-list" id="queue-ac-list" style="max-width:340px"></div>
         <div class="alert alert-ok" id="queue-ok" style="margin-top:10px"></div>
         <button class="btn btn-gold" style="margin-top:14px;font-size:16px" onclick="saveQueue()">💾 SAVE QUEUE</button>
       </div>
@@ -393,15 +393,10 @@ select option{background:#1a2535;color:var(--chalk);}
   </div>
 </div>
 
-<!-- ═══ HISTORY ═══ -->
+<!-- HISTORY -->
 <div id="tab-history" class="panel">
   <br>
-  <div id="hist-login-note">
-    <div class="sh">PICKS HISTORY</div>
-    <div class="form-card" style="max-width:380px;margin:0 auto">
-      <p style="font-size:14px;color:var(--muted)">Sign in on the "My Pick" tab to view history.</p>
-    </div>
-  </div>
+  <div id="hist-login-note"><div class="sh">PICKS HISTORY</div><div class="form-card" style="max-width:380px;margin:0 auto"><p style="font-size:14px;color:var(--muted)">Sign in on the "My Pick" tab to view history.</p></div></div>
   <div id="hist-content" style="display:none">
     <div class="sh">PICKS HISTORY</div>
     <div class="history-controls">
@@ -418,26 +413,109 @@ select option{background:#1a2535;color:var(--chalk);}
   </div>
 </div>
 
-<!-- ═══ REMINDERS ═══ -->
+<!-- REMINDERS -->
 <div id="tab-remind" class="panel">
   <br>
   <div class="sh">iMESSAGE TEMPLATES</div>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Tap Copy → paste into group chat. All templates use live data.</p>
-  <div class="rem-card"><div class="rem-head"><div class="rem-title">🚨 PICKS DUE</div><button class="btn-copy" onclick="copyRem(this,'rem1')">Copy</button></div><div class="rem-body" id="rem1">Loading…</div></div>
-  <div class="rem-card"><div class="rem-head"><div class="rem-title">📊 STANDINGS UPDATE</div><button class="btn-copy" onclick="copyRem(this,'rem2')">Copy</button></div><div class="rem-body" id="rem2">Loading…</div></div>
-  <div class="rem-card"><div class="rem-head"><div class="rem-title">💸 NO HOMER SHAME</div><button class="btn-copy" onclick="copyRem(this,'rem3')">Copy</button></div><div class="rem-body" id="rem3">Loading…</div></div>
-  <div class="rem-card"><div class="rem-head"><div class="rem-title">🎉 GONE YARD!</div><button class="btn-copy" onclick="copyRem(this,'rem4')">Copy</button></div><div class="rem-body" id="rem4">Loading…</div></div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Select which week each template references, then tap Copy. Click ✏️ to edit any message.</p>
+
+  <!-- Picks Due -->
+  <div class="rem-card">
+    <div class="rem-head">
+      <div class="rem-head-left">
+        <div class="rem-title">🚨 PICKS DUE</div>
+        <select class="rem-week-sel" id="rem1-week" onchange="buildReminder(1)"></select>
+      </div>
+      <div class="rem-head-right">
+        <button class="btn-edit" onclick="toggleEdit(1)">✏️</button>
+        <button class="btn-copy" onclick="copyRem(this,'rem1-text')">Copy</button>
+      </div>
+    </div>
+    <div class="rem-body-wrap">
+      <div class="rem-body" id="rem1-text">Loading…</div>
+      <textarea class="rem-edit-area" id="rem1-edit"></textarea>
+      <div class="rem-save-row" id="rem1-save-row" style="display:none">
+        <button class="btn-rem-save" onclick="saveEdit(1)">SAVE</button>
+        <button class="btn-rem-reset" onclick="resetEdit(1)">RESET</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Standings -->
+  <div class="rem-card">
+    <div class="rem-head">
+      <div class="rem-head-left">
+        <div class="rem-title">📊 STANDINGS UPDATE</div>
+        <select class="rem-week-sel" id="rem2-week" onchange="buildReminder(2)"></select>
+      </div>
+      <div class="rem-head-right">
+        <button class="btn-edit" onclick="toggleEdit(2)">✏️</button>
+        <button class="btn-copy" onclick="copyRem(this,'rem2-text')">Copy</button>
+      </div>
+    </div>
+    <div class="rem-body-wrap">
+      <div class="rem-body" id="rem2-text">Loading…</div>
+      <textarea class="rem-edit-area" id="rem2-edit"></textarea>
+      <div class="rem-save-row" id="rem2-save-row" style="display:none">
+        <button class="btn-rem-save" onclick="saveEdit(2)">SAVE</button>
+        <button class="btn-rem-reset" onclick="resetEdit(2)">RESET</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Homer Shame -->
+  <div class="rem-card">
+    <div class="rem-head">
+      <div class="rem-head-left">
+        <div class="rem-title">💸 NO HOMER SHAME</div>
+        <select class="rem-week-sel" id="rem3-week" onchange="buildReminder(3)"></select>
+      </div>
+      <div class="rem-head-right">
+        <button class="btn-edit" onclick="toggleEdit(3)">✏️</button>
+        <button class="btn-copy" onclick="copyRem(this,'rem3-text')">Copy</button>
+      </div>
+    </div>
+    <div class="rem-body-wrap">
+      <div class="rem-body" id="rem3-text">Loading…</div>
+      <textarea class="rem-edit-area" id="rem3-edit"></textarea>
+      <div class="rem-save-row" id="rem3-save-row" style="display:none">
+        <button class="btn-rem-save" onclick="saveEdit(3)">SAVE</button>
+        <button class="btn-rem-reset" onclick="resetEdit(3)">RESET</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gone Yard -->
+  <div class="rem-card">
+    <div class="rem-head">
+      <div class="rem-head-left">
+        <div class="rem-title">🎉 GONE YARD!</div>
+        <select class="rem-week-sel" id="rem4-week" onchange="buildReminder(4)"></select>
+      </div>
+      <div class="rem-head-right">
+        <button class="btn-edit" onclick="toggleEdit(4)">✏️</button>
+        <button class="btn-copy" onclick="copyRem(this,'rem4-text')">Copy</button>
+      </div>
+    </div>
+    <div class="rem-body-wrap">
+      <div class="rem-body" id="rem4-text">Loading…</div>
+      <textarea class="rem-edit-area" id="rem4-edit"></textarea>
+      <div class="rem-save-row" id="rem4-save-row" style="display:none">
+        <button class="btn-rem-save" onclick="saveEdit(4)">SAVE</button>
+        <button class="btn-rem-reset" onclick="resetEdit(4)">RESET</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- ═══ ADMIN ═══ -->
+<!-- ADMIN -->
 <div id="tab-admin" class="panel">
   <br>
   <div id="admin-login-section">
     <div class="sh">COMMISSIONER LOGIN</div>
     <div class="form-card" style="max-width:360px;margin:0 auto">
       <div class="form-title">⚙️ Admin Access</div>
-      <div class="fg"><label>Commissioner PIN</label>
-        <input type="password" id="admin-pin-input" placeholder="Commissioner PIN" onkeydown="if(event.key==='Enter')adminLogin()"></div>
+      <div class="fg"><label>Commissioner PIN</label><input type="password" id="admin-pin-input" placeholder="Commissioner PIN" onkeydown="if(event.key==='Enter')adminLogin()"></div>
       <button class="btn btn-primary" onclick="adminLogin()">UNLOCK ADMIN</button>
       <div class="alert alert-err" id="admin-login-err"></div>
     </div>
@@ -445,78 +523,24 @@ select option{background:#1a2535;color:var(--chalk);}
   <div id="admin-panel" style="display:none">
     <div class="sh">COMMISSIONER PANEL</div>
     <div class="admin-grid">
-      <div class="admin-card">
-        <h3>🤖 Auto-Score Week</h3>
-        <select id="score-week-sel"></select>
-        <button class="btn btn-primary" id="score-btn" onclick="adminScoreWeek()">FETCH & SCORE FROM MLB API</button>
-        <div class="score-result" id="score-result" style="display:none"></div>
-        <div class="alert alert-err" id="score-err"></div>
-      </div>
-      <div class="admin-card">
-        <h3>🗑️ Erase Week Scores</h3>
-        <select id="erase-week-sel"></select>
-        <button class="btn btn-danger" onclick="adminEraseScores()" style="margin-top:6px">ERASE SCORES FOR WEEK</button>
-        <div class="erase-warn">⚠️ Reverses pot and owes. Run before re-scoring.</div>
-        <div class="alert alert-ok" id="erase-ok"></div>
-        <div class="alert alert-err" id="erase-err"></div>
-      </div>
-      <div class="admin-card">
-        <h3>🔄 Process Queues</h3>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Manually trigger queue auto-submission for the previous week.</p>
-        <button class="btn btn-gold" onclick="adminProcessQueues()">PROCESS QUEUES NOW</button>
-        <div class="alert alert-ok" id="pq-ok"></div>
-        <div class="alert alert-err" id="pq-err"></div>
-      </div>
-      <div class="admin-card">
-        <h3>✏️ Override Pick</h3>
-        <select id="ov-name-sel"></select>
-        <select id="ov-week-sel"></select>
-        <input type="text" id="ov-player-input" placeholder="Player name">
-        <button class="btn btn-gold" onclick="adminOverridePick()">OVERRIDE PICK</button>
-        <div class="alert alert-ok" id="ov-ok"></div>
-        <div class="alert alert-err" id="ov-err"></div>
-      </div>
-      <div class="admin-card">
-        <h3>🎯 Override Score</h3>
-        <select id="os-name-sel"></select>
-        <select id="os-week-sel"></select>
-        <select id="os-scored-sel"><option value="1">✅ Homer</option><option value="0">❌ No Homer</option></select>
-        <button class="btn btn-gold" onclick="adminOverrideScore()">OVERRIDE SCORE</button>
-        <div class="alert alert-ok" id="os-ok"></div>
-        <div class="alert alert-err" id="os-err"></div>
-      </div>
-      <div class="admin-card">
-        <h3>👤 Manage Players</h3>
-        <input type="text" id="ap-name" placeholder="Player name">
-        <input type="text" id="ap-pin" placeholder="Their PIN">
-        <button class="btn btn-gold" onclick="adminAddPlayer()">ADD PLAYER</button>
-        <br><br>
-        <select id="rp-sel"></select>
-        <button class="btn btn-primary" style="margin-top:8px" onclick="adminRemovePlayer()">REMOVE PLAYER</button>
-        <div class="alert alert-ok" id="ap-ok"></div>
-        <div class="alert alert-err" id="ap-err"></div>
-      </div>
-      <div class="admin-card">
-        <h3>💰 Pot Override</h3>
-        <label>Pot ($)</label>
-        <input type="number" id="cfg-pot" placeholder="Pot amount">
-        <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Week auto-detected from deadlines.</p>
-        <button class="btn btn-gold" onclick="adminSetConfig()">SAVE</button>
-        <div class="alert alert-ok" id="cfg-ok"></div>
-        <div class="alert alert-err" id="cfg-err"></div>
-      </div>
+      <div class="admin-card"><h3>🤖 Auto-Score Week</h3><select id="score-week-sel"></select><button class="btn btn-primary" id="score-btn" onclick="adminScoreWeek()">FETCH & SCORE FROM MLB API</button><div class="score-result" id="score-result" style="display:none"></div><div class="alert alert-err" id="score-err"></div></div>
+      <div class="admin-card"><h3>🗑️ Erase Week Scores</h3><select id="erase-week-sel"></select><button class="btn btn-danger" onclick="adminEraseScores()" style="margin-top:6px">ERASE SCORES FOR WEEK</button><div class="erase-warn">⚠️ Reverses pot and owes. Run before re-scoring.</div><div class="alert alert-ok" id="erase-ok"></div><div class="alert alert-err" id="erase-err"></div></div>
+      <div class="admin-card"><h3>🔄 Process Queues</h3><p style="font-size:12px;color:var(--muted);margin-bottom:12px">Manually trigger auto-submission from queues for the previous week.</p><button class="btn btn-gold" onclick="adminProcessQueues()">PROCESS QUEUES NOW</button><div class="alert alert-ok" id="pq-ok"></div><div class="alert alert-err" id="pq-err"></div></div>
+      <div class="admin-card"><h3>✏️ Override Pick</h3><select id="ov-name-sel"></select><select id="ov-week-sel"></select><input type="text" id="ov-player-input" placeholder="Player name"><button class="btn btn-gold" onclick="adminOverridePick()">OVERRIDE PICK</button><div class="alert alert-ok" id="ov-ok"></div><div class="alert alert-err" id="ov-err"></div></div>
+      <div class="admin-card"><h3>🎯 Override Score</h3><select id="os-name-sel"></select><select id="os-week-sel"></select><select id="os-scored-sel"><option value="1">✅ Homer</option><option value="0">❌ No Homer</option></select><button class="btn btn-gold" onclick="adminOverrideScore()">OVERRIDE SCORE</button><div class="alert alert-ok" id="os-ok"></div><div class="alert alert-err" id="os-err"></div></div>
+      <div class="admin-card"><h3>👤 Manage Players</h3><input type="text" id="ap-name" placeholder="Player name"><input type="text" id="ap-pin" placeholder="Their PIN"><button class="btn btn-gold" onclick="adminAddPlayer()">ADD PLAYER</button><br><br><select id="rp-sel"></select><button class="btn btn-primary" style="margin-top:8px" onclick="adminRemovePlayer()">REMOVE PLAYER</button><div class="alert alert-ok" id="ap-ok"></div><div class="alert alert-err" id="ap-err"></div></div>
+      <div class="admin-card"><h3>💰 Pot Override</h3><label>Pot ($)</label><input type="number" id="cfg-pot" placeholder="Pot amount"><p style="font-size:12px;color:var(--muted);margin-bottom:10px">Week auto-detected from deadlines.</p><button class="btn btn-gold" onclick="adminSetConfig()">SAVE</button><div class="alert alert-ok" id="cfg-ok"></div><div class="alert alert-err" id="cfg-err"></div></div>
     </div>
   </div>
 </div>
 
 </div><!-- /wrap -->
 <script>
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────
 // CONFIG
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────
 const API = 'https://script.google.com/macros/s/AKfycbyQ9dyXqnNRtesjuiGARNtg1Z1KVN5NdWZWC0ZsKYrXQIcIF0xbONEA9gxJWuvj26iSCQ/exec';
 
-// Canonical deadlines — same as backend, used for client-side week detection
 const DEADLINES = {
    1:'2026-03-25', 2:'2026-03-30', 3:'2026-04-06', 4:'2026-04-13',
    5:'2026-04-20', 6:'2026-04-27', 7:'2026-05-04', 8:'2026-05-11',
@@ -528,72 +552,77 @@ const DEADLINES = {
   29:'2026-10-05',30:'2026-10-12',31:'2026-10-19',32:'2026-10-26',
 };
 
+function deadlineEnd(week) {
+  const dl = DEADLINES[week]; if (!dl) return null;
+  const d = new Date(dl); d.setHours(23,59,59,999); return d;
+}
+function isDeadlinePassed(week) { const d=deadlineEnd(week); return d ? new Date()>d : false; }
 function clientCurrentWeek() {
-  const now = new Date();
-  const weeks = Object.keys(DEADLINES).map(Number).sort((a,b)=>a-b);
-  for (const w of weeks) {
-    const dl = new Date(DEADLINES[w]); dl.setHours(23,59,59,999);
-    if (now <= dl) return w;
-  }
+  const weeks=Object.keys(DEADLINES).map(Number).sort((a,b)=>a-b);
+  for (const w of weeks) { if (new Date()<=deadlineEnd(w)) return w; }
   return weeks[weeks.length-1];
 }
-
-function isDeadlinePassed(week) {
-  const dl = DEADLINES[week];
-  if (!dl) return false;
-  const d = new Date(dl); d.setHours(23,59,59,999);
-  return new Date() > d;
+function clientNextWeek() {
+  const cw=clientCurrentWeek();
+  return cw<32?cw+1:null;
+}
+function fmtDate(dl) { return new Date(dl).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}); }
+function weekLabel(w) {
+  const cw=clientCurrentWeek(), nw=clientNextWeek();
+  if (w===cw) return 'CURRENT';
+  if (w===nw) return 'NEXT';
+  return null;
 }
 
-function fmtDeadline(week) {
-  const dl = DEADLINES[week];
-  if (!dl) return '—';
-  return new Date(dl).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-}
-
-// ═══ STATE ═══════════════════════════════════
-let state = {
-  standings:[], currentWeek:0, pot:0, deadlines:DEADLINES,
-  currentDeadlinePassed:false, playerNames:[], user:null, adminPin:null,
-  myUsedPicks:[], myCurrentWeekPick:null,
-};
+// ─────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────
+let state={standings:[],currentWeek:0,pot:0,currentDeadlinePassed:false,playerNames:[],user:null,adminPin:null,myUsedPicks:[],myCurrentWeekPick:null};
 let weekCache={}, viewWeek=null;
-let mlbRoster=[], waiverData=[], waiverSort=7;
-let queueDraft=[]; // local queue state before saving
+let mlbRoster=[], waiverCache={}, waiverSort=7;
+let queueDraft=[];
+let acIndex=-1, queueAcIndex=-1;
+let statsCache={};
+// Per-reminder: custom overrides + chosen week
+let remState={1:{week:0,custom:null},2:{week:0,custom:null},3:{week:0,custom:null},4:{week:0,custom:null}};
 
-// ═══ API ═════════════════════════════════════
-async function api(action, params={}, btn=null) {
-  if (btn){btn.disabled=true;btn.classList.add('btn-loading');}
-  try {
+// ─────────────────────────────────────────────────────
+// API
+// ─────────────────────────────────────────────────────
+async function api(action,params={},btn=null){
+  if(btn){btn.disabled=true;btn.classList.add('btn-loading');}
+  try{
     const qs=new URLSearchParams({action,...params}).toString();
     const r=await fetch(`${API}?${qs}`);
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    const data=await r.json();
-    if (!data.ok) throw new Error(data.error||'Server error');
-    return data;
-  } finally {
-    if (btn){btn.disabled=false;btn.classList.remove('btn-loading');}
-  }
+    if(!r.ok)throw new Error(`HTTP ${r.status}`);
+    const d=await r.json();
+    if(!d.ok)throw new Error(d.error||'Server error');
+    return d;
+  }finally{if(btn){btn.disabled=false;btn.classList.remove('btn-loading');}}
 }
 
-// ═══ TABS ════════════════════════════════════
-function showTab(name, btn) {
+// ─────────────────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────────────────
+function showTab(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (name==='week')    {viewWeek=viewWeek||state.currentWeek||1; renderWeekPicks();}
-  if (name==='history' && state.user) loadHistory();
-  if (name==='remind')  buildReminders();
-  if (name==='pick' && state.user) { loadWaiverData(); loadQueueFromServer(); }
+  if(btn)btn.classList.add('active');
+  if(name==='week'){viewWeek=viewWeek||state.currentWeek||1;renderWeekPicks();}
+  if(name==='history'&&state.user)loadHistory();
+  if(name==='remind')initReminders();
+  if(name==='pick'&&state.user){loadWaiverData(waiverSort);loadQueueFromServer();}
 }
 
-// ═══ BOOT ════════════════════════════════════
-async function boot() {
+// ─────────────────────────────────────────────────────
+// BOOT
+// ─────────────────────────────────────────────────────
+async function boot(){
   const saved=sessionStorage.getItem('hrr_user');
-  if (saved){try{state.user=JSON.parse(saved);showLoggedIn();}catch(e){}}
+  if(saved){try{state.user=JSON.parse(saved);showLoggedIn();}catch(e){}}
   loadMlbRoster();
-  try {
+  try{
     const data=await api('getStandings');
     state.standings=data.standings; state.currentWeek=data.currentWeek;
     state.pot=data.pot; state.currentDeadlinePassed=data.currentDeadlinePassed||false;
@@ -602,427 +631,512 @@ async function boot() {
     document.getElementById('pot-display').textContent=`💰 POT: $${data.pot}`;
     updateWeekBadge(data.currentWeek);
     renderStandings();
-    populateWeekSelects(); populateNameSelects();
-
-    // Load own pick info after login
-    if (state.user) fetchMyPicks();
-  } catch(e) {
-    document.getElementById('standings-body').innerHTML=
-      `<div style="padding:24px;color:#ff9090;text-align:center;line-height:1.7">⚠️ Could not reach server.<br><small>${e.message}</small></div>`;
+    populateWeekSelects();
+    populateNameSelects();
+    if(state.user)fetchMyPicks();
+  }catch(e){
+    document.getElementById('standings-body').innerHTML=`<div style="padding:24px;color:#ff9090;text-align:center;line-height:1.7">⚠️ Could not reach server.<br><small>${e.message}</small></div>`;
   }
 }
 
-function updateWeekBadge(w) {
+function updateWeekBadge(w){
   const dl=DEADLINES[w];
   let label=`Week <em>${w}</em>`;
-  if (dl) label+=` · due ${new Date(dl).toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+  if(dl)label+=` · due ${new Date(dl).toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
   document.getElementById('header-week-badge').innerHTML=label;
-  const prev=DEADLINES[w-1], el=document.getElementById('standings-footer');
-  if (el&&prev&&dl) {
-    const fmt=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    el.textContent=`Week ${w} · ${fmt(prev)} → ${fmt(dl)}`;
-  }
+  const prev=DEADLINES[w-1],el=document.getElementById('standings-footer');
+  if(el&&prev&&dl){const fmt=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});el.textContent=`Week ${w} · ${fmt(prev)} → ${fmt(dl)}`;}
 }
 
-// ═══ MLB ROSTER ══════════════════════════════
-async function loadMlbRoster() {
-  try {
-    const season=new Date().getFullYear();
-    const r=await fetch(`https://statsapi.mlb.com/api/v1/sports/1/players?season=${season}&fields=people,fullName,primaryPosition,currentTeam,active`);
-    if (!r.ok) throw new Error('');
+// ─────────────────────────────────────────────────────
+// MLB ROSTER
+// ─────────────────────────────────────────────────────
+async function loadMlbRoster(){
+  try{
+    const season=2026;
+    const r=await fetch(`https://statsapi.mlb.com/api/v1/sports/1/players?season=${season}&fields=people,fullName,active`);
+    if(!r.ok)throw new Error('');
     const data=await r.json();
     mlbRoster=(data.people||[]).filter(p=>p.active!==false).map(p=>p.fullName).filter(Boolean).sort();
     document.getElementById('player-label-hint').textContent=`(${mlbRoster.length} players)`;
-  } catch(e) {
-    document.getElementById('player-label-hint').textContent='(type any name)';
+  }catch(e){
+    // Fallback: try previous season
+    try{
+      const r=await fetch(`https://statsapi.mlb.com/api/v1/sports/1/players?season=2025&fields=people,fullName,active`);
+      if(!r.ok)throw new Error('');
+      const data=await r.json();
+      mlbRoster=(data.people||[]).filter(p=>p.active!==false).map(p=>p.fullName).filter(Boolean).sort();
+      document.getElementById('player-label-hint').textContent=`(${mlbRoster.length} players — 2025 roster)`;
+    }catch(e2){
+      document.getElementById('player-label-hint').textContent='(type any name)';
+    }
   }
 }
 
-// ═══ WAIVER / HR LEADERS ═════════════════════
-let waiverCache={};
-async function loadWaiverData(days=7) {
+// ─────────────────────────────────────────────────────
+// HR STATS — robust handling for pre-season / no data
+// ─────────────────────────────────────────────────────
+const MLB_SEASON_START = '2026-03-25'; // Opening Day
+
+function isPreseason() {
+  return new Date() < new Date(MLB_SEASON_START);
+}
+
+async function fetchHrStats(startDate, endDate, limit=25) {
+  const fmt = d => d.toISOString().split('T')[0];
+  // For season-wide stats use different endpoint
+  const isSeasonWide = !startDate;
+  const season = new Date().getFullYear();
+
+  let url;
+  if (isSeasonWide) {
+    url = `https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&limit=${limit}&sortStat=homeRuns&fields=stats,splits,stat,homeRuns,player,fullName,team,teamName`;
+  } else {
+    url = `https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(startDate)}&endDate=${fmt(endDate)}&limit=${limit}&sortStat=homeRuns&fields=stats,splits,stat,homeRuns,player,fullName,team,teamName`;
+  }
+
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`MLB API returned ${r.status}`);
+  const json = await r.json();
+  const splits = json.stats?.[0]?.splits || [];
+  return splits.filter(s => s.stat.homeRuns > 0);
+}
+
+// ─────────────────────────────────────────────────────
+// WAIVER TABLE
+// ─────────────────────────────────────────────────────
+async function loadWaiverData(days=7){
   waiverSort=days;
-  const cacheKey=days;
-  if (waiverCache[cacheKey]) { renderWaiverTable(waiverCache[cacheKey]); return; }
-
+  if(waiverCache[days]){renderWaiverTable(waiverCache[days],days);return;}
   document.getElementById('waiver-table-wrap').innerHTML='<div class="waiver-loading"><div class="spinner"></div></div>';
-  try {
-    const season=new Date().getFullYear();
-    const endDate=new Date(); const startDate=new Date();
-    if (days>0) startDate.setDate(endDate.getDate()-days);
-    else startDate=new Date(`${season}-03-01`);
-    const fmt=d=>d.toISOString().split('T')[0];
 
-    const url = days>0
-      ? `https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(startDate)}&endDate=${fmt(endDate)}&limit=30&sortStat=homeRuns&fields=stats,splits,stat,homeRuns,player,fullName,currentTeam,teamName`
-      : `https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&limit=30&sortStat=homeRuns&fields=stats,splits,stat,homeRuns,player,fullName,currentTeam,teamName`;
+  if(isPreseason()){
+    // Pre-season: show 2025 season leaders as reference
+    try{
+      const url=`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&limit=25&sortStat=homeRuns&fields=stats,splits,stat,homeRuns,player,fullName,team,teamName`;
+      const r=await fetch(url); if(!r.ok)throw new Error('');
+      const json=await r.json();
+      const splits=(json.stats?.[0]?.splits||[]).filter(s=>s.stat.homeRuns>0);
+      const rows=splits.map(s=>({name:s.player.fullName,team:s.team?.name||'—',hrs:s.stat.homeRuns})).sort((a,b)=>b.hrs-a.hrs).slice(0,20);
+      waiverCache[days]=rows;
+      renderWaiverTable(rows,days,true);
+    }catch(e){
+      document.getElementById('waiver-table-wrap').innerHTML=`<div class="waiver-error">⚾ Pre-season: HR data not yet available for 2026.<br>Stats will load once the season begins (${fmtDate(MLB_SEASON_START)}).</div>`;
+    }
+    return;
+  }
 
-    const r=await fetch(url); if (!r.ok) throw new Error('MLB API');
-    const json=await r.json();
-    const splits=(json.stats?.[0]?.splits||[]).filter(s=>s.stat.homeRuns>0);
-    const rows=splits.map(s=>({
-      name: s.player.fullName,
-      team: s.team?.name||s.player?.currentTeam?.name||'—',
-      hrs:  s.stat.homeRuns,
-    })).sort((a,b)=>b.hrs-a.hrs).slice(0,20);
+  try{
+    const now=new Date();
+    let splits;
+    if(days===0){
+      splits=await fetchHrStats(null,null,25);
+    }else{
+      const start=new Date(); start.setDate(now.getDate()-days);
+      splits=await fetchHrStats(start,now,25);
+    }
 
-    waiverCache[cacheKey]=rows;
-    renderWaiverTable(rows);
-  } catch(e) {
-    document.getElementById('waiver-table-wrap').innerHTML=`<div class="waiver-loading" style="color:#ff9090">⚠️ Could not load HR data — MLB API may be unavailable</div>`;
+    if(!splits.length){
+      // No HRs in range yet — cascade to season
+      const seasonSplits=await fetchHrStats(null,null,25);
+      if(!seasonSplits.length){
+        document.getElementById('waiver-table-wrap').innerHTML=`<div class="waiver-error">No home run data available yet for the selected period.<br><small>Try a longer date range or check back after games are played.</small></div>`;
+        return;
+      }
+      const rows=seasonSplits.map(s=>({name:s.player.fullName,team:s.team?.name||'—',hrs:s.stat.homeRuns})).sort((a,b)=>b.hrs-a.hrs).slice(0,20);
+      waiverCache[days]=rows;
+      renderWaiverTable(rows,days,false,true); // showSeasonNote
+      return;
+    }
+
+    const rows=splits.map(s=>({name:s.player.fullName,team:s.team?.name||'—',hrs:s.stat.homeRuns})).sort((a,b)=>b.hrs-a.hrs).slice(0,20);
+    waiverCache[days]=rows;
+    renderWaiverTable(rows,days);
+  }catch(e){
+    document.getElementById('waiver-table-wrap').innerHTML=`<div class="waiver-error">⚠️ Could not load HR data from MLB API.<br><small style="opacity:.7">${e.message}</small><br><small>This usually means no games have been played in this date range yet, or the API is temporarily unavailable.</small></div>`;
   }
 }
 
-function sortWaiver(days, btn) {
+function sortWaiver(days,btn){
   document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   loadWaiverData(days);
 }
 
-function renderWaiverTable(rows) {
+function renderWaiverTable(rows,days,isPreseason2025=false,isSeasonFallback=false){
   const used=new Set(state.myUsedPicks.map(p=>p?.toLowerCase().trim()));
-  const label=['Last 7 days','Last 7 days','Last 15 days','Last 30 days','Season'][waiverSort>0?Math.ceil(waiverSort/8):4]||'';
+  const daysLabel=days===0?'Season':`Last ${days}d`;
+  let note='';
+  if(isPreseason2025)note=`<div class="season-note">📊 Showing 2026 spring reference data. Current 2026 stats will appear once the season starts.</div>`;
+  else if(isSeasonFallback)note=`<div class="season-note">📊 No HRs in selected window — showing season totals instead.</div>`;
+
   const header=`<table class="waiver-table"><thead><tr>
     <th>#</th><th>PLAYER</th><th>TEAM</th>
-    <th class="sorted" title="Home Runs">HR (${waiverSort>0?`L${waiverSort}`:'YTD'})</th>
+    <th class="sorted">HR (${daysLabel})</th>
   </tr></thead><tbody>`;
   const bodyRows=rows.map((r,i)=>{
     const isUsed=used.has(r.name?.toLowerCase().trim());
     const usedTag=isUsed?`<span class="used-tag">USED</span>`:'';
     return `<tr class="${isUsed?'wv-used':''}">
       <td style="color:var(--muted);font-size:12px">${i+1}</td>
-      <td><span class="waiver-name" onclick="selectWaiverPlayer('${r.name.replace(/'/g,"\\'")}')">${r.name}${usedTag}</span></td>
+      <td><span class="waiver-name" onclick="selectWaiverPlayer('${r.name.replace(/'/g,"\\'")}' )">${r.name}${usedTag}</span></td>
       <td><span class="waiver-team">${r.team}</span></td>
       <td class="wv-hr ${r.hrs>=3?'hot':''}">${r.hrs}</td>
     </tr>`;
   }).join('');
-  document.getElementById('waiver-table-wrap').innerHTML=header+bodyRows+'</tbody></table>';
+  document.getElementById('waiver-table-wrap').innerHTML=header+bodyRows+'</tbody></table>'+note;
 }
 
-function selectWaiverPlayer(name) {
+function selectWaiverPlayer(name){
   document.getElementById('pick-player-input').value=name;
   document.getElementById('ac-list').innerHTML='';
   loadPlayerStats(name);
   checkDuplicate(name);
 }
 
-// ═══ PLAYER STATS CARD ═══════════════════════
-let statsCache={};
-async function loadPlayerStats(playerName) {
+// ─────────────────────────────────────────────────────
+// PLAYER STATS CARD
+// ─────────────────────────────────────────────────────
+async function loadPlayerStats(playerName){
   const wrap=document.getElementById('stats-card-wrap');
   wrap.style.display='block';
   wrap.innerHTML='<div class="stats-loading">Loading stats for '+playerName+'…</div>';
 
-  if (statsCache[playerName]) { renderStatsCard(statsCache[playerName],playerName); return; }
+  if(statsCache[playerName]){renderStatsCard(statsCache[playerName],playerName);return;}
 
-  try {
-    const season=new Date().getFullYear();
-    const now=new Date(), fmt=d=>d.toISOString().split('T')[0];
-    const d7=new Date(); d7.setDate(now.getDate()-7);
-    const d15=new Date(); d15.setDate(now.getDate()-15);
-    const d30=new Date(); d30.setDate(now.getDate()-30);
-    const seasonStart=`${season}-03-01`;
+  if(isPreseason()){
+    // Use 2025 season stats as reference
+    try{
+      const url=`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&playerPool=all&fields=stats,splits,stat,homeRuns,atBats,player,fullName`;
+      const r=await fetch(url); if(!r.ok)throw new Error('');
+      const json=await r.json();
+      const splits=json.stats?.[0]?.splits||[];
+      const m=splits.find(s=>s.player?.fullName?.toLowerCase()===playerName.toLowerCase());
+      const stats={yr:m?m.stat.homeRuns:0,d30:0,d15:0,d7:0,preseason:true,ref2025:true};
+      statsCache[playerName]=stats;
+      renderStatsCard(stats,playerName);
+    }catch(e){
+      wrap.innerHTML=`<div class="stats-card"><p class="stats-preseason">⚾ Pre-season: stats not yet available for 2026.<br>Showing will appear once games begin.</p></div>`;
+    }
+    return;
+  }
 
-    // Fetch season + 3 rolling windows in parallel
-    const [yr,r30,r15,r7] = await Promise.all([
-      fetch(`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&playerPool=all&fields=stats,splits,stat,homeRuns,player,fullName`).then(r=>r.json()).catch(()=>({})),
+  try{
+    const now=new Date(),fmt=d=>d.toISOString().split('T')[0];
+    const d7=new Date();d7.setDate(now.getDate()-7);
+    const d15=new Date();d15.setDate(now.getDate()-15);
+    const d30=new Date();d30.setDate(now.getDate()-30);
+
+    const [yr,r30,r15,r7]=await Promise.all([
+      fetch(`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2026&playerPool=all&fields=stats,splits,stat,homeRuns,player,fullName`).then(r=>r.json()).catch(()=>({})),
       fetch(`https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(d30)}&endDate=${fmt(now)}&fields=stats,splits,stat,homeRuns,player,fullName`).then(r=>r.json()).catch(()=>({})),
       fetch(`https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(d15)}&endDate=${fmt(now)}&fields=stats,splits,stat,homeRuns,player,fullName`).then(r=>r.json()).catch(()=>({})),
       fetch(`https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(d7)}&endDate=${fmt(now)}&fields=stats,splits,stat,homeRuns,player,fullName`).then(r=>r.json()).catch(()=>({})),
     ]);
 
-    function findHR(json, name) {
+    function findHR(json,name){
       const splits=json.stats?.[0]?.splits||[];
       const m=splits.find(s=>s.player?.fullName?.toLowerCase()===name.toLowerCase());
-      return m ? m.stat.homeRuns : 0;
+      return m?m.stat.homeRuns:0;
     }
-
-    const stats={ yr:findHR(yr,playerName), d30:findHR(r30,playerName), d15:findHR(r15,playerName), d7:findHR(r7,playerName) };
+    const stats={yr:findHR(yr,playerName),d30:findHR(r30,playerName),d15:findHR(r15,playerName),d7:findHR(r7,playerName)};
     statsCache[playerName]=stats;
     renderStatsCard(stats,playerName);
-  } catch(e) {
-    wrap.innerHTML=`<div class="stats-loading" style="color:#ff9090">Could not load stats</div>`;
+  }catch(e){
+    wrap.innerHTML=`<div class="stats-loading" style="color:#ff9090">Could not load stats — MLB API may be unavailable</div>`;
   }
 }
 
-function renderStatsCard(stats, name) {
+function renderStatsCard(stats,name){
   const wrap=document.getElementById('stats-card-wrap');
   wrap.style.display='block';
+  const preseasonNote=stats.ref2025?`<div class="stats-preseason">⚾ Pre-season: showing 2025 season HRs as reference. 2026 stats begin ${fmtDate(MLB_SEASON_START)}.</div>`:'';
   wrap.innerHTML=`<div class="stats-card">
-    <div class="stats-card-header">
-      <div><div class="stats-player-name">⚾ ${name}</div></div>
-      <div style="font-size:11px;color:var(--muted)">2026 HR Stats</div>
-    </div>
+    <div class="stats-card-header"><div class="stats-player-name">⚾ ${name}</div><div style="font-size:11px;color:var(--muted)">${stats.ref2025?'2025 Ref':'2026 HR Stats'}</div></div>
     <div class="stats-grid">
       <div class="stat-box"><div class="stat-num">${stats.d7}</div><div class="stat-lbl">Last 7d</div></div>
       <div class="stat-box"><div class="stat-num">${stats.d15}</div><div class="stat-lbl">Last 15d</div></div>
       <div class="stat-box"><div class="stat-num">${stats.d30}</div><div class="stat-lbl">Last 30d</div></div>
-      <div class="stat-box" style="border-color:rgba(240,180,41,0.3)"><div class="stat-num" style="color:var(--gold)">${stats.yr}</div><div class="stat-lbl">Season</div></div>
-    </div>
-  </div>`;
+      <div class="stat-box" style="border-color:rgba(240,180,41,0.3)"><div class="stat-num" style="color:var(--gold)">${stats.yr}</div><div class="stat-lbl">${stats.ref2025?'2025 YTD':'Season'}</div></div>
+    </div>${preseasonNote}</div>`;
 }
 
-// ═══ AUTOCOMPLETE ════════════════════════════
-let acIndex=-1, queueAcIndex=-1;
+// Queue item stats (mini version shown inline)
+async function loadQueueItemStats(playerName){
+  if(statsCache[playerName]){return statsCache[playerName];}
+  if(isPreseason()){
+    try{
+      const url=`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&playerPool=all&fields=stats,splits,stat,homeRuns,player,fullName`;
+      const r=await fetch(url); if(!r.ok)throw new Error('');
+      const json=await r.json();
+      const splits=json.stats?.[0]?.splits||[];
+      const m=splits.find(s=>s.player?.fullName?.toLowerCase()===playerName.toLowerCase());
+      const stats={yr:m?m.stat.homeRuns:0,d30:0,d15:0,d7:0,ref2025:true};
+      statsCache[playerName]=stats;
+      return stats;
+    }catch(e){return null;}
+  }
+  // During season: just get season total (quick single call)
+  try{
+    const season=new Date().getFullYear();
+    const url=`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&playerPool=all&fields=stats,splits,stat,homeRuns,player,fullName`;
+    const r=await fetch(url); if(!r.ok)throw new Error('');
+    const json=await r.json();
+    const splits=json.stats?.[0]?.splits||[];
+    const m=splits.find(s=>s.player?.fullName?.toLowerCase()===playerName.toLowerCase());
+    const stats={yr:m?m.stat.homeRuns:0,d30:0,d15:0,d7:0};
+    statsCache[playerName]=stats;
+    return stats;
+  }catch(e){return null;}
+}
 
-function buildAcList(val, listId, onSelect) {
+// ─────────────────────────────────────────────────────
+// AUTOCOMPLETE — shared helper
+// ─────────────────────────────────────────────────────
+function buildAcList(val,listId,selectFn){
   const list=document.getElementById(listId);
-  acIndex=-1;
-  if (val.length<2||!mlbRoster.length){list.innerHTML='';return;}
+  if(val.length<2||!mlbRoster.length){list.innerHTML='';return;}
   const lower=val.toLowerCase();
   const matches=mlbRoster.filter(n=>n.toLowerCase().includes(lower)).slice(0,8);
-  if (!matches.length){list.innerHTML='';return;}
+  if(!matches.length){list.innerHTML='';return;}
   list.innerHTML=matches.map(name=>{
     const idx=name.toLowerCase().indexOf(lower);
     const hi=name.slice(0,idx)+'<mark>'+name.slice(idx,idx+val.length)+'</mark>'+name.slice(idx+val.length);
-    const hrs=statsCache[name]?`<span class="ac-hr">${statsCache[name].d7} HR/7d</span>`:'';
-    return `<div class="ac-item" data-name="${name}" onmousedown="(${onSelect.toString()})('${name.replace(/'/g,"\\'")}',event)"><span class="ac-name">${hi}</span>${hrs}</div>`;
+    const cached=statsCache[name];
+    const hrHint=cached?`<span class="ac-hr">${cached.yr} HR${cached.ref2025?' (\'25)':''}</span>`:'';
+    return `<div class="ac-item" data-name="${name}" onmousedown="${selectFn}('${name.replace(/'/g,"\\'")}',event)"><span class="ac-name">${hi}</span>${hrHint}</div>`;
   }).join('');
 }
 
-function onPlayerInput() {
+// Pick field
+function onPlayerInput(){
   const val=document.getElementById('pick-player-input').value.trim();
   buildAcList(val,'ac-list','selectAcItem');
-  if (!val) {document.getElementById('stats-card-wrap').style.display='none'; document.getElementById('dupe-warning').style.display='none';}
+  if(!val){document.getElementById('stats-card-wrap').style.display='none';document.getElementById('dupe-warning').style.display='none';}
 }
-
-function selectAcItem(name, e) {
-  if (e) e.preventDefault();
+function selectAcItem(name,e){
+  if(e)e.preventDefault();
   document.getElementById('pick-player-input').value=name;
   document.getElementById('ac-list').innerHTML='';
   loadPlayerStats(name);
   checkDuplicate(name);
 }
-
-function onPlayerKeydown(e) {
-  const list=document.getElementById('ac-list');
-  const items=list.querySelectorAll('.ac-item');
-  if (e.key==='ArrowDown'){e.preventDefault();acIndex=Math.min(acIndex+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('ac-active',i===acIndex));}
-  else if (e.key==='ArrowUp'){e.preventDefault();acIndex=Math.max(acIndex-1,-1);items.forEach((el,i)=>el.classList.toggle('ac-active',i===acIndex));}
-  else if (e.key==='Enter'&&acIndex>=0){e.preventDefault();selectAcItem(items[acIndex].dataset.name,null);}
-  else if (e.key==='Escape'){list.innerHTML='';acIndex=-1;}
-  else if (e.key==='Enter'&&acIndex<0){doSavePick();}
+function onPlayerKeydown(e){
+  const list=document.getElementById('ac-list'),items=list.querySelectorAll('.ac-item');
+  if(e.key==='ArrowDown'){e.preventDefault();acIndex=Math.min(acIndex+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('ac-active',i===acIndex));}
+  else if(e.key==='ArrowUp'){e.preventDefault();acIndex=Math.max(acIndex-1,-1);items.forEach((el,i)=>el.classList.toggle('ac-active',i===acIndex));}
+  else if(e.key==='Enter'&&acIndex>=0){e.preventDefault();selectAcItem(items[acIndex].dataset.name,null);}
+  else if(e.key==='Escape'){list.innerHTML='';acIndex=-1;}
+  else if(e.key==='Enter'&&acIndex<0)doSavePick();
 }
 
-// Queue autocomplete
-function onQueueInput() {
+// Queue field  ← FIX: now uses same buildAcList with its own selectFn
+function onQueueInput(){
   const val=document.getElementById('queue-add-input').value.trim();
   buildAcList(val,'queue-ac-list','selectQueueAc');
 }
-function selectQueueAc(name,e) {
-  if (e) e.preventDefault();
+function selectQueueAc(name,e){
+  if(e)e.preventDefault();
   document.getElementById('queue-add-input').value=name;
   document.getElementById('queue-ac-list').innerHTML='';
 }
-
-document.addEventListener('click',e=>{
-  if (!e.target.closest('#player-fg')) {document.getElementById('ac-list').innerHTML='';acIndex=-1;}
-  if (!e.target.closest('.queue-add-row')&&!e.target.closest('#queue-ac-list')) document.getElementById('queue-ac-list').innerHTML='';
-});
-
-// ═══ DUPE CHECK ══════════════════════════════
-function checkDuplicate(playerName) {
-  const dupeEl=document.getElementById('dupe-warning');
-  const used=state.myUsedPicks;
-  const dupe=used.find(u=>u?.player?.toLowerCase().trim()===playerName?.toLowerCase().trim());
-  if (dupe) {
-    dupeEl.style.display='block';
-    dupeEl.textContent=`⚠️ You already picked ${dupe.player} in Week ${dupe.week} this season!`;
-  } else {
-    dupeEl.style.display='none';
-  }
+function onQueueKeydown(e){
+  const list=document.getElementById('queue-ac-list'),items=list.querySelectorAll('.ac-item');
+  if(e.key==='ArrowDown'){e.preventDefault();queueAcIndex=Math.min(queueAcIndex+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('ac-active',i===queueAcIndex));}
+  else if(e.key==='ArrowUp'){e.preventDefault();queueAcIndex=Math.max(queueAcIndex-1,-1);items.forEach((el,i)=>el.classList.toggle('ac-active',i===queueAcIndex));}
+  else if(e.key==='Enter'&&queueAcIndex>=0){e.preventDefault();selectQueueAc(items[queueAcIndex].dataset.name,null);}
+  else if(e.key==='Escape'){list.innerHTML='';queueAcIndex=-1;}
+  else if(e.key==='Enter'&&queueAcIndex<0)addToQueue();
 }
 
-// ═══ SELECTS ═════════════════════════════════
-function populateWeekSelects() {
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#player-fg')){document.getElementById('ac-list').innerHTML='';acIndex=-1;}
+  if(!e.target.closest('.queue-add-row')&&!e.target.closest('#queue-ac-list')){document.getElementById('queue-ac-list').innerHTML='';queueAcIndex=-1;}
+});
+
+// ─────────────────────────────────────────────────────
+// DUPE CHECK
+// ─────────────────────────────────────────────────────
+function checkDuplicate(playerName){
+  const dupeEl=document.getElementById('dupe-warning');
+  const week=+document.getElementById('pick-week-sel').value;
+  const dupe=state.myUsedPicks.find(u=>u?.player?.toLowerCase().trim()===playerName?.toLowerCase().trim()&&u.week!==week);
+  if(dupe){dupeEl.style.display='block';dupeEl.textContent=`⚠️ You already picked ${dupe.player} in Week ${dupe.week} this season!`;}
+  else{dupeEl.style.display='none';}
+}
+
+// ─────────────────────────────────────────────────────
+// SELECTS
+// ─────────────────────────────────────────────────────
+function populateWeekSelects(){
   const cw=state.currentWeek;
   ['pick-week-sel','score-week-sel','ov-week-sel','os-week-sel','erase-week-sel'].forEach(id=>{
-    const el=document.getElementById(id); if (!el) return;
+    const el=document.getElementById(id);if(!el)return;
     el.innerHTML='';
-    for (let w=1;w<=32;w++) {
-      const o=document.createElement('option');
-      o.value=w;
-      const passed=isDeadlinePassed(w);
-      o.textContent=`Week ${w}${w===cw?' ← current':''}${passed&&w<=cw?' ✓':''}`;
-      if (w===cw) o.selected=true;
+    for(let w=1;w<=32;w++){
+      const o=document.createElement('option');o.value=w;
+      const lbl=weekLabel(w);
+      o.textContent=`Week ${w}${lbl?' — '+lbl:''}`;
+      if(w===cw)o.selected=true;
       el.appendChild(o);
     }
   });
   const lnSel=document.getElementById('login-name');
   lnSel.innerHTML='<option value="">— select name —</option>';
   state.playerNames.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;lnSel.appendChild(o);});
+
+  // Reminder week selects — default rem1/rem3/rem4 to NEXT, rem2 to CURRENT
+  ['rem1-week','rem2-week','rem3-week','rem4-week'].forEach((id,idx)=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.innerHTML='';
+    for(let w=1;w<=32;w++){
+      const o=document.createElement('option');o.value=w;
+      const lbl=weekLabel(w);
+      o.textContent=`Wk ${w}${lbl?' ('+lbl+')':''}`;
+      el.appendChild(o);
+    }
+    // Default: rem2=current (standings after current), others=next
+    const defaultWeek=idx===1?cw:(clientNextWeek()||cw);
+    el.value=defaultWeek;
+    remState[idx+1].week=defaultWeek;
+  });
 }
 
-function populateNameSelects() {
+function populateNameSelects(){
   ['ov-name-sel','os-name-sel','rp-sel'].forEach(id=>{
-    const el=document.getElementById(id); if (!el) return;
+    const el=document.getElementById(id);if(!el)return;
     el.innerHTML='';
     state.playerNames.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;el.appendChild(o);});
   });
   const histSel=document.getElementById('hist-player-sel');
-  if (histSel) {
+  if(histSel){
     histSel.innerHTML='';
-    state.playerNames.forEach(n=>{
-      const o=document.createElement('option');o.value=n;o.textContent=n;
-      if (state.user&&n===state.user.name) o.selected=true;
-      histSel.appendChild(o);
-    });
+    state.playerNames.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;if(state.user&&n===state.user.name)o.selected=true;histSel.appendChild(o);});
   }
 }
 
-// ═══ STANDINGS ═══════════════════════════════
-function renderStandings() {
+// ─────────────────────────────────────────────────────
+// STANDINGS
+// ─────────────────────────────────────────────────────
+function renderStandings(){
   const body=document.getElementById('standings-body');
   body.innerHTML='';
-  const passed=state.currentDeadlinePassed;
-  const myName=state.user?.name?.toLowerCase();
-
+  const passed=state.currentDeadlinePassed,myName=state.user?.name?.toLowerCase();
   state.standings.forEach((p,i)=>{
-    const rank=i+1;
-    const rkCls=rank===1?'rk1':rank===2?'rk2':rank===3?'rk3':'';
+    const rank=i+1,rkCls=rank===1?'rk1':rank===2?'rk2':rank===3?'rk3':'';
     const rkIcon=rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
     const pct=p.played?Math.round(p.winPct*100)+'%':'—';
-    const isMe=myName&&p.name.toLowerCase()===myName;
-    const sc=p.thisWeekScored;
-
-    // Pick display with deadline gating
-    let pickHtml, pickClass='s-pick';
-    if (sc===1){pickHtml=`⚡ ${p.thisWeekPick||'?'}`;}
-    else if (sc===0){pickHtml=`💸 ${p.thisWeekPick||'?'}`;}
-    else if (!p.hasPickedThisWeek){pickHtml='— not picked';pickClass+=' pick-hidden';}
-    else if (isMe&&!passed){
-      const ownPick=state.myCurrentWeekPick;
-      if (ownPick){pickHtml=`🔒 ${ownPick}`;pickClass+=' pick-own';}
-      else{pickHtml='✓ Picked';pickClass+=' pick-own';}
-    } else if (passed){pickHtml=p.thisWeekPick||'—';}
-    else {pickHtml='✓ Picked';pickClass+=' pick-hidden';}
-
-    // Streak badge
+    const isMe=myName&&p.name.toLowerCase()===myName,sc=p.thisWeekScored;
+    let pickHtml,pickClass='s-pick';
+    if(sc===1)pickHtml=`⚡ ${p.thisWeekPick||'?'}`;
+    else if(sc===0)pickHtml=`💸 ${p.thisWeekPick||'?'}`;
+    else if(!p.hasPickedThisWeek){pickHtml='— not picked';pickClass+=' pick-hidden';}
+    else if(isMe&&!passed){const own=state.myCurrentWeekPick;pickHtml=own?`🔒 ${own}`:' ✓ Picked';pickClass+=' pick-own';}
+    else if(passed)pickHtml=p.thisWeekPick||'—';
+    else{pickHtml='✓ Picked';pickClass+=' pick-hidden';}
     let streakHtml='<span class="streak-none">—</span>';
-    if (p.streak>=2) streakHtml=`<span class="streak-badge streak-hot">🔥 ${p.streak}</span>`;
-    else if (p.streak===1) streakHtml=`<span class="streak-badge streak-hot">✓ 1</span>`;
-    else if (p.loseStreak>=2) streakHtml=`<span class="streak-badge streak-cold">❄️ ${p.loseStreak}</span>`;
-    else if (p.loseStreak===1) streakHtml=`<span class="streak-badge streak-cold">✗ 1</span>`;
-
+    if(p.streak>=2)streakHtml=`<span class="streak-badge streak-hot">🔥 ${p.streak}</span>`;
+    else if(p.streak===1)streakHtml=`<span class="streak-badge streak-hot">✓ 1</span>`;
+    else if(p.loseStreak>=2)streakHtml=`<span class="streak-badge streak-cold">❄️ ${p.loseStreak}</span>`;
+    else if(p.loseStreak===1)streakHtml=`<span class="streak-badge streak-cold">✗ 1</span>`;
     const row=document.createElement('div');
     row.className='s-row'+(rank===1?' s-leader':'');
-    row.innerHTML=`
-      <div class="s-rank ${rkCls}">${rkIcon}</div>
-      <div><div class="s-name">${p.name}</div><div class="${pickClass}">Wk ${state.currentWeek}: ${pickHtml}</div></div>
-      <div class="s-pts">${p.pts}</div>
-      <div class="s-owes">$${p.owes}</div>
-      <div class="s-pct">${pct}</div>
-      <div class="s-streak">${streakHtml}</div>`;
+    row.innerHTML=`<div class="s-rank ${rkCls}">${rkIcon}</div><div><div class="s-name">${p.name}</div><div class="${pickClass}">Wk ${state.currentWeek}: ${pickHtml}</div></div><div class="s-pts">${p.pts}</div><div class="s-owes">$${p.owes}</div><div class="s-pct">${pct}</div><div class="s-streak">${streakHtml}</div>`;
     body.appendChild(row);
   });
 }
 
-// ═══ WEEK PICKS ══════════════════════════════
-async function renderWeekPicks() {
+// ─────────────────────────────────────────────────────
+// WEEK PICKS — with CURRENT/NEXT tags
+// ─────────────────────────────────────────────────────
+async function renderWeekPicks(){
   const w=viewWeek||state.currentWeek||1;
   document.getElementById('wk-label').textContent=`Week ${w}`;
-  document.getElementById('current-week-tag').style.display=(w===state.currentWeek)?'inline':'none';
+  // Tag: CURRENT, NEXT, or past
+  const tagEl=document.getElementById('wk-status-tag');
+  const lbl=weekLabel(w);
+  if(lbl){
+    tagEl.style.display='inline';
+    tagEl.textContent=lbl;
+    tagEl.className='week-tag '+(lbl==='CURRENT'?'week-tag-current':lbl==='NEXT'?'week-tag-next':'week-tag-past');
+  } else {
+    tagEl.style.display=isDeadlinePassed(w)?'inline':'none';
+    if(isDeadlinePassed(w)){tagEl.textContent='PAST';tagEl.className='week-tag week-tag-past';}
+  }
+
   const grid=document.getElementById('picks-grid');
   grid.innerHTML='<div class="spinner"></div>';
-
-  try {
+  try{
     let data;
-    if (state.user) data=await api('getWeekPicksGated',{week:w,viewerName:state.user.name,viewerPin:state.user.pin});
+    if(state.user)data=await api('getWeekPicksGated',{week:w,viewerName:state.user.name,viewerPin:state.user.pin});
     else data=await api('getWeekPicksGated',{week:w});
     weekCache[w]=data;
 
-    const dlEl=document.getElementById('wk-deadline');
-    const rangeEl=document.getElementById('wk-range');
-    const noteEl=document.getElementById('deadline-note');
+    const dlEl=document.getElementById('wk-deadline'),rangeEl=document.getElementById('wk-range'),noteEl=document.getElementById('deadline-note');
     const dl=DEADLINES[w];
-    if (dl) {
-      const dlDate=new Date(dl); dlDate.setHours(23,59,59,999);
-      const diff=dlDate-new Date(); const days=Math.ceil(diff/86400000);
-      dlEl.textContent=`Deadline: ${new Date(dl).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}`;
+    if(dl){
+      const dlDate=new Date(dl);dlDate.setHours(23,59,59,999);
+      const diff=dlDate-new Date(),days=Math.ceil(diff/86400000);
+      dlEl.textContent=`Deadline: ${fmtDate(dl)}`;
       dlEl.className='week-dl'+(diff>0&&days<=2?' urgent':'');
-      if (diff>0&&days<=2) dlEl.textContent+=` (${days}d left!)`;
-      if (diff<0) dlEl.textContent+=' · Closed';
+      if(diff>0&&days<=2)dlEl.textContent+=` (${days}d left!)`;
+      if(diff<0)dlEl.textContent+=' · Closed';
       const prevDl=DEADLINES[w-1];
-      rangeEl.textContent=prevDl
-        ?`${new Date(prevDl).toLocaleDateString('en-US',{month:'short',day:'numeric'})} → ${new Date(dl).toLocaleDateString('en-US',{month:'short',day:'numeric'})}`:'';
+      rangeEl.textContent=prevDl?`${new Date(prevDl).toLocaleDateString('en-US',{month:'short',day:'numeric'})} → ${new Date(dl).toLocaleDateString('en-US',{month:'short',day:'numeric'})}`:'';
       noteEl.style.display=(!data.deadlinePassed&&diff>0)?'block':'none';
-      noteEl.textContent=state.user
-        ?`🔒 Your pick is visible to you. Others' picks reveal after the deadline.`
-        :`🔒 Sign in to see your own pick before the deadline.`;
-    } else {dlEl.textContent='';rangeEl.textContent='';noteEl.style.display='none';}
+      noteEl.textContent=state.user?`🔒 Your pick is visible to you. Others' picks reveal after the deadline.`:`🔒 Sign in to see your own pick before the deadline.`;
+    }else{dlEl.textContent='';rangeEl.textContent='';noteEl.style.display='none';}
 
     grid.innerHTML='';
-    const pickMap={};
-    data.picks.forEach(p=>{pickMap[p.name]=p;});
+    const pickMap={};data.picks.forEach(p=>{pickMap[p.name]=p;});
     let missers=[];
-
     state.playerNames.forEach(name=>{
-      const entry=pickMap[name];
-      const scored=data.scores[name]??null;
+      const entry=pickMap[name],scored=data.scores[name]??null;
       const isOwn=state.user&&name.toLowerCase()===state.user.name.toLowerCase();
-      const hidden=entry?.player==='__HIDDEN__';
-      const isLate=entry?.isLate;
-
+      const hidden=entry?.player==='__HIDDEN__',isLate=entry?.isLate;
       let cardCls='pc-pending',rCls='res-pending',rTxt='⏳ Pending';
-      if (scored===1){cardCls='pc-homer';rCls='res-homer';rTxt='⚡ HOMER!';}
-      if (scored===0){cardCls='pc-miss'; rCls='res-miss'; rTxt='💸 No homer';missers.push(name);}
-      if (isOwn&&scored===null) cardCls='pc-own';
-
+      if(scored===1){cardCls='pc-homer';rCls='res-homer';rTxt='⚡ HOMER!';}
+      if(scored===0){cardCls='pc-miss';rCls='res-miss';rTxt='💸 No homer';missers.push(name);}
+      if(isOwn&&scored===null)cardCls='pc-own';
       const lateBadge=isLate&&(data.deadlinePassed||isOwn)?`<span class="late-badge">LATE</span>`:'';
-      const playerDisplay=!entry
-        ?`<span class="pc-player hidden">— not picked</span>`
-        :hidden?`<span class="pc-player hidden">✓ Picked</span>`
-        :`<span class="pc-player">${entry.player}</span>`;
-
+      const playerDisplay=!entry?`<span class="pc-player hidden">— not picked</span>`:hidden?`<span class="pc-player hidden">✓ Picked</span>`:`<span class="pc-player">${entry.player}</span>`;
       const card=document.createElement('div');
       card.className=`pick-card ${cardCls}`;
-      card.innerHTML=`
-        <div class="pc-gamer">${name}${isOwn?'<span class="pc-own-badge">YOU</span>':''}${lateBadge}</div>
-        ${playerDisplay}
-        ${!entry?'<div style="font-size:11px;color:var(--muted)">No pick</div>':hidden?'<div style="font-size:11px;color:var(--muted)">🔒 Hidden</div>':''}
-        <div class="pc-result ${rCls}">${scored!==null?rTxt:(entry&&!hidden?'':rTxt)}</div>`;
+      card.innerHTML=`<div class="pc-gamer">${name}${isOwn?'<span class="pc-own-badge">YOU</span>':''}${lateBadge}</div>${playerDisplay}${!entry?'<div style="font-size:11px;color:var(--muted)">No pick</div>':hidden?'<div style="font-size:11px;color:var(--muted)">🔒 Hidden</div>':''}<div class="pc-result ${rCls}">${scored!==null?rTxt:''}</div>`;
       grid.appendChild(card);
     });
-
     const mb=document.getElementById('miss-bar');
-    if (missers.length&&Object.keys(data.scores).length){mb.style.display='block';document.getElementById('miss-names').textContent=missers.join(', ');}
+    if(missers.length&&Object.keys(data.scores).length){mb.style.display='block';document.getElementById('miss-names').textContent=missers.join(', ');}
     else mb.style.display='none';
-  } catch(e) {
-    grid.innerHTML=`<div style="color:#ff9090;grid-column:1/-1;padding:20px">⚠️ ${e.message}</div>`;
-  }
+  }catch(e){grid.innerHTML=`<div style="color:#ff9090;grid-column:1/-1;padding:20px">⚠️ ${e.message}</div>`;}
 }
 
-function changeWeek(dir) {
+function changeWeek(dir){
   viewWeek=Math.max(1,Math.min(32,(viewWeek||state.currentWeek||1)+dir));
   delete weekCache[viewWeek];
   renderWeekPicks();
 }
 
-// ═══ AUTH ════════════════════════════════════
-async function login() {
-  const name=document.getElementById('login-name').value;
-  const pin=document.getElementById('login-pin').value.trim();
-  const err=document.getElementById('login-err');
-  const btn=document.getElementById('login-btn');
+// ─────────────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────────────
+async function login(){
+  const name=document.getElementById('login-name').value,pin=document.getElementById('login-pin').value.trim();
+  const err=document.getElementById('login-err'),btn=document.getElementById('login-btn');
   err.classList.remove('show');
-  if (!name){showAlert(err,'Select your name');return;}
-  if (!pin){showAlert(err,'Enter your PIN');return;}
-  try {
+  if(!name){showAlert(err,'Select your name');return;}
+  if(!pin){showAlert(err,'Enter your PIN');return;}
+  try{
     const data=await api('getPlayerPicks',{name,pin},btn);
-    state.user={name,pin};
-    state.myUsedPicks=data.usedPicks||[];
-    // Find current week pick
+    state.user={name,pin};state.myUsedPicks=data.usedPicks||[];
     const myWkPick=data.picks.find(p=>p.week===state.currentWeek);
     state.myCurrentWeekPick=myWkPick?.player||null;
     sessionStorage.setItem('hrr_user',JSON.stringify(state.user));
-    showLoggedIn();
-    renderStandings();
-  } catch(e) {
-    showAlert(err,e.message.includes('Wrong PIN')?'🔒 Wrong PIN — try again.':e.message);
-  }
+    showLoggedIn();renderStandings();
+  }catch(e){showAlert(err,e.message.includes('Wrong PIN')?'🔒 Wrong PIN — try again.':e.message);}
 }
 
-function showLoggedIn() {
+function showLoggedIn(){
   document.getElementById('auth-banner').style.display='flex';
   document.getElementById('auth-name-label').textContent=state.user.name;
   document.getElementById('pick-login-section').style.display='none';
@@ -1031,13 +1145,13 @@ function showLoggedIn() {
   document.getElementById('hist-content').style.display='block';
   document.getElementById('pick-form-title').textContent=`${state.user.name}'s Pick`;
   const histSel=document.getElementById('hist-player-sel');
-  if (histSel) Array.from(histSel.options).forEach(o=>{o.selected=o.value===state.user.name;});
+  if(histSel)Array.from(histSel.options).forEach(o=>{o.selected=o.value===state.user.name;});
   updateHistNote(state.user.name);
   updatePickButton();
 }
 
-function signOut() {
-  state.user=null; state.myUsedPicks=[]; state.myCurrentWeekPick=null;
+function signOut(){
+  state.user=null;state.myUsedPicks=[];state.myCurrentWeekPick=null;
   sessionStorage.removeItem('hrr_user');
   document.getElementById('auth-banner').style.display='none';
   document.getElementById('pick-login-section').style.display='block';
@@ -1048,331 +1162,332 @@ function signOut() {
   renderStandings();
 }
 
-async function fetchMyPicks() {
-  if (!state.user) return;
-  try {
+async function fetchMyPicks(){
+  if(!state.user)return;
+  try{
     const data=await api('getPlayerPicks',{name:state.user.name,pin:state.user.pin});
     state.myUsedPicks=data.usedPicks||[];
     const myWkPick=data.picks.find(p=>p.week===state.currentWeek);
     state.myCurrentWeekPick=myWkPick?.player||null;
-    updatePickButton();
-    renderStandings();
-  } catch(e) {}
+    updatePickButton();renderStandings();
+  }catch(e){}
 }
 
-// ═══ PICK FORM ═══════════════════════════════
-function onWeekChange() {
+// ─────────────────────────────────────────────────────
+// PICK FORM
+// ─────────────────────────────────────────────────────
+function onWeekChange(){
   updatePickButton();
-  // Pre-fill if we have an existing pick for this week
   const week=+document.getElementById('pick-week-sel').value;
   const existing=state.myUsedPicks.find(p=>p.week===week);
-  if (existing) {
+  if(existing){
     document.getElementById('pick-player-input').value=existing.player;
-    loadPlayerStats(existing.player);
-    checkDuplicate(existing.player);
-  } else {
+    loadPlayerStats(existing.player);checkDuplicate(existing.player);
+  }else{
     document.getElementById('pick-player-input').value='';
     document.getElementById('stats-card-wrap').style.display='none';
     document.getElementById('dupe-warning').style.display='none';
   }
 }
 
-function updatePickButton() {
-  const btn=document.getElementById('pick-action-btn');
-  if (!btn) return;
+function updatePickButton(){
+  const btn=document.getElementById('pick-action-btn');if(!btn)return;
   const week=+document.getElementById('pick-week-sel')?.value||state.currentWeek;
   const hasPick=state.myUsedPicks.find(p=>p.week===week);
   btn.textContent=hasPick?'✏️ UPDATE PICK':'⚾ LOCK IN PICK';
 }
 
-async function doSavePick() {
+async function doSavePick(){
   const week=document.getElementById('pick-week-sel').value;
   const player=document.getElementById('pick-player-input').value.trim();
-  const okEl=document.getElementById('pick-ok');
-  const warnEl=document.getElementById('pick-warn');
-  const errEl=document.getElementById('pick-err');
+  const okEl=document.getElementById('pick-ok'),warnEl=document.getElementById('pick-warn'),errEl=document.getElementById('pick-err');
   const btn=document.getElementById('pick-action-btn');
   [okEl,warnEl,errEl].forEach(el=>el.classList.remove('show'));
   document.getElementById('ac-list').innerHTML='';
-
-  if (!player){showAlert(errEl,'Enter a player name');return;}
-
-  // Dupe check
+  if(!player){showAlert(errEl,'Enter a player name');return;}
   const dupeEl=document.getElementById('dupe-warning');
-  if (dupeEl.style.display==='block') {
-    showAlert(errEl,dupeEl.textContent);
-    return;
-  }
-
+  if(dupeEl.style.display==='block'){showAlert(errEl,dupeEl.textContent);return;}
   const hasPick=state.myUsedPicks.find(p=>+p.week===+week);
-  const action=hasPick?'changePick':'submitPick';
-
-  try {
-    const data=await api(action,{name:state.user.name,pin:state.user.pin,week,player},btn);
-    if (data.isLate) showAlert(warnEl,`⚠️ Late pick recorded — after the deadline, but saved for the record.`);
+  try{
+    const data=await api(hasPick?'changePick':'submitPick',{name:state.user.name,pin:state.user.pin,week,player},btn);
+    if(data.isLate)showAlert(warnEl,`⚠️ Late pick recorded — after the deadline, but saved.`);
     else showAlert(okEl,`✅ ${data.message}`);
-
-    // Update local state
     const existing=state.myUsedPicks.findIndex(p=>+p.week===+week);
-    if (existing>=0) state.myUsedPicks[existing].player=player;
+    if(existing>=0)state.myUsedPicks[existing].player=player;
     else state.myUsedPicks.push({week:+week,player});
-    if (+week===state.currentWeek) state.myCurrentWeekPick=player;
-
-    updatePickButton();
-    renderStandings();
-
+    if(+week===state.currentWeek)state.myCurrentWeekPick=player;
+    updatePickButton();renderStandings();
     const prev=document.getElementById('pick-preview');
     prev.style.display='block';
     prev.textContent=`📣 ${state.user.name}'s Week ${week} pick: ${player} ⚾  (tap to copy)`;
     prev.dataset.text=`📣 ${state.user.name}'s Week ${week} pick: ${player} ⚾`;
     delete weekCache[+week];
-  } catch(e) { showAlert(errEl,e.message); }
+  }catch(e){showAlert(errEl,e.message);}
 }
 
-function copyPickPreview() {
+function copyPickPreview(){
   const el=document.getElementById('pick-preview');
   navigator.clipboard.writeText(el.dataset.text||el.textContent).then(()=>{
-    el.textContent='✅ Copied!';
-    setTimeout(()=>{el.textContent=(el.dataset.text||'')+'  (tap to copy)';},1800);
+    el.textContent='✅ Copied!';setTimeout(()=>{el.textContent=(el.dataset.text||'')+'  (tap to copy)';},1800);
   });
 }
 
-// ═══ QUEUE ═══════════════════════════════════
-async function loadQueueFromServer() {
-  if (!state.user) return;
-  try {
+// ─────────────────────────────────────────────────────
+// QUEUE
+// ─────────────────────────────────────────────────────
+async function loadQueueFromServer(){
+  if(!state.user)return;
+  try{
     const data=await api('getQueue',{name:state.user.name,pin:state.user.pin});
     queueDraft=data.queue.map(q=>q.player);
     renderQueueList();
-  } catch(e) {}
+  }catch(e){}
 }
 
-function renderQueueList() {
+async function renderQueueList(){
   const ul=document.getElementById('queue-list');
   ul.innerHTML='';
-  if (!queueDraft.length) {
-    ul.innerHTML='<li style="font-size:13px;color:var(--muted);padding:8px 0">Queue is empty. Add players below.</li>';
-    return;
-  }
+  if(!queueDraft.length){ul.innerHTML='<li style="font-size:13px;color:var(--muted);padding:8px 0">Queue is empty. Add players below.</li>';return;}
   const used=new Set(state.myUsedPicks.map(p=>p?.player?.toLowerCase().trim()));
-  queueDraft.forEach((player,i)=>{
+
+  for(let i=0;i<queueDraft.length;i++){
+    const player=queueDraft[i];
     const isDupe=used.has(player?.toLowerCase().trim());
-    const li=document.createElement('li'); li.className='queue-item';
+    // Try to get quick stats
+    const cached=statsCache[player];
+    const statsHint=cached?`<span class="queue-item-stats">${cached.yr} HR${cached.ref2025?' (\'25)':''}</span>`:'';
+
+    const li=document.createElement('li');li.className='queue-item';
     li.innerHTML=`
       <span class="queue-item-pos">${i+1}</span>
-      <span class="queue-item-name">${player}${isDupe?'<span class="queue-item-dupe">⚠️ Already used</span>':''}</span>
-      <div style="display:flex;gap:4px">
+      <span class="queue-item-name">${player}${isDupe?'<span class="queue-item-dupe">⚠️ used</span>':''}${statsHint}</span>
+      <div style="display:flex;gap:4px;align-items:center">
         ${i>0?`<button class="queue-move" onclick="moveQueue(${i},-1)">↑</button>`:''}
         ${i<queueDraft.length-1?`<button class="queue-move" onclick="moveQueue(${i},1)">↓</button>`:''}
         <button class="queue-remove" onclick="removeFromQueue(${i})">✕</button>
       </div>`;
     ul.appendChild(li);
-  });
+
+    // Load stats in background if not cached
+    if(!cached){
+      loadQueueItemStats(player).then(stats=>{
+        if(stats){
+          const hint=li.querySelector('.queue-item-stats')||document.createElement('span');
+          hint.className='queue-item-stats';
+          hint.textContent=`${stats.yr} HR${stats.ref2025?' (\'25)':''}`;
+          const nameSpan=li.querySelector('.queue-item-name');
+          if(nameSpan&&!nameSpan.contains(hint))nameSpan.appendChild(hint);
+        }
+      });
+    }
+  }
 }
 
-function addToQueue() {
+function addToQueue(){
   const input=document.getElementById('queue-add-input');
   const player=input.value.trim();
-  if (!player) return;
+  if(!player)return;
   document.getElementById('queue-ac-list').innerHTML='';
-  queueDraft.push(player);
-  input.value='';
+  queueDraft.push(player);input.value='';
   renderQueueList();
 }
-
-function removeFromQueue(i) {
-  queueDraft.splice(i,1);
-  renderQueueList();
-}
-
-function moveQueue(i,dir) {
-  const j=i+dir;
-  if (j<0||j>=queueDraft.length) return;
-  [queueDraft[i],queueDraft[j]]=[queueDraft[j],queueDraft[i]];
-  renderQueueList();
-}
-
-async function saveQueue() {
+function removeFromQueue(i){queueDraft.splice(i,1);renderQueueList();}
+function moveQueue(i,dir){const j=i+dir;if(j<0||j>=queueDraft.length)return;[queueDraft[i],queueDraft[j]]=[queueDraft[j],queueDraft[i]];renderQueueList();}
+async function saveQueue(){
   const okEl=document.getElementById('queue-ok');
-  try {
-    const data=await api('setQueue',{name:state.user.name,pin:state.user.pin,queue:JSON.stringify(queueDraft)});
-    showAlert(okEl,`✅ ${data.message}`);
-  } catch(e) { showAlert(okEl,'⚠️ '+e.message); }
+  try{const data=await api('setQueue',{name:state.user.name,pin:state.user.pin,queue:JSON.stringify(queueDraft)});showAlert(okEl,`✅ ${data.message}`);}
+  catch(e){showAlert(okEl,'⚠️ '+e.message);}
 }
 
-// ═══ HISTORY ═════════════════════════════════
-function updateHistNote(targetName) {
-  const noteEl=document.getElementById('hist-viewing-note');
-  if (!noteEl) return;
-  noteEl.textContent=state.user&&targetName===state.user.name?'(your full history)':'(past deadlines only)';
-}
-
-async function loadHistory() {
-  if (!state.user) return;
+// ─────────────────────────────────────────────────────
+// HISTORY
+// ─────────────────────────────────────────────────────
+function updateHistNote(n){const el=document.getElementById('hist-viewing-note');if(el)el.textContent=state.user&&n===state.user.name?'(your full history)':'(past deadlines only)';}
+async function loadHistory(){
+  if(!state.user)return;
   const histSel=document.getElementById('hist-player-sel');
   const targetName=histSel?.value||state.user.name;
   const body=document.getElementById('history-body');
   updateHistNote(targetName);
   body.innerHTML='<tr><td colspan="3" style="text-align:center;padding:24px"><div class="spinner" style="margin:0 auto"></div></td></tr>';
-  try {
-    let picks, scores;
-    if (targetName===state.user.name) {
-      const data=await api('getPlayerPicks',{name:state.user.name,pin:state.user.pin});
-      picks=data.picks; scores=data.scores;
-    } else {
-      const data=await api('getPlayerPicksPublic',{targetName,viewerName:state.user.name,viewerPin:state.user.pin});
-      picks=data.picks; scores=data.scores;
-    }
+  try{
+    let picks,scores;
+    if(targetName===state.user.name){const d=await api('getPlayerPicks',{name:state.user.name,pin:state.user.pin});picks=d.picks;scores=d.scores;}
+    else{const d=await api('getPlayerPicksPublic',{targetName,viewerName:state.user.name,viewerPin:state.user.pin});picks=d.picks;scores=d.scores;}
     body.innerHTML='';
-    const pickMap={};
-    picks.forEach(p=>{pickMap[p.week]=p;});
-    for (let w=1;w<=32;w++) {
-      const entry=pickMap[w]; if (!entry) continue;
-      const s=scores[w]??null;
-      const rCls=s===1?'ht-homer':s===0?'ht-miss':'ht-pending';
-      const rTxt=s===1?'⚡ Homer':s===0?'💸 Miss':'⏳ Pending';
+    const pickMap={};picks.forEach(p=>{pickMap[p.week]=p;});
+    for(let w=1;w<=32;w++){
+      const entry=pickMap[w];if(!entry)continue;
+      const s=scores[w]??null,rCls=s===1?'ht-homer':s===0?'ht-miss':'ht-pending',rTxt=s===1?'⚡ Homer':s===0?'💸 Miss':'⏳ Pending';
       const late=entry.submittedAt&&DEADLINES[w]&&new Date(entry.submittedAt)>new Date(DEADLINES[w]+'T23:59:59');
       const tr=document.createElement('tr');
       tr.innerHTML=`<td>Week ${w}</td><td>${entry.player||entry}${late?` <span class="late-badge">LATE</span>`:''}</td><td class="${rCls}">${rTxt}</td>`;
       body.appendChild(tr);
     }
-    if (!body.children.length)
-      body.innerHTML=`<tr><td colspan="3" style="color:var(--muted);padding:16px">${targetName===state.user.name?'No picks yet.':'No past-deadline picks for '+targetName+'.'}</td></tr>`;
-  } catch(e) {
-    body.innerHTML=`<tr><td colspan="3" style="color:#ff9090;padding:16px">⚠️ ${e.message}</td></tr>`;
-  }
+    if(!body.children.length)body.innerHTML=`<tr><td colspan="3" style="color:var(--muted);padding:16px">${targetName===state.user.name?'No picks yet.':'No past-deadline picks for '+targetName+'.'}</td></tr>`;
+  }catch(e){body.innerHTML=`<tr><td colspan="3" style="color:#ff9090;padding:16px">⚠️ ${e.message}</td></tr>`;}
 }
 
-// ═══ REMINDERS ═══════════════════════════════
-async function buildReminders() {
-  const w=state.currentWeek, pot=state.pot;
+// ─────────────────────────────────────────────────────
+// REMINDERS — per-week selectors + editable + edit/reset
+// ─────────────────────────────────────────────────────
+function initReminders(){
+  // Build all 4 reminders with default weeks
+  [1,2,3,4].forEach(n=>buildReminder(n));
+}
+
+async function buildReminder(n){
+  const weekSel=document.getElementById(`rem${n}-week`);
+  const w=weekSel?+weekSel.value:(n===2?state.currentWeek:(clientNextWeek()||state.currentWeek));
+  remState[n].week=w;
+  if(remState[n].custom){
+    document.getElementById(`rem${n}-text`).textContent=remState[n].custom;
+    return;
+  }
+  // Fetch week data (cached)
   let weekData=weekCache[w];
-  if (!weekData){try{weekData=await api('getWeekPicksGated',{week:w});weekCache[w]=weekData;}catch(e){}}
-  const dlStr=fmtDeadline(w);
+  if(!weekData){try{weekData=await api('getWeekPicksGated',{week:w});weekCache[w]=weekData;}catch(e){}}
+  const pot=state.pot,dlStr=DEADLINES[w]?fmtDate(DEADLINES[w]):'—';
   const submitted=new Set((weekData?.picks||[]).map(p=>p.name));
-  const missing=state.playerNames.filter(n=>!submitted.has(n));
+  const missing=state.playerNames.filter(nm=>!submitted.has(nm));
   const scores=weekData?.scores||{};
-  const pickMap={};
-  (weekData?.picks||[]).forEach(p=>{if(p.player!=='__HIDDEN__') pickMap[p.name]=p.player;});
-  const homerers=state.playerNames.filter(n=>scores[n]===1);
-  const missers=state.playerNames.filter(n=>scores[n]===0);
-  const homerLines=homerers.length?homerers.map(n=>`• ${n} → ${pickMap[n]||'?'} ⚡`).join('\n'):'• (none yet)';
-  const missLines=missers.length?missers.map(n=>`• ${n} → ${pickMap[n]||'?'}`).join('\n'):'• (none yet)';
+  const pickMap={};(weekData?.picks||[]).forEach(p=>{if(p.player!=='__HIDDEN__')pickMap[p.name]=p.player;});
+  const homerers=state.playerNames.filter(nm=>scores[nm]===1);
+  const missers=state.playerNames.filter(nm=>scores[nm]===0);
+  const homerLines=homerers.length?homerers.map(nm=>`• ${nm} → ${pickMap[nm]||'?'} ⚡`).join('\n'):'• (none yet)';
+  const missLines=missers.length?missers.map(nm=>`• ${nm} → ${pickMap[nm]||'?'}`).join('\n'):'• (none yet)';
   const rankEmoji=['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣'];
   const sLines=state.standings.map((p,i)=>`${rankEmoji[i]||`${i+1}.`} ${p.name} — ${p.pts} pts (owes $${p.owes})`).join('\n');
+  const lbl=weekLabel(w)||`Week ${w}`;
 
-  document.getElementById('rem1').textContent=`⚾ HOME RUN RALLY — PICKS DUE ⚾\n\nWeek ${w} deadline: ${dlStr}\n\n${missing.length===0?'✅ Everyone has picked!':`Still need to pick:\n${missing.map(n=>`• ${n}`).join('\n')}`}\n\nMissing a pick = $1 in the pot.\n💰 Current pot: $${pot}\n\nWhat's your homer this week? 🔨`;
-  document.getElementById('rem2').textContent=`⚾ HOME RUN RALLY — STANDINGS ⚾\n\n📊 After Week ${w-1}:\n\n${sLines}\n\n💰 Pot: $${pot}\n👑 Who's taking it home?`;
-  document.getElementById('rem3').textContent=`⚾ RALLY REPORT — Week ${w} Results ⚾\n\n💸 No homer:\n${missLines}\n\n${homerers.length?`⚡ Got it right:\n${homerLines}\n\n`:''}Misses add $1 to the pot.\n💰 Pot now: $${pot}`;
-  document.getElementById('rem4').textContent=`⚾🚀 GONE! GONE! GONE! 🚀⚾\n\nWeek ${w} results:\n\n⚡ Correct pickers:\n${homerLines}\n\n💸 No homer — pay up:\n${missLines}\n\n💰 Pot now: $${pot}\n📊 ${state.standings[0]?.name||'?'} leads with ${state.standings[0]?.pts||0} pts`;
+  const texts={
+    1:`⚾ HOME RUN RALLY — PICKS DUE ⚾\n\n${lbl} deadline: ${dlStr}\n\n${missing.length===0?'✅ Everyone has picked!':`Still need to pick:\n${missing.map(nm=>`• ${nm}`).join('\n')}`}\n\nMissing a pick = $1 in the pot.\n💰 Current pot: $${pot}\n\nWhat's your homer? 🔨`,
+    2:`⚾ HOME RUN RALLY — STANDINGS ⚾\n\n📊 After Week ${w-1}:\n\n${sLines}\n\n💰 Pot: $${pot}\n👑 Who's taking it home?`,
+    3:`⚾ RALLY REPORT — ${lbl} Results ⚾\n\n💸 No homer:\n${missLines}\n\n${homerers.length?`⚡ Got it right:\n${homerLines}\n\n`:''}Misses add $1 to the pot.\n💰 Pot now: $${pot}`,
+    4:`⚾🚀 GONE! GONE! GONE! 🚀⚾\n\n${lbl} results:\n\n⚡ Correct pickers:\n${homerLines}\n\n💸 No homer — pay up:\n${missLines}\n\n💰 Pot now: $${pot}\n📊 ${state.standings[0]?.name||'?'} leads with ${state.standings[0]?.pts||0} pts`,
+  };
+  document.getElementById(`rem${n}-text`).textContent=texts[n];
+  // Keep edit area in sync if visible
+  const editArea=document.getElementById(`rem${n}-edit`);
+  if(editArea&&editArea.classList.contains('visible'))editArea.value=texts[n];
 }
 
-// ═══ ADMIN ═══════════════════════════════════
-function adminLogin() {
+function toggleEdit(n){
+  const textEl=document.getElementById(`rem${n}-text`);
+  const editEl=document.getElementById(`rem${n}-edit`);
+  const saveRow=document.getElementById(`rem${n}-save-row`);
+  const isEditing=editEl.classList.contains('visible');
+  if(isEditing){
+    // Close without saving
+    editEl.classList.remove('visible');textEl.classList.remove('hidden');saveRow.style.display='none';
+  }else{
+    editEl.value=remState[n].custom||textEl.textContent;
+    editEl.classList.add('visible');textEl.classList.add('hidden');saveRow.style.display='flex';
+  }
+}
+function saveEdit(n){
+  const editEl=document.getElementById(`rem${n}-edit`);
+  remState[n].custom=editEl.value;
+  document.getElementById(`rem${n}-text`).textContent=editEl.value;
+  editEl.classList.remove('visible');
+  document.getElementById(`rem${n}-text`).classList.remove('hidden');
+  document.getElementById(`rem${n}-save-row`).style.display='none';
+}
+function resetEdit(n){
+  remState[n].custom=null;
+  const editEl=document.getElementById(`rem${n}-edit`);
+  editEl.classList.remove('visible');
+  document.getElementById(`rem${n}-text`).classList.remove('hidden');
+  document.getElementById(`rem${n}-save-row`).style.display='none';
+  buildReminder(n);
+}
+
+// ─────────────────────────────────────────────────────
+// ADMIN
+// ─────────────────────────────────────────────────────
+function adminLogin(){
   const pin=document.getElementById('admin-pin-input').value.trim();
   const err=document.getElementById('admin-login-err');
-  if (!pin){showAlert(err,'Enter commissioner PIN');return;}
+  if(!pin){showAlert(err,'Enter commissioner PIN');return;}
   state.adminPin=pin;
   document.getElementById('admin-login-section').style.display='none';
   document.getElementById('admin-panel').style.display='block';
   document.getElementById('cfg-pot').value=state.pot;
 }
-
-async function adminScoreWeek() {
+async function adminScoreWeek(){
   const week=document.getElementById('score-week-sel').value;
-  const resEl=document.getElementById('score-result'), errEl=document.getElementById('score-err'), btn=document.getElementById('score-btn');
-  errEl.classList.remove('show'); resEl.style.display='none';
-  try {
+  const resEl=document.getElementById('score-result'),errEl=document.getElementById('score-err'),btn=document.getElementById('score-btn');
+  errEl.classList.remove('show');resEl.style.display='none';
+  try{
     const data=await api('scoreWeek',{week,pin:state.adminPin},btn);
     resEl.style.display='block';
     resEl.innerHTML=data.results.map(r=>`<div class="sr-row"><span>${r.name} → ${r.player}</span><span class="${r.homered?'sr-homer':'sr-miss'}">${r.homered?`⚡ ${r.hrs} HR`:'💸 Miss'}</span></div>`).join('')+`<div style="margin-top:8px;color:var(--gold);font-weight:700">Pot: $${data.newPot} (+$${data.potAdded})</div>`;
-    delete weekCache[+week];
-    await refreshStandings();
-  } catch(e){showAlert(errEl,e.message);}
+    delete weekCache[+week];await refreshStandings();
+  }catch(e){showAlert(errEl,e.message);}
 }
-
-async function adminEraseScores() {
+async function adminEraseScores(){
   const week=document.getElementById('erase-week-sel').value;
-  const okEl=document.getElementById('erase-ok'), errEl=document.getElementById('erase-err');
-  okEl.classList.remove('show'); errEl.classList.remove('show');
-  if (!confirm(`Erase ALL scores for Week ${week}? Pot and owes will be reversed.`)) return;
-  try {
-    const data=await api('eraseWeekScores',{week,pin:state.adminPin});
-    showAlert(okEl,`✅ ${data.message}`);
-    delete weekCache[+week];
-    await refreshStandings();
-    document.getElementById('cfg-pot').value=state.pot;
-  } catch(e){showAlert(errEl,e.message);}
+  const okEl=document.getElementById('erase-ok'),errEl=document.getElementById('erase-err');
+  okEl.classList.remove('show');errEl.classList.remove('show');
+  if(!confirm(`Erase ALL scores for Week ${week}? Pot and owes will be reversed.`))return;
+  try{const data=await api('eraseWeekScores',{week,pin:state.adminPin});showAlert(okEl,`✅ ${data.message}`);delete weekCache[+week];await refreshStandings();document.getElementById('cfg-pot').value=state.pot;}
+  catch(e){showAlert(errEl,e.message);}
 }
-
-async function adminProcessQueues() {
-  const okEl=document.getElementById('pq-ok'), errEl=document.getElementById('pq-err');
-  okEl.classList.remove('show'); errEl.classList.remove('show');
-  try {
-    const data=await api('processQueues',{pin:state.adminPin});
-    const processed=data.results?.filter(r=>r.player).map(r=>`${r.name}→${r.player}`).join(', ')||'none';
-    showAlert(okEl,`✅ Week ${data.weekProcessed} processed. Auto-submitted: ${processed}`);
-  } catch(e){showAlert(errEl,e.message);}
+async function adminProcessQueues(){
+  const okEl=document.getElementById('pq-ok'),errEl=document.getElementById('pq-err');
+  okEl.classList.remove('show');errEl.classList.remove('show');
+  try{const data=await api('processQueues',{pin:state.adminPin});const processed=data.results?.filter(r=>r.player).map(r=>`${r.name}→${r.player}`).join(', ')||'none';showAlert(okEl,`✅ Week ${data.weekProcessed} processed. Auto-submitted: ${processed}`);}
+  catch(e){showAlert(errEl,e.message);}
 }
-
-async function adminOverridePick() {
-  const name=document.getElementById('ov-name-sel').value, week=document.getElementById('ov-week-sel').value, player=document.getElementById('ov-player-input').value.trim();
+async function adminOverridePick(){
+  const name=document.getElementById('ov-name-sel').value,week=document.getElementById('ov-week-sel').value,player=document.getElementById('ov-player-input').value.trim();
   const ok=document.getElementById('ov-ok'),err=document.getElementById('ov-err');
-  ok.classList.remove('show'); err.classList.remove('show');
+  ok.classList.remove('show');err.classList.remove('show');
   try{const data=await api('overridePick',{pin:state.adminPin,name,week,player});showAlert(ok,data.message);delete weekCache[+week];}
   catch(e){showAlert(err,e.message);}
 }
-
-async function adminOverrideScore() {
-  const name=document.getElementById('os-name-sel').value, week=document.getElementById('os-week-sel').value, scored=document.getElementById('os-scored-sel').value;
+async function adminOverrideScore(){
+  const name=document.getElementById('os-name-sel').value,week=document.getElementById('os-week-sel').value,scored=document.getElementById('os-scored-sel').value;
   const ok=document.getElementById('os-ok'),err=document.getElementById('os-err');
-  ok.classList.remove('show'); err.classList.remove('show');
+  ok.classList.remove('show');err.classList.remove('show');
   try{const data=await api('overrideScore',{pin:state.adminPin,name,week,scored});showAlert(ok,data.message);delete weekCache[+week];await refreshStandings();}
   catch(e){showAlert(err,e.message);}
 }
-
-async function adminAddPlayer() {
-  const name=document.getElementById('ap-name').value.trim(), pin=document.getElementById('ap-pin').value.trim();
+async function adminAddPlayer(){
+  const name=document.getElementById('ap-name').value.trim(),pin=document.getElementById('ap-pin').value.trim();
   const ok=document.getElementById('ap-ok'),err=document.getElementById('ap-err');
-  ok.classList.remove('show'); err.classList.remove('show');
+  ok.classList.remove('show');err.classList.remove('show');
   try{const data=await api('addPlayer',{pin:state.adminPin,name,playerPin:pin});showAlert(ok,data.message);state.playerNames.push(name);populateNameSelects();populateWeekSelects();}
   catch(e){showAlert(err,e.message);}
 }
-
-async function adminRemovePlayer() {
+async function adminRemovePlayer(){
   const name=document.getElementById('rp-sel').value;
   const ok=document.getElementById('ap-ok'),err=document.getElementById('ap-err');
-  ok.classList.remove('show'); err.classList.remove('show');
-  if (!confirm(`Remove ${name}?`)) return;
+  ok.classList.remove('show');err.classList.remove('show');
+  if(!confirm(`Remove ${name}?`))return;
   try{const data=await api('removePlayer',{pin:state.adminPin,name});showAlert(ok,data.message);}
   catch(e){showAlert(err,e.message);}
 }
-
-async function adminSetConfig() {
+async function adminSetConfig(){
   const pot=document.getElementById('cfg-pot').value;
   const ok=document.getElementById('cfg-ok'),err=document.getElementById('cfg-err');
-  ok.classList.remove('show'); err.classList.remove('show');
-  try{
-    if (pot) await api('setConfig',{pin:state.adminPin,key:'pot',value:pot});
-    state.pot=+pot;
-    document.getElementById('pot-display').textContent=`💰 POT: $${pot}`;
-    showAlert(ok,'Pot updated!');
-  } catch(e){showAlert(err,e.message);}
+  ok.classList.remove('show');err.classList.remove('show');
+  try{if(pot)await api('setConfig',{pin:state.adminPin,key:'pot',value:pot});state.pot=+pot;document.getElementById('pot-display').textContent=`💰 POT: $${pot}`;showAlert(ok,'Pot updated!');}
+  catch(e){showAlert(err,e.message);}
 }
-
-async function refreshStandings() {
+async function refreshStandings(){
   const fresh=await api('getStandings');
-  state.standings=fresh.standings; state.pot=fresh.pot;
-  state.currentWeek=fresh.currentWeek; state.currentDeadlinePassed=fresh.currentDeadlinePassed||false;
+  state.standings=fresh.standings;state.pot=fresh.pot;state.currentWeek=fresh.currentWeek;state.currentDeadlinePassed=fresh.currentDeadlinePassed||false;
   document.getElementById('pot-display').textContent=`💰 POT: $${fresh.pot}`;
-  updateWeekBadge(fresh.currentWeek);
-  renderStandings();
+  updateWeekBadge(fresh.currentWeek);renderStandings();
 }
 
-// ═══ UTILS ═══════════════════════════════════
-function copyRem(btn,id) {
+// ─────────────────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────────────────
+function copyRem(btn,id){
   navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{
-    const orig=btn.textContent; btn.textContent='✓ Copied!'; btn.classList.add('copied');
+    const orig=btn.textContent;btn.textContent='✓ Copied!';btn.classList.add('copied');
     setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied');},2200);
   });
 }
