@@ -84,6 +84,7 @@ header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:
 
 /* Week picks */
 .week-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.week-nav-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
 .week-nav-btns{display:flex;align-items:center;gap:12px;}
 .wbtn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--chalk);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .wbtn:hover{background:rgba(255,255,255,0.12);}
@@ -302,27 +303,49 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
   <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:14px" id="standings-footer"> </p>
 </div>
 
-<!-- WEEK -->
+<!-- WEEK — dual panel -->
 <div id="tab-week" class="panel">
   <br>
-  <div class="week-bar">
-    <div class="week-nav-btns">
-      <button class="wbtn" onclick="changeWeek(-1)">◀</button>
-      <div>
-        <span class="week-num" id="wk-label">—</span>
-        <span class="week-tag" id="wk-status-tag" style="display:none"></span>
-      </div>
-      <button class="wbtn" onclick="changeWeek(1)">▶</button>
-    </div>
-    <div style="text-align:right">
-      <div class="week-dl" id="wk-deadline"> </div>
-      <div style="font-size:11px;color:var(--muted);margin-top:3px" id="wk-range"> </div>
-    </div>
+  <!-- Navigation row -->
+  <div class="week-nav-row">
+    <button class="wbtn" onclick="shiftView(-1)" title="Scroll back one week">◀</button>
+    <span style="font-size:13px;color:var(--muted);flex:1;text-align:center" id="week-nav-hint">Viewing weeks</span>
+    <button class="wbtn" onclick="shiftView(1)" title="Scroll forward one week">▶</button>
   </div>
-  <div class="sh">PICKS</div>
-  <div class="picks-grid" id="picks-grid"><div class="spinner"></div></div>
-  <div class="miss-bar" id="miss-bar" style="display:none"><strong>💸 No homer:</strong> <span id="miss-names"></span></div>
-  <div class="deadline-note" id="deadline-note" style="display:none"></div>
+  <!-- Primary (top) week panel -->
+  <div class="week-block" id="week-block-primary">
+    <div class="week-bar">
+      <div class="week-nav-btns">
+        <span class="week-num" id="wk-label-primary">—</span>
+        <span class="week-tag" id="wk-tag-primary" style="display:none"></span>
+      </div>
+      <div style="text-align:right">
+        <div class="week-dl" id="wk-deadline-primary"> </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px" id="wk-range-primary"> </div>
+      </div>
+    </div>
+    <div class="sh" id="wk-sh-primary">PICKS</div>
+    <div class="picks-grid" id="picks-grid-primary"><div class="spinner"></div></div>
+    <div class="miss-bar" id="miss-bar-primary" style="display:none"><strong>💸 No homer:</strong> <span id="miss-names-primary"></span></div>
+    <div class="deadline-note" id="deadline-note-primary" style="display:none"></div>
+  </div>
+  <!-- Secondary (bottom) week panel -->
+  <div class="week-block" id="week-block-secondary" style="margin-top:28px">
+    <div class="week-bar" style="background:var(--surface2)">
+      <div class="week-nav-btns">
+        <span class="week-num" id="wk-label-secondary" style="font-size:22px">—</span>
+        <span class="week-tag" id="wk-tag-secondary" style="display:none"></span>
+      </div>
+      <div style="text-align:right">
+        <div class="week-dl" id="wk-deadline-secondary"> </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px" id="wk-range-secondary"> </div>
+      </div>
+    </div>
+    <div class="sh" id="wk-sh-secondary" style="font-size:16px">PICKS</div>
+    <div class="picks-grid" id="picks-grid-secondary"><div class="spinner"></div></div>
+    <div class="miss-bar" id="miss-bar-secondary" style="display:none"><strong>💸 No homer:</strong> <span id="miss-names-secondary"></span></div>
+    <div class="deadline-note" id="deadline-note-secondary" style="display:none"></div>
+  </div>
 </div>
 
 <!-- MY PICK -->
@@ -526,7 +549,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
       <div class="admin-card"><h3>🤖 Auto-Score Week</h3><select id="score-week-sel"></select><button class="btn btn-primary" id="score-btn" onclick="adminScoreWeek()">FETCH & SCORE FROM MLB API</button><div class="score-result" id="score-result" style="display:none"></div><div class="alert alert-err" id="score-err"></div></div>
       <div class="admin-card"><h3>🗑️ Erase Week Scores</h3><select id="erase-week-sel"></select><button class="btn btn-danger" onclick="adminEraseScores()" style="margin-top:6px">ERASE SCORES FOR WEEK</button><div class="erase-warn">⚠️ Reverses pot and owes. Run before re-scoring.</div><div class="alert alert-ok" id="erase-ok"></div><div class="alert alert-err" id="erase-err"></div></div>
       <div class="admin-card"><h3>🔄 Process Queues</h3><p style="font-size:12px;color:var(--muted);margin-bottom:12px">Manually trigger auto-submission from queues for the previous week.</p><button class="btn btn-gold" onclick="adminProcessQueues()">PROCESS QUEUES NOW</button><div class="alert alert-ok" id="pq-ok"></div><div class="alert alert-err" id="pq-err"></div></div>
-      <div class="admin-card"><h3>✏️ Override Pick</h3><select id="ov-name-sel"></select><select id="ov-week-sel"></select><input type="text" id="ov-player-input" placeholder="Player name"><button class="btn btn-gold" onclick="adminOverridePick()">OVERRIDE PICK</button><div class="alert alert-ok" id="ov-ok"></div><div class="alert alert-err" id="ov-err"></div></div>
+      <div class="admin-card"><h3>✏️ Override Pick</h3><select id="ov-name-sel"></select><select id="ov-week-sel"></select><div class="fg" style="position:relative;margin-bottom:10px"><input type="text" id="ov-player-input" placeholder="Search player…" autocomplete="off" oninput="buildAcList(this.value,'ov-ac-list','selectOvAc')" onkeydown="ovKeydown(event)"><div class="autocomplete-list" id="ov-ac-list"></div></div><button class="btn btn-gold" onclick="adminOverridePick()">OVERRIDE PICK</button><div class="alert alert-ok" id="ov-ok"></div><div class="alert alert-err" id="ov-err"></div></div>
       <div class="admin-card"><h3>🎯 Override Score</h3><select id="os-name-sel"></select><select id="os-week-sel"></select><select id="os-scored-sel"><option value="1">✅ Homer</option><option value="0">❌ No Homer</option></select><button class="btn btn-gold" onclick="adminOverrideScore()">OVERRIDE SCORE</button><div class="alert alert-ok" id="os-ok"></div><div class="alert alert-err" id="os-err"></div></div>
       <div class="admin-card"><h3>👤 Manage Players</h3><input type="text" id="ap-name" placeholder="Player name"><input type="text" id="ap-pin" placeholder="Their PIN"><button class="btn btn-gold" onclick="adminAddPlayer()">ADD PLAYER</button><br><br><select id="rp-sel"></select><button class="btn btn-primary" style="margin-top:8px" onclick="adminRemovePlayer()">REMOVE PLAYER</button><div class="alert alert-ok" id="ap-ok"></div><div class="alert alert-err" id="ap-err"></div></div>
       <div class="admin-card"><h3>💰 Pot Override</h3><label>Pot ($)</label><input type="number" id="cfg-pot" placeholder="Pot amount"><p style="font-size:12px;color:var(--muted);margin-bottom:10px">Week auto-detected from deadlines.</p><button class="btn btn-gold" onclick="adminSetConfig()">SAVE</button><div class="alert alert-ok" id="cfg-ok"></div><div class="alert alert-err" id="cfg-err"></div></div>
@@ -537,9 +560,9 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
 </div><!-- /wrap -->
 <script>
 // ─────────────────────────────────────────────────────
-// CONFIG
+// CON
 // ─────────────────────────────────────────────────────
-const API = 'https://script.google.com/macros/s/AKfycbyQ9dyXqnNRtesjuiGARNtg1Z1KVN5NdWZWC0ZsKYrXQIcIF0xbONEA9gxJWuvj26iSCQ/exec';
+const API = 'https://script.google.com/macros/s/AKfycbyg0wgPARqulJPg4rcKpYXg3QYSOV9qHOcSX58Id_7nokJTev2sjVuEF2O6qCCgOMPamg/exec';
 
 const DEADLINES = {
    1:'2026-03-25', 2:'2026-03-30', 3:'2026-04-06', 4:'2026-04-13',
@@ -557,20 +580,27 @@ function deadlineEnd(week) {
   const d = new Date(dl); d.setHours(23,59,59,999); return d;
 }
 function isDeadlinePassed(week) { const d=deadlineEnd(week); return d ? new Date()>d : false; }
+// CURRENT = most recent week whose deadline has passed
+// NEXT     = the upcoming open week (first deadline not yet passed)
 function clientCurrentWeek() {
   const weeks=Object.keys(DEADLINES).map(Number).sort((a,b)=>a-b);
-  for (const w of weeks) { if (new Date()<=deadlineEnd(w)) return w; }
-  return weeks[weeks.length-1];
+  let last=weeks[0];
+  for (const w of weeks) {
+    if (isDeadlinePassed(w)) last=w;
+    else break;
+  }
+  return last;
 }
 function clientNextWeek() {
-  const cw=clientCurrentWeek();
-  return cw<32?cw+1:null;
+  const weeks=Object.keys(DEADLINES).map(Number).sort((a,b)=>a-b);
+  for (const w of weeks) { if (!isDeadlinePassed(w)) return w; }
+  return null;
 }
 function fmtDate(dl) { return new Date(dl).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}); }
 function weekLabel(w) {
   const cw=clientCurrentWeek(), nw=clientNextWeek();
   if (w===cw) return 'CURRENT';
-  if (w===nw) return 'NEXT';
+  if (nw && w===nw) return 'NEXT';
   return null;
 }
 
@@ -609,7 +639,7 @@ function showTab(name,btn){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(name==='week'){viewWeek=viewWeek||state.currentWeek||1;renderWeekPicks();}
+  if(name==='week'){renderBothWeeks();}
   if(name==='history'&&state.user)loadHistory();
   if(name==='remind')initReminders();
   if(name==='pick'&&state.user){loadWaiverData(waiverSort);loadQueueFromServer();}
@@ -627,7 +657,7 @@ async function boot(){
     state.standings=data.standings; state.currentWeek=data.currentWeek;
     state.pot=data.pot; state.currentDeadlinePassed=data.currentDeadlinePassed||false;
     state.playerNames=data.standings.map(s=>s.name);
-    viewWeek=data.currentWeek;
+    viewOffset=0; // default: primary=CURRENT week (past deadline), secondary=NEXT
     document.getElementById('pot-display').textContent=`💰 POT: $${data.pot}`;
     updateWeekBadge(data.currentWeek);
     renderStandings();
@@ -645,27 +675,30 @@ function updateWeekBadge(w){
   if(dl)label+=` · due ${new Date(dl).toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
   document.getElementById('header-week-badge').innerHTML=label;
   const prev=DEADLINES[w-1],el=document.getElementById('standings-footer');
-  if(el&&prev&&dl){const fmt=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});el.textContent=`Week ${w} · ${fmt(prev)} → ${fmt(dl)}`;}
+  if(el&&prev&&dl){const fmt=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});const tag=weekLabel(w);el.textContent=`${tag||('Week '+w)} · ${fmt(prev)} → ${fmt(dl)}`;}
 }
 
 // ─────────────────────────────────────────────────────
 // MLB ROSTER
 // ─────────────────────────────────────────────────────
 async function loadMlbRoster(){
-  try{
-    const season=2026;
-    const r=await fetch(`https://statsapi.mlb.com/api/v1/sports/1/players?season=${season}&fields=people,fullName,active`);
-    if(!r.ok)throw new Error('');
+  // Don't use fields= filter — it causes MLB API to return objects with undefined properties
+  async function fetchRoster(season){
+    const r=await fetch(`https://statsapi.mlb.com/api/v1/sports/1/players?season=${season}`);
+    if(!r.ok)throw new Error(`HTTP ${r.status}`);
     const data=await r.json();
-    mlbRoster=(data.people||[]).filter(p=>p.active!==false).map(p=>p.fullName).filter(Boolean).sort();
+    // data.people is array of player objects; extract fullName safely
+    return (data.people||[])
+      .map(p=>typeof p==='object'?p.fullName:p)
+      .filter(n=>typeof n==='string'&&n.trim().length>0)
+      .sort();
+  }
+  try{
+    mlbRoster=await fetchRoster(2026);
     document.getElementById('player-label-hint').textContent=`(${mlbRoster.length} players)`;
   }catch(e){
-    // Fallback: try previous season
     try{
-      const r=await fetch(`https://statsapi.mlb.com/api/v1/sports/1/players?season=2025&fields=people,fullName,active`);
-      if(!r.ok)throw new Error('');
-      const data=await r.json();
-      mlbRoster=(data.people||[]).filter(p=>p.active!==false).map(p=>p.fullName).filter(Boolean).sort();
+      mlbRoster=await fetchRoster(2025);
       document.getElementById('player-label-hint').textContent=`(${mlbRoster.length} players — 2025 roster)`;
     }catch(e2){
       document.getElementById('player-label-hint').textContent='(type any name)';
@@ -682,24 +715,33 @@ function isPreseason() {
   return new Date() < new Date(MLB_SEASON_START);
 }
 
+// Safe extractor: MLB API field-filtering can cause partial objects
+function safePlayerName(split){
+  return split?.player?.fullName || split?.player?.nameFirstLast || split?.playerName || null;
+}
+function safeTeamName(split){
+  return split?.team?.name || split?.team?.teamName || split?.teamName || '—';
+}
+
 async function fetchHrStats(startDate, endDate, limit=25) {
   const fmt = d => d.toISOString().split('T')[0];
-  // For season-wide stats use different endpoint
   const isSeasonWide = !startDate;
   const season = new Date().getFullYear();
 
+  // Do NOT use &fields= — it causes the MLB API to return partially populated objects
   let url;
   if (isSeasonWide) {
-    url = `https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&limit=${limit}&sortStat=homeRuns&fields=stats,splits,stat,homeRuns,player,fullName,team,teamName`;
+    url = `https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&limit=${limit}&sortStat=homeRuns`;
   } else {
-    url = `https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(startDate)}&endDate=${fmt(endDate)}&limit=${limit}&sortStat=homeRuns&fields=stats,splits,stat,homeRuns,player,fullName,team,teamName`;
+    url = `https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(startDate)}&endDate=${fmt(endDate)}&limit=${limit}&sortStat=homeRuns`;
   }
 
   const r = await fetch(url);
   if (!r.ok) throw new Error(`MLB API returned ${r.status}`);
   const json = await r.json();
   const splits = json.stats?.[0]?.splits || [];
-  return splits.filter(s => s.stat.homeRuns > 0);
+  // Filter: must have homeRuns > 0 AND a resolvable player name
+  return splits.filter(s => (s.stat?.homeRuns||0) > 0 && safePlayerName(s));
 }
 
 // ─────────────────────────────────────────────────────
@@ -710,18 +752,25 @@ async function loadWaiverData(days=7){
   if(waiverCache[days]){renderWaiverTable(waiverCache[days],days);return;}
   document.getElementById('waiver-table-wrap').innerHTML='<div class="waiver-loading"><div class="spinner"></div></div>';
 
+  function splitsToRows(splits,limit=20){
+    return splits
+      .map(s=>({name:safePlayerName(s),team:safeTeamName(s),hrs:s.stat?.homeRuns||0}))
+      .filter(r=>r.name&&r.hrs>0)
+      .sort((a,b)=>b.hrs-a.hrs)
+      .slice(0,limit);
+  }
+
   if(isPreseason()){
-    // Pre-season: show 2025 season leaders as reference
     try{
-      const url=`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&limit=25&sortStat=homeRuns&fields=stats,splits,stat,homeRuns,player,fullName,team,teamName`;
-      const r=await fetch(url); if(!r.ok)throw new Error('');
+      const r=await fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&limit=25&sortStat=homeRuns');
+      if(!r.ok)throw new Error('HTTP '+r.status);
       const json=await r.json();
-      const splits=(json.stats?.[0]?.splits||[]).filter(s=>s.stat.homeRuns>0);
-      const rows=splits.map(s=>({name:s.player.fullName,team:s.team?.name||'—',hrs:s.stat.homeRuns})).sort((a,b)=>b.hrs-a.hrs).slice(0,20);
+      const rows=splitsToRows(json.stats?.[0]?.splits||[]);
+      if(!rows.length)throw new Error('No data');
       waiverCache[days]=rows;
       renderWaiverTable(rows,days,true);
     }catch(e){
-      document.getElementById('waiver-table-wrap').innerHTML=`<div class="waiver-error">⚾ Pre-season: HR data not yet available for 2026.<br>Stats will load once the season begins (${fmtDate(MLB_SEASON_START)}).</div>`;
+      document.getElementById('waiver-table-wrap').innerHTML='<div class="waiver-error">⚾ Pre-season: HR reference data unavailable right now. Stats appear once the season begins ('+fmtDate(MLB_SEASON_START)+').<br><small style="opacity:.6">'+e.message+'</small></div>';
     }
     return;
   }
@@ -729,34 +778,29 @@ async function loadWaiverData(days=7){
   try{
     const now=new Date();
     let splits;
-    if(days===0){
-      splits=await fetchHrStats(null,null,25);
-    }else{
-      const start=new Date(); start.setDate(now.getDate()-days);
-      splits=await fetchHrStats(start,now,25);
-    }
+    if(days===0){splits=await fetchHrStats(null,null,25);}
+    else{const start=new Date();start.setDate(now.getDate()-days);splits=await fetchHrStats(start,now,25);}
 
     if(!splits.length){
-      // No HRs in range yet — cascade to season
       const seasonSplits=await fetchHrStats(null,null,25);
-      if(!seasonSplits.length){
-        document.getElementById('waiver-table-wrap').innerHTML=`<div class="waiver-error">No home run data available yet for the selected period.<br><small>Try a longer date range or check back after games are played.</small></div>`;
-        return;
-      }
-      const rows=seasonSplits.map(s=>({name:s.player.fullName,team:s.team?.name||'—',hrs:s.stat.homeRuns})).sort((a,b)=>b.hrs-a.hrs).slice(0,20);
+      const rows=splitsToRows(seasonSplits);
+      if(!rows.length){document.getElementById('waiver-table-wrap').innerHTML='<div class="waiver-error">No home run data available yet. Try a longer range.</div>';return;}
       waiverCache[days]=rows;
-      renderWaiverTable(rows,days,false,true); // showSeasonNote
+      renderWaiverTable(rows,days,false,true);
       return;
     }
-
-    const rows=splits.map(s=>({name:s.player.fullName,team:s.team?.name||'—',hrs:s.stat.homeRuns})).sort((a,b)=>b.hrs-a.hrs).slice(0,20);
+    const rows=splitsToRows(splits);
     waiverCache[days]=rows;
     renderWaiverTable(rows,days);
   }catch(e){
-    document.getElementById('waiver-table-wrap').innerHTML=`<div class="waiver-error">⚠️ Could not load HR data from MLB API.<br><small style="opacity:.7">${e.message}</small><br><small>This usually means no games have been played in this date range yet, or the API is temporarily unavailable.</small></div>`;
+    try{
+      const seasonSplits=await fetchHrStats(null,null,25);
+      const rows=splitsToRows(seasonSplits);
+      if(rows.length){waiverCache[days]=rows;renderWaiverTable(rows,days,false,true);return;}
+    }catch(e2){}
+    document.getElementById('waiver-table-wrap').innerHTML='<div class="waiver-error">⚠️ Could not load HR data.<br><small style="opacity:.7">'+e.message+'</small><br><small>Try the Season tab, or check back after more games are played.</small></div>';
   }
 }
-
 function sortWaiver(days,btn){
   document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
@@ -800,23 +844,29 @@ function selectWaiverPlayer(name){
 async function loadPlayerStats(playerName){
   const wrap=document.getElementById('stats-card-wrap');
   wrap.style.display='block';
-  wrap.innerHTML='<div class="stats-loading">Loading stats for '+playerName+'…</div>';
-
+  wrap.innerHTML='<div class="stats-loading">Loading stats for '+playerName+'...</div>';
   if(statsCache[playerName]){renderStatsCard(statsCache[playerName],playerName);return;}
 
+  function findHR(json,name){
+    const splits=json.stats?.[0]?.splits||[];
+    const lower=name.toLowerCase();
+    const m=splits.find(s=>{
+      const n=safePlayerName(s);
+      return n&&n.toLowerCase()===lower;
+    });
+    return m?m.stat?.homeRuns||0:0;
+  }
+
   if(isPreseason()){
-    // Use 2025 season stats as reference
     try{
-      const url=`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&playerPool=all&fields=stats,splits,stat,homeRuns,atBats,player,fullName`;
-      const r=await fetch(url); if(!r.ok)throw new Error('');
+      const r=await fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&playerPool=all');
+      if(!r.ok)throw new Error('HTTP '+r.status);
       const json=await r.json();
-      const splits=json.stats?.[0]?.splits||[];
-      const m=splits.find(s=>s.player?.fullName?.toLowerCase()===playerName.toLowerCase());
-      const stats={yr:m?m.stat.homeRuns:0,d30:0,d15:0,d7:0,preseason:true,ref2025:true};
+      const stats={yr:findHR(json,playerName),d30:0,d15:0,d7:0,ref2025:true};
       statsCache[playerName]=stats;
       renderStatsCard(stats,playerName);
     }catch(e){
-      wrap.innerHTML=`<div class="stats-card"><p class="stats-preseason">⚾ Pre-season: stats not yet available for 2026.<br>Showing will appear once games begin.</p></div>`;
+      wrap.innerHTML='<div class="stats-card"><p class="stats-preseason">⚾ Pre-season: 2025 reference stats unavailable right now. Stats appear once games begin.</p></div>';
     }
     return;
   }
@@ -826,27 +876,21 @@ async function loadPlayerStats(playerName){
     const d7=new Date();d7.setDate(now.getDate()-7);
     const d15=new Date();d15.setDate(now.getDate()-15);
     const d30=new Date();d30.setDate(now.getDate()-30);
+    const season=now.getFullYear();
 
     const [yr,r30,r15,r7]=await Promise.all([
-      fetch(`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2026&playerPool=all&fields=stats,splits,stat,homeRuns,player,fullName`).then(r=>r.json()).catch(()=>({})),
-      fetch(`https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(d30)}&endDate=${fmt(now)}&fields=stats,splits,stat,homeRuns,player,fullName`).then(r=>r.json()).catch(()=>({})),
-      fetch(`https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(d15)}&endDate=${fmt(now)}&fields=stats,splits,stat,homeRuns,player,fullName`).then(r=>r.json()).catch(()=>({})),
-      fetch(`https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(d7)}&endDate=${fmt(now)}&fields=stats,splits,stat,homeRuns,player,fullName`).then(r=>r.json()).catch(()=>({})),
+      fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season='+season+'&playerPool=all').then(r=>r.json()).catch(()=>({})),
+      fetch('https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate='+fmt(d30)+'&endDate='+fmt(now)).then(r=>r.json()).catch(()=>({})),
+      fetch('https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate='+fmt(d15)+'&endDate='+fmt(now)).then(r=>r.json()).catch(()=>({})),
+      fetch('https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate='+fmt(d7)+'&endDate='+fmt(now)).then(r=>r.json()).catch(()=>({})),
     ]);
-
-    function findHR(json,name){
-      const splits=json.stats?.[0]?.splits||[];
-      const m=splits.find(s=>s.player?.fullName?.toLowerCase()===name.toLowerCase());
-      return m?m.stat.homeRuns:0;
-    }
     const stats={yr:findHR(yr,playerName),d30:findHR(r30,playerName),d15:findHR(r15,playerName),d7:findHR(r7,playerName)};
     statsCache[playerName]=stats;
     renderStatsCard(stats,playerName);
   }catch(e){
-    wrap.innerHTML=`<div class="stats-loading" style="color:#ff9090">Could not load stats — MLB API may be unavailable</div>`;
+    wrap.innerHTML='<div class="stats-loading" style="color:#ff9090">Could not load stats — '+e.message+'</div>';
   }
 }
-
 function renderStatsCard(stats,name){
   const wrap=document.getElementById('stats-card-wrap');
   wrap.style.display='block';
@@ -863,31 +907,22 @@ function renderStatsCard(stats,name){
 
 // Queue item stats (mini version shown inline)
 async function loadQueueItemStats(playerName){
-  if(statsCache[playerName]){return statsCache[playerName];}
-  if(isPreseason()){
-    try{
-      const url=`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&playerPool=all&fields=stats,splits,stat,homeRuns,player,fullName`;
-      const r=await fetch(url); if(!r.ok)throw new Error('');
-      const json=await r.json();
-      const splits=json.stats?.[0]?.splits||[];
-      const m=splits.find(s=>s.player?.fullName?.toLowerCase()===playerName.toLowerCase());
-      const stats={yr:m?m.stat.homeRuns:0,d30:0,d15:0,d7:0,ref2025:true};
-      statsCache[playerName]=stats;
-      return stats;
-    }catch(e){return null;}
-  }
-  // During season: just get season total (quick single call)
-  try{
-    const season=new Date().getFullYear();
-    const url=`https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&playerPool=all&fields=stats,splits,stat,homeRuns,player,fullName`;
-    const r=await fetch(url); if(!r.ok)throw new Error('');
-    const json=await r.json();
+  if(statsCache[playerName]) return statsCache[playerName];
+  const lower=playerName.toLowerCase();
+  function findInSplits(json){
     const splits=json.stats?.[0]?.splits||[];
-    const m=splits.find(s=>s.player?.fullName?.toLowerCase()===playerName.toLowerCase());
-    const stats={yr:m?m.stat.homeRuns:0,d30:0,d15:0,d7:0};
+    const m=splits.find(s=>{ const n=safePlayerName(s); return n&&n.toLowerCase()===lower; });
+    return m?m.stat?.homeRuns||0:0;
+  }
+  const refSeason=isPreseason()?2025:new Date().getFullYear();
+  try{
+    const r=await fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season='+refSeason+'&playerPool=all');
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const json=await r.json();
+    const stats={yr:findInSplits(json),d30:0,d15:0,d7:0,ref2025:isPreseason()};
     statsCache[playerName]=stats;
     return stats;
-  }catch(e){return null;}
+  }catch(e){ return null; }
 }
 
 // ─────────────────────────────────────────────────────
@@ -1049,72 +1084,132 @@ function renderStandings(){
 // ─────────────────────────────────────────────────────
 // WEEK PICKS — with CURRENT/NEXT tags
 // ─────────────────────────────────────────────────────
-async function renderWeekPicks(){
-  const w=viewWeek||state.currentWeek||1;
-  document.getElementById('wk-label').textContent=`Week ${w}`;
-  // Tag: CURRENT, NEXT, or past
-  const tagEl=document.getElementById('wk-status-tag');
-  const lbl=weekLabel(w);
-  if(lbl){
-    tagEl.style.display='inline';
-    tagEl.textContent=lbl;
-    tagEl.className='week-tag '+(lbl==='CURRENT'?'week-tag-current':lbl==='NEXT'?'week-tag-next':'week-tag-past');
-  } else {
-    tagEl.style.display=isDeadlinePassed(w)?'inline':'none';
-    if(isDeadlinePassed(w)){tagEl.textContent='PAST';tagEl.className='week-tag week-tag-past';}
-  }
+// viewOffset: 0 = default (CURRENT primary, NEXT secondary)
+// negative = shift back, positive = shift forward
+let viewOffset = 0;
 
-  const grid=document.getElementById('picks-grid');
-  grid.innerHTML='<div class="spinner"></div>';
-  try{
-    let data;
-    if(state.user)data=await api('getWeekPicksGated',{week:w,viewerName:state.user.name,viewerPin:state.user.pin});
-    else data=await api('getWeekPicksGated',{week:w});
-    weekCache[w]=data;
-
-    const dlEl=document.getElementById('wk-deadline'),rangeEl=document.getElementById('wk-range'),noteEl=document.getElementById('deadline-note');
-    const dl=DEADLINES[w];
-    if(dl){
-      const dlDate=new Date(dl);dlDate.setHours(23,59,59,999);
-      const diff=dlDate-new Date(),days=Math.ceil(diff/86400000);
-      dlEl.textContent=`Deadline: ${fmtDate(dl)}`;
-      dlEl.className='week-dl'+(diff>0&&days<=2?' urgent':'');
-      if(diff>0&&days<=2)dlEl.textContent+=` (${days}d left!)`;
-      if(diff<0)dlEl.textContent+=' · Closed';
-      const prevDl=DEADLINES[w-1];
-      rangeEl.textContent=prevDl?`${new Date(prevDl).toLocaleDateString('en-US',{month:'short',day:'numeric'})} → ${new Date(dl).toLocaleDateString('en-US',{month:'short',day:'numeric'})}`:'';
-      noteEl.style.display=(!data.deadlinePassed&&diff>0)?'block':'none';
-      noteEl.textContent=state.user?`🔒 Your pick is visible to you. Others' picks reveal after the deadline.`:`🔒 Sign in to see your own pick before the deadline.`;
-    }else{dlEl.textContent='';rangeEl.textContent='';noteEl.style.display='none';}
-
-    grid.innerHTML='';
-    const pickMap={};data.picks.forEach(p=>{pickMap[p.name]=p;});
-    let missers=[];
-    state.playerNames.forEach(name=>{
-      const entry=pickMap[name],scored=data.scores[name]??null;
-      const isOwn=state.user&&name.toLowerCase()===state.user.name.toLowerCase();
-      const hidden=entry?.player==='__HIDDEN__',isLate=entry?.isLate;
-      let cardCls='pc-pending',rCls='res-pending',rTxt='⏳ Pending';
-      if(scored===1){cardCls='pc-homer';rCls='res-homer';rTxt='⚡ HOMER!';}
-      if(scored===0){cardCls='pc-miss';rCls='res-miss';rTxt='💸 No homer';missers.push(name);}
-      if(isOwn&&scored===null)cardCls='pc-own';
-      const lateBadge=isLate&&(data.deadlinePassed||isOwn)?`<span class="late-badge">LATE</span>`:'';
-      const playerDisplay=!entry?`<span class="pc-player hidden">— not picked</span>`:hidden?`<span class="pc-player hidden">✓ Picked</span>`:`<span class="pc-player">${entry.player}</span>`;
-      const card=document.createElement('div');
-      card.className=`pick-card ${cardCls}`;
-      card.innerHTML=`<div class="pc-gamer">${name}${isOwn?'<span class="pc-own-badge">YOU</span>':''}${lateBadge}</div>${playerDisplay}${!entry?'<div style="font-size:11px;color:var(--muted)">No pick</div>':hidden?'<div style="font-size:11px;color:var(--muted)">🔒 Hidden</div>':''}<div class="pc-result ${rCls}">${scored!==null?rTxt:''}</div>`;
-      grid.appendChild(card);
-    });
-    const mb=document.getElementById('miss-bar');
-    if(missers.length&&Object.keys(data.scores).length){mb.style.display='block';document.getElementById('miss-names').textContent=missers.join(', ');}
-    else mb.style.display='none';
-  }catch(e){grid.innerHTML=`<div style="color:#ff9090;grid-column:1/-1;padding:20px">⚠️ ${e.message}</div>`;}
+function getViewWeeks(){
+  const cw = clientCurrentWeek();
+  const nw = clientNextWeek() || (cw < 32 ? cw+1 : cw);
+  const primary   = Math.max(1, Math.min(32, cw + viewOffset));
+  const secondary = Math.max(1, Math.min(32, nw + viewOffset));
+  return { primary, secondary };
 }
 
-function changeWeek(dir){
-  viewWeek=Math.max(1,Math.min(32,(viewWeek||state.currentWeek||1)+dir));
-  delete weekCache[viewWeek];
-  renderWeekPicks();
+function shiftView(dir){
+  viewOffset += dir;
+  // Clamp: don't go below week 1 for primary
+  const cw=clientCurrentWeek();
+  const minOffset = 1 - cw;
+  const maxOffset = 32 - cw;
+  viewOffset = Math.max(minOffset, Math.min(maxOffset, viewOffset));
+  renderBothWeeks();
+}
+
+async function renderBothWeeks(){
+  const { primary, secondary } = getViewWeeks();
+  const cw=clientCurrentWeek(), nw=clientNextWeek();
+  document.getElementById('week-nav-hint').textContent =
+    `Week ${primary} + Week ${secondary}`;
+  await Promise.all([
+    renderOneWeekPanel(primary, 'primary'),
+    renderOneWeekPanel(secondary, 'secondary'),
+  ]);
+}
+
+// Keep backward compat alias
+async function renderWeekPicks(){ renderBothWeeks(); }
+// Keep old changeWeek for other callers
+function changeWeek(dir){ shiftView(dir); }
+
+async function renderOneWeekPanel(w, slot){
+  // slot = 'primary' | 'secondary'
+  const sfx = '-' + slot;
+
+  // Label + tag
+  document.getElementById('wk-label'+sfx).textContent = `Week ${w}`;
+  const tagEl = document.getElementById('wk-tag'+sfx);
+  const lbl   = weekLabel(w);
+  if(lbl){
+    tagEl.style.display='inline'; tagEl.textContent=lbl;
+    tagEl.className='week-tag '+(lbl==='CURRENT'?'week-tag-current':lbl==='NEXT'?'week-tag-next':'week-tag-past');
+  }else if(isDeadlinePassed(w)){
+    tagEl.style.display='inline'; tagEl.textContent='PAST'; tagEl.className='week-tag week-tag-past';
+  }else{
+    tagEl.style.display='none';
+  }
+
+  // Section heading
+  const shEl = document.getElementById('wk-sh'+sfx);
+  if(shEl) shEl.textContent = lbl ? lbl+' WEEK PICKS' : `WEEK ${w} PICKS`;
+
+  const grid = document.getElementById('picks-grid'+sfx);
+  grid.innerHTML='<div class="spinner"></div>';
+
+  try{
+    let data = weekCache[w];
+    if(!data){
+      if(state.user) data=await api('getWeekPicksGated',{week:w,viewerName:state.user.name,viewerPin:state.user.pin});
+      else            data=await api('getWeekPicksGated',{week:w});
+      weekCache[w]=data;
+    }
+
+    // Deadline display
+    const dlEl    = document.getElementById('wk-deadline'+sfx);
+    const rangeEl = document.getElementById('wk-range'+sfx);
+    const noteEl  = document.getElementById('deadline-note'+sfx);
+    const dl = DEADLINES[w];
+    if(dl){
+      const dlDate=new Date(dl); dlDate.setHours(23,59,59,999);
+      const diff=dlDate-new Date(), days=Math.ceil(diff/86400000);
+      dlEl.textContent=`Deadline: ${fmtDate(dl)}`;
+      dlEl.className='week-dl'+(diff>0&&days<=2?' urgent':'');
+      if(diff>0&&days<=2) dlEl.textContent+=` (${days}d left!)`;
+      if(diff<0)           dlEl.textContent+=' · Closed';
+      const prevDl=DEADLINES[w-1];
+      rangeEl.textContent=prevDl
+        ?`${new Date(prevDl).toLocaleDateString('en-US',{month:'short',day:'numeric'})} → ${new Date(dl).toLocaleDateString('en-US',{month:'short',day:'numeric'})}`:' ';
+      noteEl.style.display=(!data.deadlinePassed&&diff>0)?'block':'none';
+      noteEl.textContent=state.user
+        ?'🔒 Your pick is visible to you. Others reveal after the deadline.'
+        :'🔒 Sign in to see your own pick before the deadline.';
+    }else{dlEl.textContent='';rangeEl.textContent='';noteEl.style.display='none';}
+
+    // Render pick cards
+    grid.innerHTML='';
+    const pickMap={};
+    data.picks.forEach(p=>{pickMap[p.name]=p;});
+    let missers=[];
+
+    state.playerNames.forEach(name=>{
+      const entry=pickMap[name], scored=data.scores[name]??null;
+      const isOwn=state.user&&name.toLowerCase()===state.user.name.toLowerCase();
+      const hidden=entry?.player==='__HIDDEN__', isLate=entry?.isLate;
+      let cardCls='pc-pending',rCls='res-pending',rTxt='⏳ Pending';
+      if(scored===1){cardCls='pc-homer';rCls='res-homer';rTxt='⚡ HOMER!';}
+      if(scored===0){cardCls='pc-miss'; rCls='res-miss'; rTxt='💸 No homer';missers.push(name);}
+      if(isOwn&&scored===null) cardCls='pc-own';
+      const lateBadge=isLate&&(data.deadlinePassed||isOwn)?'<span class="late-badge" title="Submitted after deadline">LATE</span>':'';
+      const lateTs=isLate&&entry?.submittedAt?'<div style="font-size:10px;color:var(--late);margin-top:2px">'+new Date(entry.submittedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})+'</div>':'';
+      const playerDisplay=!entry
+        ?'<span class="pc-player hidden">— not picked</span>'
+        :hidden?'<span class="pc-player hidden">✓ Picked</span>'
+        :'<span class="pc-player">'+entry.player+'</span>';
+      const card=document.createElement('div');
+      card.className='pick-card '+cardCls;
+      card.innerHTML='<div class="pc-gamer">'+name+(isOwn?'<span class="pc-own-badge">YOU</span>':'')+lateBadge+'</div>'+playerDisplay+(!entry?'<div style="font-size:11px;color:var(--muted)">No pick</div>':hidden?'<div style="font-size:11px;color:var(--muted)">🔒 Hidden</div>':'')+lateTs+'<div class="pc-result '+rCls+'">'+(scored!==null?rTxt:'')+'</div>';
+      grid.appendChild(card);
+    });
+
+    const mb=document.getElementById('miss-bar'+sfx);
+    if(missers.length&&Object.keys(data.scores).length){
+      mb.style.display='block';
+      document.getElementById('miss-names'+sfx).textContent=missers.join(', ');
+    }else mb.style.display='none';
+
+  }catch(e){
+    grid.innerHTML='<div style="color:#ff9090;grid-column:1/-1;padding:20px">⚠️ '+e.message+'</div>';
+  }
 }
 
 // ─────────────────────────────────────────────────────
@@ -1405,6 +1500,22 @@ function resetEdit(n){
 // ─────────────────────────────────────────────────────
 // ADMIN
 // ─────────────────────────────────────────────────────
+function selectOvAc(name,e){
+  if(e)e.preventDefault();
+  document.getElementById('ov-player-input').value=name;
+  document.getElementById('ov-ac-list').innerHTML='';
+}
+function ovKeydown(e){
+  const list=document.getElementById('ov-ac-list'),items=list.querySelectorAll('.ac-item');
+  if(e.key==='ArrowDown'){e.preventDefault();let i=parseInt(list.dataset.idx||'-1')+1;i=Math.min(i,items.length-1);list.dataset.idx=i;items.forEach((el,j)=>el.classList.toggle('ac-active',j===i));}
+  else if(e.key==='ArrowUp'){e.preventDefault();let i=parseInt(list.dataset.idx||'0')-1;i=Math.max(i,-1);list.dataset.idx=i;items.forEach((el,j)=>el.classList.toggle('ac-active',j===i));}
+  else if(e.key==='Enter'){const i=parseInt(list.dataset.idx||'-1');if(i>=0&&items[i]){e.preventDefault();selectOvAc(items[i].dataset.name,null);}}
+  else if(e.key==='Escape'){list.innerHTML='';}
+}
+document.addEventListener('click',e2=>{
+  if(!e2.target.closest('.admin-card'))document.getElementById('ov-ac-list').innerHTML='';
+});
+
 function adminLogin(){
   const pin=document.getElementById('admin-pin-input').value.trim();
   const err=document.getElementById('admin-login-err');
