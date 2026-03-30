@@ -368,6 +368,10 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
     <div class="sh">SUBMIT PICK</div>
     <div class="form-card">
       <div class="form-title" id="pick-form-title">My Pick</div>
+      <div id="current-pick-status" style="display:none;background:rgba(240,180,41,0.08);border:1px solid rgba(240,180,41,0.25);border-radius:9px;padding:10px 14px;margin-bottom:16px;font-size:13px;">
+        <span style="color:var(--muted)">Current week pick: </span>
+        <strong id="current-pick-display" style="color:var(--gold)"></strong>
+      </div>
       <div class="fg"><label>Week</label><select id="pick-week-sel" onchange="onWeekChange()"></select></div>
       <div class="fg" id="player-fg">
         <label>Player <span id="player-label-hint" style="font-size:10px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400"></span></label>
@@ -560,9 +564,9 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
 </div><!-- /wrap -->
 <script>
 // ─────────────────────────────────────────────────────
-// CON
+// CONFIG
 // ─────────────────────────────────────────────────────
-const API = 'https://script.google.com/macros/s/AKfycbyg0wgPARqulJPg4rcKpYXg3QYSOV9qHOcSX58Id_7nokJTev2sjVuEF2O6qCCgOMPamg/exec';
+const API = 'https://script.google.com/macros/s/AKfycbzbBOTtH2rB-t9G2IAl-0aIkER4iaTd5efYMOSOTc1Iw_74ncLL8SEurSQaJVNhORCXhQ/exec';
 
 const DEADLINES = {
    1:'2026-03-25', 2:'2026-03-30', 3:'2026-04-06', 4:'2026-04-13',
@@ -607,12 +611,12 @@ function weekLabel(w) {
 // ─────────────────────────────────────────────────────
 // STATE
 // ─────────────────────────────────────────────────────
-let state={standings:[],currentWeek:0,pot:0,currentDeadlinePassed:false,playerNames:[],user:null,adminPin:null,myUsedPicks:[],myCurrentWeekPick:null};
+let state={standings:[],currentWeek:0,nextWeek:0,pot:0,currentDeadlinePassed:false,playerNames:[],user:null,adminPin:null,myUsedPicks:[],myCurrentWeekPick:null};
 let weekCache={}, viewWeek=null;
 let mlbRoster=[], waiverCache={}, waiverSort=7;
 let queueDraft=[];
 let acIndex=-1, queueAcIndex=-1;
-let statsCache={};
+let seasonHrMapCache={}, playerStatsCache={}; // MLB stats caches (replaces playerStatsCache)
 // Per-reminder: custom overrides + chosen week
 let remState={1:{week:0,custom:null},2:{week:0,custom:null},3:{week:0,custom:null},4:{week:0,custom:null}};
 
@@ -642,7 +646,18 @@ function showTab(name,btn){
   if(name==='week'){renderBothWeeks();}
   if(name==='history'&&state.user)loadHistory();
   if(name==='remind')initReminders();
-  if(name==='pick'&&state.user){loadWaiverData(waiverSort);loadQueueFromServer();}
+  if(name==='pick'&&state.user){
+    loadWaiverData(waiverSort);
+    loadQueueFromServer();
+    // Pre-fill current pick if exists
+    const wk=+document.getElementById('pick-week-sel')?.value||state.currentWeek;
+    const existing=state.myUsedPicks.find(p=>p.week===wk);
+    if(existing&&!document.getElementById('pick-player-input').value){
+      document.getElementById('pick-player-input').value=existing.player;
+      loadPlayerStats(existing.player);
+    }
+    updatePickButton();
+  }
 }
 
 // ─────────────────────────────────────────────────────
@@ -655,6 +670,7 @@ async function boot(){
   try{
     const data=await api('getStandings');
     state.standings=data.standings; state.currentWeek=data.currentWeek;
+    state.nextWeek=data.nextWeek||clientNextWeek();
     state.pot=data.pot; state.currentDeadlinePassed=data.currentDeadlinePassed||false;
     state.playerNames=data.standings.map(s=>s.name);
     viewOffset=0; // default: primary=CURRENT week (past deadline), secondary=NEXT
@@ -715,33 +731,99 @@ function isPreseason() {
   return new Date() < new Date(MLB_SEASON_START);
 }
 
-// Safe extractor: MLB API field-filtering can cause partial objects
-function safePlayerName(split){
-  return split?.player?.fullName || split?.player?.nameFirstLast || split?.playerName || null;
+// ─────────────────────────────────────────────────────
+// MLB API HELPERS
+// The MLB Stats API has TWO different response structures:
+//   /stats/leaders  → splits have: { rank, value, person:{fullName,id}, team:{name} }
+//   /stats (season/byDateRange) → splits have: { player:{fullName,id}, team:{name}, stat:{homeRuns,...} }
+// We handle both. Never use &fields= — it causes partial objects.
+// ─────────────────────────────────────────────────────
+
+// Extract player name from ANY MLB API split object
+function safePlayerName(s) {
+  if (!s) return null;
+  // leaders endpoint uses "person"
+  if (s.person?.fullName)  return s.person.fullName;
+  if (s.person?.nameFirstLast) return s.person.nameFirstLast;
+  // stats endpoint uses "player"
+  if (s.player?.fullName)  return s.player.fullName;
+  if (s.player?.nameFirstLast) return s.player.nameFirstLast;
+  // direct string fallbacks
+  if (s.playerName)        return s.playerName;
+  return null;
 }
-function safeTeamName(split){
-  return split?.team?.name || split?.team?.teamName || split?.teamName || '—';
+function safePlayerId(s) {
+  return s?.person?.id || s?.player?.id || null;
+}
+function safeTeamName(s) {
+  return s?.team?.name || s?.team?.teamName || s?.teamName || '—';
+}
+function safeHRCount(s) {
+  // leaders endpoint: value field holds the stat
+  if (typeof s.value === 'number') return s.value;
+  // stats endpoint: stat object
+  return s.stat?.homeRuns ?? 0;
 }
 
-async function fetchHrStats(startDate, endDate, limit=25) {
-  const fmt = d => d.toISOString().split('T')[0];
-  const isSeasonWide = !startDate;
-  const season = new Date().getFullYear();
+// Build a date string YYYY-MM-DD
+const fmtDate2 = d => d.toISOString().split('T')[0];
 
-  // Do NOT use &fields= — it causes the MLB API to return partially populated objects
-  let url;
-  if (isSeasonWide) {
-    url = `https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&limit=${limit}&sortStat=homeRuns`;
-  } else {
-    url = `https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmt(startDate)}&endDate=${fmt(endDate)}&limit=${limit}&sortStat=homeRuns`;
-  }
 
+// ── Fetch HR leaders via /stats/leaders (cleanest endpoint for leaderboard) ──
+// Returns array of {name, team, hrs, personId}
+async function fetchHrLeaders(season, limit=25) {
+  const url = `https://statsapi.mlb.com/api/v1/stats/leaders?leaderCategories=homeRuns&leaderGameTypes=R&season=${season}&limit=${limit}`;
   const r = await fetch(url);
-  if (!r.ok) throw new Error(`MLB API returned ${r.status}`);
+  if (!r.ok) throw new Error(`Leaders API ${r.status}`);
+  const json = await r.json();
+  const leaders = json.leagueLeaders?.[0]?.leaders || [];
+  return leaders
+    .map(s => ({
+      name:     safePlayerName(s),
+      team:     safeTeamName(s),
+      hrs:      safeHRCount(s),
+      personId: safePlayerName(s),
+    }))
+    .filter(r => r.name && r.hrs > 0);
+}
+
+// ── Fetch HR leaders for a date RANGE via /stats byDateRange ──
+// Returns array of {name, team, hrs}
+async function fetchHrByDateRange(startDate, endDate, limit=25) {
+  const url = `https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate=${fmtDate2(startDate)}&endDate=${fmtDate2(endDate)}&limit=${limit}&sortStat=homeRuns`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`byDateRange API ${r.status}`);
   const json = await r.json();
   const splits = json.stats?.[0]?.splits || [];
-  // Filter: must have homeRuns > 0 AND a resolvable player name
-  return splits.filter(s => (s.stat?.homeRuns||0) > 0 && safePlayerName(s));
+  return splits
+    .map(s => ({
+      name:     safePlayerName(s),
+      team:     safeTeamName(s),
+      hrs:      safeHRCount(s),
+      personId: safePlayerName(s),
+    }))
+    .filter(r => r.name && r.hrs > 0)
+    .sort((a,b) => b.hrs - a.hrs);
+}
+
+// ── Fetch season HR totals for ALL players (for per-player lookup) ──
+// Returns Map: lowerCaseName → hrs
+async function fetchSeasonHrMap(season) {
+  // Use leaders endpoint — more reliable than season stats for current season
+  const leaders = await fetchHrLeaders(season, 200);
+  const map = new Map();
+  leaders.forEach(l => { if(l.name) map.set(l.name.toLowerCase(), l.hrs); });
+  return map;
+}
+
+// ── Cache ──
+// caches defined in state section above
+
+async function getSeasonHrMap(season) {
+  if (!seasonHrMapCache[season]) {
+    seasonHrMapCache[season] = await fetchSeasonHrMap(season);
+  }
+  return seasonHrMapCache[season];
 }
 
 // ─────────────────────────────────────────────────────
@@ -749,86 +831,104 @@ async function fetchHrStats(startDate, endDate, limit=25) {
 // ─────────────────────────────────────────────────────
 async function loadWaiverData(days=7){
   waiverSort=days;
-  if(waiverCache[days]){renderWaiverTable(waiverCache[days],days);return;}
+  const cacheKey=days;
+  if(waiverCache[cacheKey]){renderWaiverTable(waiverCache[cacheKey],days);return;}
   document.getElementById('waiver-table-wrap').innerHTML='<div class="waiver-loading"><div class="spinner"></div></div>';
 
-  function splitsToRows(splits,limit=20){
-    return splits
-      .map(s=>({name:safePlayerName(s),team:safeTeamName(s),hrs:s.stat?.homeRuns||0}))
-      .filter(r=>r.name&&r.hrs>0)
-      .sort((a,b)=>b.hrs-a.hrs)
-      .slice(0,limit);
+  const now = new Date();
+  const season = now.getFullYear();
+
+  // Helper: normalize rows to top 20
+  function topRows(arr, limit=20){
+    return arr.filter(r=>r.name&&r.hrs>0).sort((a,b)=>b.hrs-a.hrs).slice(0,limit);
   }
 
+  // Pre-season: show prior year as reference
   if(isPreseason()){
     try{
-      const r=await fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&limit=25&sortStat=homeRuns');
-      if(!r.ok)throw new Error('HTTP '+r.status);
-      const json=await r.json();
-      const rows=splitsToRows(json.stats?.[0]?.splits||[]);
-      if(!rows.length)throw new Error('No data');
-      waiverCache[days]=rows;
+      const leaders = await fetchHrLeaders(2025, 25);
+      const rows = topRows(leaders);
+      if(!rows.length) throw new Error('No 2025 data');
+      waiverCache[cacheKey]=rows;
       renderWaiverTable(rows,days,true);
     }catch(e){
-      document.getElementById('waiver-table-wrap').innerHTML='<div class="waiver-error">⚾ Pre-season: HR reference data unavailable right now. Stats appear once the season begins ('+fmtDate(MLB_SEASON_START)+').<br><small style="opacity:.6">'+e.message+'</small></div>';
+      document.getElementById('waiver-table-wrap').innerHTML=
+        `<div class="waiver-error">⚾ Pre-season — 2025 reference data unavailable.<br>Stats appear once games begin (${fmtDate(MLB_SEASON_START)}).<br><small>${e.message}</small></div>`;
     }
     return;
   }
 
   try{
-    const now=new Date();
-    let splits;
-    if(days===0){splits=await fetchHrStats(null,null,25);}
-    else{const start=new Date();start.setDate(now.getDate()-days);splits=await fetchHrStats(start,now,25);}
-
-    if(!splits.length){
-      const seasonSplits=await fetchHrStats(null,null,25);
-      const rows=splitsToRows(seasonSplits);
-      if(!rows.length){document.getElementById('waiver-table-wrap').innerHTML='<div class="waiver-error">No home run data available yet. Try a longer range.</div>';return;}
-      waiverCache[days]=rows;
-      renderWaiverTable(rows,days,false,true);
-      return;
+    let rows;
+    if(days===0){
+      // Season total — use leaders endpoint
+      const leaders = await fetchHrLeaders(season, 25);
+      rows = topRows(leaders);
+    }else{
+      // Rolling window
+      const start = new Date(); start.setDate(now.getDate()-days);
+      const rangeRows = await fetchHrByDateRange(start, now, 25);
+      rows = topRows(rangeRows);
+      if(!rows.length){
+        // Cascade to season if no recent data
+        const leaders = await fetchHrLeaders(season, 25);
+        rows = topRows(leaders);
+        if(!rows.length){
+          document.getElementById('waiver-table-wrap').innerHTML=
+            `<div class="waiver-error">No HR data yet for this window. Try Season.</div>`;
+          return;
+        }
+        waiverCache[cacheKey]=rows;
+        renderWaiverTable(rows,days,false,true);
+        return;
+      }
     }
-    const rows=splitsToRows(splits);
-    waiverCache[days]=rows;
+    waiverCache[cacheKey]=rows;
     renderWaiverTable(rows,days);
   }catch(e){
+    // Final fallback: try season
     try{
-      const seasonSplits=await fetchHrStats(null,null,25);
-      const rows=splitsToRows(seasonSplits);
-      if(rows.length){waiverCache[days]=rows;renderWaiverTable(rows,days,false,true);return;}
+      const leaders = await fetchHrLeaders(season, 25);
+      const rows = topRows(leaders);
+      if(rows.length){ waiverCache[cacheKey]=rows; renderWaiverTable(rows,days,false,true); return; }
     }catch(e2){}
-    document.getElementById('waiver-table-wrap').innerHTML='<div class="waiver-error">⚠️ Could not load HR data.<br><small style="opacity:.7">'+e.message+'</small><br><small>Try the Season tab, or check back after more games are played.</small></div>';
+    document.getElementById('waiver-table-wrap').innerHTML=
+      `<div class="waiver-error">⚠️ HR data unavailable.<br><small>${e.message}</small></div>`;
   }
 }
+
 function sortWaiver(days,btn){
   document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  delete waiverCache[days];  // bust cache so fresh fetch
   loadWaiverData(days);
 }
 
-function renderWaiverTable(rows,days,isPreseason2025=false,isSeasonFallback=false){
-  const used=new Set(state.myUsedPicks.map(p=>p?.toLowerCase().trim()));
+function renderWaiverTable(rows,days,isRef2025=false,isSeasonFallback=false){
+  const used=new Set(state.myUsedPicks.map(p=>p?.toLowerCase?.()?.trim()).filter(Boolean));
   const daysLabel=days===0?'Season':`Last ${days}d`;
   let note='';
-  if(isPreseason2025)note=`<div class="season-note">📊 Showing 2026 spring reference data. Current 2026 stats will appear once the season starts.</div>`;
-  else if(isSeasonFallback)note=`<div class="season-note">📊 No HRs in selected window — showing season totals instead.</div>`;
+  if(isRef2025) note=`<div class="season-note">📊 Showing 2025 season totals as pre-season reference.</div>`;
+  else if(isSeasonFallback) note=`<div class="season-note">📊 No HRs in selected window — showing season totals.</div>`;
 
-  const header=`<table class="waiver-table"><thead><tr>
+  const table=`<table class="waiver-table"><thead><tr>
     <th>#</th><th>PLAYER</th><th>TEAM</th>
     <th class="sorted">HR (${daysLabel})</th>
-  </tr></thead><tbody>`;
-  const bodyRows=rows.map((r,i)=>{
+  </tr></thead><tbody>`+
+  rows.map((r,i)=>{
     const isUsed=used.has(r.name?.toLowerCase().trim());
     const usedTag=isUsed?`<span class="used-tag">USED</span>`:'';
+    const cached=playerStatsCache[r.name];
+    const hint=cached&&days>0?`<span class="ac-hr" style="font-size:11px;color:var(--muted);margin-left:4px">${cached.yr} YTD</span>`:'';
     return `<tr class="${isUsed?'wv-used':''}">
       <td style="color:var(--muted);font-size:12px">${i+1}</td>
-      <td><span class="waiver-name" onclick="selectWaiverPlayer('${r.name.replace(/'/g,"\\'")}' )">${r.name}${usedTag}</span></td>
+      <td><span class="waiver-name" onclick="selectWaiverPlayer('${r.name.replace(/'/g,"\\'")}' )">${r.name}${usedTag}${hint}</span></td>
       <td><span class="waiver-team">${r.team}</span></td>
       <td class="wv-hr ${r.hrs>=3?'hot':''}">${r.hrs}</td>
     </tr>`;
-  }).join('');
-  document.getElementById('waiver-table-wrap').innerHTML=header+bodyRows+'</tbody></table>'+note;
+  }).join('')+
+  `</tbody></table>${note}`;
+  document.getElementById('waiver-table-wrap').innerHTML=table;
 }
 
 function selectWaiverPlayer(name){
@@ -840,87 +940,91 @@ function selectWaiverPlayer(name){
 
 // ─────────────────────────────────────────────────────
 // PLAYER STATS CARD
+// Fetches d7, d15, d30 via byDateRange + season via leaders
+// All 4 in parallel, resolved by player name match
 // ─────────────────────────────────────────────────────
 async function loadPlayerStats(playerName){
   const wrap=document.getElementById('stats-card-wrap');
+  if(!wrap) return;
   wrap.style.display='block';
-  wrap.innerHTML='<div class="stats-loading">Loading stats for '+playerName+'...</div>';
-  if(statsCache[playerName]){renderStatsCard(statsCache[playerName],playerName);return;}
+  wrap.innerHTML=`<div class="stats-loading">Loading stats for ${playerName}…</div>`;
 
-  function findHR(json,name){
-    const splits=json.stats?.[0]?.splits||[];
-    const lower=name.toLowerCase();
-    const m=splits.find(s=>{
-      const n=safePlayerName(s);
-      return n&&n.toLowerCase()===lower;
-    });
-    return m?m.stat?.homeRuns||0:0;
-  }
+  if(playerStatsCache[playerName]){renderStatsCard(playerStatsCache[playerName],playerName);return;}
 
+  const lower = playerName.toLowerCase();
+
+  // Pre-season: use 2025 season total as reference
   if(isPreseason()){
     try{
-      const r=await fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=2025&playerPool=all');
-      if(!r.ok)throw new Error('HTTP '+r.status);
-      const json=await r.json();
-      const stats={yr:findHR(json,playerName),d30:0,d15:0,d7:0,ref2025:true};
-      statsCache[playerName]=stats;
+      const map = await getSeasonHrMap(2025);
+      const stats={yr:map.get(lower)||0, d30:0, d15:0, d7:0, ref2025:true};
+      playerStatsCache[playerName]=stats;
       renderStatsCard(stats,playerName);
     }catch(e){
-      wrap.innerHTML='<div class="stats-card"><p class="stats-preseason">⚾ Pre-season: 2025 reference stats unavailable right now. Stats appear once games begin.</p></div>';
+      wrap.innerHTML=`<div class="stats-card"><p class="stats-preseason">⚾ Pre-season stats unavailable. Check back after ${fmtDate(MLB_SEASON_START)}.</p></div>`;
     }
     return;
   }
 
   try{
-    const now=new Date(),fmt=d=>d.toISOString().split('T')[0];
-    const d7=new Date();d7.setDate(now.getDate()-7);
-    const d15=new Date();d15.setDate(now.getDate()-15);
-    const d30=new Date();d30.setDate(now.getDate()-30);
-    const season=now.getFullYear();
+    const now=new Date(), season=now.getFullYear();
+    const d7s=new Date(); d7s.setDate(now.getDate()-7);
+    const d15s=new Date(); d15s.setDate(now.getDate()-15);
+    const d30s=new Date(); d30s.setDate(now.getDate()-30);
 
-    const [yr,r30,r15,r7]=await Promise.all([
-      fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season='+season+'&playerPool=all').then(r=>r.json()).catch(()=>({})),
-      fetch('https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate='+fmt(d30)+'&endDate='+fmt(now)).then(r=>r.json()).catch(()=>({})),
-      fetch('https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate='+fmt(d15)+'&endDate='+fmt(now)).then(r=>r.json()).catch(()=>({})),
-      fetch('https://statsapi.mlb.com/api/v1/stats?stats=byDateRange&group=hitting&gameType=R&startDate='+fmt(d7)+'&endDate='+fmt(now)).then(r=>r.json()).catch(()=>({})),
+    // Fetch season map + 3 rolling windows in parallel
+    const [seasonMap, rows7, rows15, rows30] = await Promise.all([
+      getSeasonHrMap(season),
+      fetchHrByDateRange(d7s, now, 200).catch(()=>[]),
+      fetchHrByDateRange(d15s,now, 200).catch(()=>[]),
+      fetchHrByDateRange(d30s,now, 200).catch(()=>[]),
     ]);
-    const stats={yr:findHR(yr,playerName),d30:findHR(r30,playerName),d15:findHR(r15,playerName),d7:findHR(r7,playerName)};
-    statsCache[playerName]=stats;
+
+    function findInRows(rows){ return rows.find(r=>r.name?.toLowerCase()===lower)?.hrs || 0; }
+
+    const stats={
+      yr:  seasonMap.get(lower) || 0,
+      d30: findInRows(rows30),
+      d15: findInRows(rows15),
+      d7:  findInRows(rows7),
+    };
+    playerStatsCache[playerName]=stats;
     renderStatsCard(stats,playerName);
   }catch(e){
-    wrap.innerHTML='<div class="stats-loading" style="color:#ff9090">Could not load stats — '+e.message+'</div>';
+    wrap.innerHTML=`<div class="stats-loading" style="color:#ff9090">Could not load stats: ${e.message}</div>`;
   }
 }
+
 function renderStatsCard(stats,name){
   const wrap=document.getElementById('stats-card-wrap');
+  if(!wrap)return;
   wrap.style.display='block';
-  const preseasonNote=stats.ref2025?`<div class="stats-preseason">⚾ Pre-season: showing 2025 season HRs as reference. 2026 stats begin ${fmtDate(MLB_SEASON_START)}.</div>`:'';
+  const preseasonNote=stats.ref2025?`<div class="stats-preseason">⚾ Pre-season: showing 2025 HRs as reference. 2026 stats begin ${fmtDate(MLB_SEASON_START)}.</div>`:'';
   wrap.innerHTML=`<div class="stats-card">
-    <div class="stats-card-header"><div class="stats-player-name">⚾ ${name}</div><div style="font-size:11px;color:var(--muted)">${stats.ref2025?'2025 Ref':'2026 HR Stats'}</div></div>
+    <div class="stats-card-header">
+      <div class="stats-player-name">⚾ ${name}</div>
+      <div style="font-size:11px;color:var(--muted)">${stats.ref2025?'2025 Ref':'2026 HR Stats'}</div>
+    </div>
     <div class="stats-grid">
       <div class="stat-box"><div class="stat-num">${stats.d7}</div><div class="stat-lbl">Last 7d</div></div>
       <div class="stat-box"><div class="stat-num">${stats.d15}</div><div class="stat-lbl">Last 15d</div></div>
       <div class="stat-box"><div class="stat-num">${stats.d30}</div><div class="stat-lbl">Last 30d</div></div>
-      <div class="stat-box" style="border-color:rgba(240,180,41,0.3)"><div class="stat-num" style="color:var(--gold)">${stats.yr}</div><div class="stat-lbl">${stats.ref2025?'2025 YTD':'Season'}</div></div>
+      <div class="stat-box" style="border-color:rgba(240,180,41,0.3)">
+        <div class="stat-num" style="color:var(--gold)">${stats.yr}</div>
+        <div class="stat-lbl">${stats.ref2025?'2025 YTD':'Season'}</div>
+      </div>
     </div>${preseasonNote}</div>`;
 }
 
-// Queue item stats (mini version shown inline)
+// ── Queue item stats (lightweight — season total only) ──
 async function loadQueueItemStats(playerName){
-  if(statsCache[playerName]) return statsCache[playerName];
-  const lower=playerName.toLowerCase();
-  function findInSplits(json){
-    const splits=json.stats?.[0]?.splits||[];
-    const m=splits.find(s=>{ const n=safePlayerName(s); return n&&n.toLowerCase()===lower; });
-    return m?m.stat?.homeRuns||0:0;
-  }
-  const refSeason=isPreseason()?2025:new Date().getFullYear();
+  if(playerStatsCache[playerName]) return playerStatsCache[playerName];
+  const lower = playerName.toLowerCase();
+  const refYear = isPreseason() ? 2025 : new Date().getFullYear();
   try{
-    const r=await fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season='+refSeason+'&playerPool=all');
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    const json=await r.json();
-    const stats={yr:findInSplits(json),d30:0,d15:0,d7:0,ref2025:isPreseason()};
-    statsCache[playerName]=stats;
+    const map = await getSeasonHrMap(refYear);
+    const stats={yr:map.get(lower)||0, d30:0, d15:0, d7:0, ref2025:isPreseason()};
+    playerStatsCache[playerName]=stats;
     return stats;
   }catch(e){ return null; }
 }
@@ -937,7 +1041,7 @@ function buildAcList(val,listId,selectFn){
   list.innerHTML=matches.map(name=>{
     const idx=name.toLowerCase().indexOf(lower);
     const hi=name.slice(0,idx)+'<mark>'+name.slice(idx,idx+val.length)+'</mark>'+name.slice(idx+val.length);
-    const cached=statsCache[name];
+    const cached=playerStatsCache[name];
     const hrHint=cached?`<span class="ac-hr">${cached.yr} HR${cached.ref2025?' (\'25)':''}</span>`:'';
     return `<div class="ac-item" data-name="${name}" onmousedown="${selectFn}('${name.replace(/'/g,"\\'")}',event)"><span class="ac-name">${hi}</span>${hrHint}</div>`;
   }).join('');
@@ -1008,11 +1112,15 @@ function populateWeekSelects(){
   ['pick-week-sel','score-week-sel','ov-week-sel','os-week-sel','erase-week-sel'].forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
     el.innerHTML='';
+    // Pick submission defaults to NEXT (open) week; admin/scoring defaults to CURRENT (closed)
+    const nw=state.nextWeek||clientNextWeek()||cw;
+    const defaultW=id==='pick-week-sel'?nw:cw;
     for(let w=1;w<=32;w++){
       const o=document.createElement('option');o.value=w;
       const lbl=weekLabel(w);
-      o.textContent=`Week ${w}${lbl?' — '+lbl:''}`;
-      if(w===cw)o.selected=true;
+      const weekTag=lbl?` — ${lbl}`:(isDeadlinePassed(w)?' ✓':'');
+      o.textContent=`Week ${w}${weekTag}`;
+      if(w===defaultW)o.selected=true;
       el.appendChild(o);
     }
   });
@@ -1076,7 +1184,7 @@ function renderStandings(){
     else if(p.loseStreak===1)streakHtml=`<span class="streak-badge streak-cold">✗ 1</span>`;
     const row=document.createElement('div');
     row.className='s-row'+(rank===1?' s-leader':'');
-    row.innerHTML=`<div class="s-rank ${rkCls}">${rkIcon}</div><div><div class="s-name">${p.name}</div><div class="${pickClass}">Wk ${state.currentWeek}: ${pickHtml}</div></div><div class="s-pts">${p.pts}</div><div class="s-owes">$${p.owes}</div><div class="s-pct">${pct}</div><div class="s-streak">${streakHtml}</div>`;
+    row.innerHTML=`<div class="s-rank ${rkCls}">${rkIcon}</div><div><div class="s-name">${p.name}</div><div class="${pickClass}">${state.currentDeadlinePassed?'Wk '+state.currentWeek+' (closed):':'Picks open:'} ${pickHtml}</div></div><div class="s-pts">${p.pts}</div><div class="s-owes">$${p.owes}</div><div class="s-pct">${pct}</div><div class="s-streak">${streakHtml}</div>`;
     body.appendChild(row);
   });
 }
@@ -1239,6 +1347,7 @@ function showLoggedIn(){
   document.getElementById('hist-login-note').style.display='none';
   document.getElementById('hist-content').style.display='block';
   document.getElementById('pick-form-title').textContent=`${state.user.name}'s Pick`;
+  updateCurrentPickBanner();
   const histSel=document.getElementById('hist-player-sel');
   if(histSel)Array.from(histSel.options).forEach(o=>{o.selected=o.value===state.user.name;});
   updateHistNote(state.user.name);
@@ -1255,6 +1364,24 @@ function signOut(){
   document.getElementById('hist-content').style.display='none';
   document.getElementById('login-pin').value='';
   renderStandings();
+}
+
+function updateCurrentPickBanner(){
+  if(!state.user) return;
+  const banner=document.getElementById('current-pick-status');
+  const display=document.getElementById('current-pick-display');
+  if(!banner||!display) return;
+  // Show pick for the week currently selected, or current week
+  const wk=+document.getElementById('pick-week-sel')?.value||state.currentWeek;
+  const pick=state.myUsedPicks.find(p=>p.week===wk);
+  if(pick){
+    banner.style.display='block';
+    display.textContent=`${pick.player} (Week ${wk})`;
+  } else {
+    banner.style.display='block';
+    display.textContent='None yet for this week';
+    display.style.color='var(--muted)';
+  }
 }
 
 async function fetchMyPicks(){
@@ -1349,7 +1476,7 @@ async function renderQueueList(){
     const player=queueDraft[i];
     const isDupe=used.has(player?.toLowerCase().trim());
     // Try to get quick stats
-    const cached=statsCache[player];
+    const cached=playerStatsCache[player];
     const statsHint=cached?`<span class="queue-item-stats">${cached.yr} HR${cached.ref2025?' (\'25)':''}</span>`:'';
 
     const li=document.createElement('li');li.className='queue-item';
@@ -1588,7 +1715,8 @@ async function adminSetConfig(){
 }
 async function refreshStandings(){
   const fresh=await api('getStandings');
-  state.standings=fresh.standings;state.pot=fresh.pot;state.currentWeek=fresh.currentWeek;state.currentDeadlinePassed=fresh.currentDeadlinePassed||false;
+  state.standings=fresh.standings;state.pot=fresh.pot;state.currentWeek=fresh.currentWeek;
+  state.nextWeek=fresh.nextWeek||clientNextWeek();state.currentDeadlinePassed=fresh.currentDeadlinePassed||false;
   document.getElementById('pot-display').textContent=`💰 POT: $${fresh.pot}`;
   updateWeekBadge(fresh.currentWeek);renderStandings();
 }
