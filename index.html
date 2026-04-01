@@ -24,7 +24,7 @@ header{position:relative;overflow:hidden;background:linear-gradient(160deg,#8b1a
 header::before{content:'⚾';position:absolute;font-size:200px;right:-40px;top:-40px;opacity:0.06;transform:rotate(20deg);line-height:1;}
 header::after{content:'⚾';position:absolute;font-size:120px;left:-20px;bottom:-30px;opacity:0.05;transform:rotate(-15deg);}
 .logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,9vw,72px);letter-spacing:4px;line-height:1;color:#fff;text-shadow:4px 4px 0 rgba(0,0,0,0.35);}
-.logo em{color:var(--gold);font-style:normal;}
+.logo em{color:var(--gold);font-style:normal;transition:text-shadow .2s;} .logo em:hover{text-shadow:0 0 20px rgba(240,180,41,0.8),0 0 40px rgba(240,180,41,0.4);}
 .tagline{font-size:12px;letter-spacing:3px;text-transform:uppercase;opacity:.7;margin-top:6px;}
 .pot-pill{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#1a1200;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;padding:7px 24px;border-radius:999px;margin-top:14px;box-shadow:0 4px 20px rgba(240,180,41,0.4);}
 .header-meta{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:10px;flex-wrap:wrap;}
@@ -240,7 +240,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
 .score-result{background:var(--surface2);border-radius:8px;padding:12px;margin-top:12px;font-size:13px;max-height:220px;overflow-y:auto;}
 .sr-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);}
 .sr-row:last-child{border:none;}
-.sr-homer{color:#4fc66a;font-weight:700;}.sr-miss{color:#ff7c7c;}
+.sr-homer{color:#4fc66a;font-weight:700;}.sr-miss{color:#ff7c7c;}.sr-pending{color:var(--late);}
 .erase-warn{font-size:12px;color:#ff9494;margin-top:8px;line-height:1.5;}
 
 /* Misc */
@@ -258,7 +258,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
 <body>
 
 <header>
-  <div class="logo">Home Run <em>Rally</em></div>
+  <div class="logo">Home Run <em id="rally-egg" onclick="launchEasterEgg()" style="cursor:pointer;user-select:none" title="⚾">Rally</em></div>
   <div class="tagline">⚾ Pick · Pray · Pay ⚾</div>
   <div class="pot-pill" id="pot-display">💰 —</div>
   <div class="header-meta">
@@ -405,7 +405,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
       <div class="divider"></div>
       <div class="queue-section">
         <div class="sh" style="font-size:16px">📋 PICK QUEUE</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Add future picks in order. If you miss a week's deadline, the top pick auto-submits.</p>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Add future picks in order. If you miss a week's deadline, the top non-duplicate pick auto-submits. Players you've already used this season are flagged ⚠️ and skipped.</p>
         <ul class="queue-list" id="queue-list"></ul>
         <div class="queue-add-row">
           <input type="text" id="queue-add-input" placeholder="Add player to queue…" autocomplete="off"
@@ -552,6 +552,11 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
     <div class="admin-grid">
       <div class="admin-card"><h3>🤖 Auto-Score Week</h3><select id="score-week-sel"></select><button class="btn btn-primary" id="score-btn" onclick="adminScoreWeek()">FETCH & SCORE FROM MLB API</button><div class="score-result" id="score-result" style="display:none"></div><div class="alert alert-err" id="score-err"></div></div>
       <div class="admin-card"><h3>🗑️ Erase Week Scores</h3><select id="erase-week-sel"></select><button class="btn btn-danger" onclick="adminEraseScores()" style="margin-top:6px">ERASE SCORES FOR WEEK</button><div class="erase-warn">⚠️ Reverses pot and owes. Run before re-scoring.</div><div class="alert alert-ok" id="erase-ok"></div><div class="alert alert-err" id="erase-err"></div></div>
+      <div class="admin-card"><h3>🔄 Refresh HR Data Cache</h3>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Forces fresh MLB API fetch for HR leaders, player stats, and season totals. Run if data looks stale.</p>
+        <button class="btn btn-ghost" style="font-size:16px;padding:11px" onclick="bustSeasonCache();document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));document.getElementById('sort-7').classList.add('active');loadWaiverData(7);showAlert(document.getElementById('pq-ok'),'✅ Cache cleared — fresh data loading');document.getElementById('stats-card-wrap').style.display='none'">🔄 CLEAR DATA CACHE</button>
+        <div class="alert alert-ok" id="cache-ok" style="margin-top:8px"></div>
+      </div>
       <div class="admin-card"><h3>🔄 Process Queues</h3><p style="font-size:12px;color:var(--muted);margin-bottom:12px">Manually trigger auto-submission from queues for the previous week.</p><button class="btn btn-gold" onclick="adminProcessQueues()">PROCESS QUEUES NOW</button><div class="alert alert-ok" id="pq-ok"></div><div class="alert alert-err" id="pq-err"></div></div>
       <div class="admin-card"><h3>✏️ Override Pick</h3><select id="ov-name-sel"></select><select id="ov-week-sel"></select><div class="fg" style="position:relative;margin-bottom:10px"><input type="text" id="ov-player-input" placeholder="Search player…" autocomplete="off" oninput="buildAcList(this.value,'ov-ac-list','selectOvAc')" onkeydown="ovKeydown(event)"><div class="autocomplete-list" id="ov-ac-list"></div></div><button class="btn btn-gold" onclick="adminOverridePick()">OVERRIDE PICK</button><div class="alert alert-ok" id="ov-ok"></div><div class="alert alert-err" id="ov-err"></div></div>
       <div class="admin-card"><h3>🎯 Override Score</h3><select id="os-name-sel"></select><select id="os-week-sel"></select><select id="os-scored-sel"><option value="1">✅ Homer</option><option value="0">❌ No Homer</option></select><button class="btn btn-gold" onclick="adminOverrideScore()">OVERRIDE SCORE</button><div class="alert alert-ok" id="os-ok"></div><div class="alert alert-err" id="os-err"></div></div>
@@ -566,7 +571,7 @@ textarea{resize:vertical;min-height:120px;line-height:1.6;font-size:13px;}
 // ─────────────────────────────────────────────────────
 // CONFIG
 // ─────────────────────────────────────────────────────
-const API = 'https://script.google.com/macros/s/AKfycbzbBOTtH2rB-t9G2IAl-0aIkER4iaTd5efYMOSOTc1Iw_74ncLL8SEurSQaJVNhORCXhQ/exec';
+const API = 'https://script.google.com/macros/s/AKfycbxZ2QTHp4RxlRSukWGqu_AUZhxiUD0Pxp8yDODp3VTg3cs_E5z5dJj6S5FjYBV65bf3LQ/exec';
 
 const DEADLINES = {
    1:'2026-03-25', 2:'2026-03-30', 3:'2026-04-06', 4:'2026-04-13',
@@ -581,7 +586,8 @@ const DEADLINES = {
 
 function deadlineEnd(week) {
   const dl = DEADLINES[week]; if (!dl) return null;
-  const d = new Date(dl); d.setHours(23,59,59,999); return d;
+  // Parse as local midnight then set to end of day — avoids UTC offset shifting date
+  const d = new Date(dl + 'T00:00:00'); d.setHours(23,59,59,999); return d;
 }
 function isDeadlinePassed(week) { const d=deadlineEnd(week); return d ? new Date()>d : false; }
 // CURRENT = most recent week whose deadline has passed
@@ -600,7 +606,11 @@ function clientNextWeek() {
   for (const w of weeks) { if (!isDeadlinePassed(w)) return w; }
   return null;
 }
-function fmtDate(dl) { return new Date(dl).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}); }
+function fmtDate(dl) {
+  // Parse date strings as local midnight to avoid UTC timezone shift (e.g. Mar 25 → Mar 24)
+  const d = typeof dl === 'string' ? new Date(dl + 'T00:00:00') : dl;
+  return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+}
 function weekLabel(w) {
   const cw=clientCurrentWeek(), nw=clientNextWeek();
   if (w===cw) return 'CURRENT';
@@ -691,7 +701,7 @@ function updateWeekBadge(w){
   if(dl)label+=` · due ${new Date(dl).toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
   document.getElementById('header-week-badge').innerHTML=label;
   const prev=DEADLINES[w-1],el=document.getElementById('standings-footer');
-  if(el&&prev&&dl){const fmt=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});const tag=weekLabel(w);el.textContent=`${tag||('Week '+w)} · ${fmt(prev)} → ${fmt(dl)}`;}
+  if(el&&prev&&dl){const fmt=d=>fmtDate(d);const tag=weekLabel(w);el.textContent=`${tag||('Week '+w)} · ${fmt(prev)} → ${fmt(dl)}`;}
 }
 
 // ─────────────────────────────────────────────────────
@@ -771,20 +781,35 @@ const fmtDate2 = d => d.toISOString().split('T')[0];
 
 // ── Fetch HR leaders via /stats/leaders (cleanest endpoint for leaderboard) ──
 // Returns array of {name, team, hrs, personId}
-async function fetchHrLeaders(season, limit=25) {
-  const url = `https://statsapi.mlb.com/api/v1/stats/leaders?leaderCategories=homeRuns&leaderGameTypes=R&season=${season}&limit=${limit}`;
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(`Leaders API ${r.status}`);
-  const json = await r.json();
-  const leaders = json.leagueLeaders?.[0]?.leaders || [];
-  return leaders
-    .map(s => ({
-      name:     safePlayerName(s),
-      team:     safeTeamName(s),
-      hrs:      safeHRCount(s),
-      personId: safePlayerName(s),
-    }))
-    .filter(r => r.name && r.hrs > 0);
+async function fetchHrLeaders(season, limit=50) {
+  // Try /stats/leaders first (cleanest), fall back to /stats?stats=season
+  // /stats/leaders uses {person.fullName, value} structure
+  // /stats?stats=season uses {player.fullName, stat.homeRuns} structure
+  
+  // Try leaders endpoint first
+  try {
+    const url = `https://statsapi.mlb.com/api/v1/stats/leaders?leaderCategories=homeRuns&leaderGameTypes=R&season=${season}&limit=${limit}`;
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`${r.status}`);
+    const json = await r.json();
+    const leaders = json.leagueLeaders?.[0]?.leaders || [];
+    const rows = leaders
+      .map(s => ({ name: safePlayerName(s), team: safeTeamName(s), hrs: safeHRCount(s) }))
+      .filter(r => r.name && r.hrs > 0);
+    if (rows.length > 0) return rows;
+    // Falls through if empty (early season)
+  } catch(e) { /* fall through to season stats */ }
+  
+  // Fallback: /stats?stats=season — more reliable early season
+  const url2 = `https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&limit=${limit}&sortStat=homeRuns`;
+  const r2 = await fetch(url2);
+  if (!r2.ok) throw new Error(`Season stats API ${r2.status}`);
+  const json2 = await r2.json();
+  const splits = json2.stats?.[0]?.splits || [];
+  return splits
+    .map(s => ({ name: safePlayerName(s), team: safeTeamName(s), hrs: safeHRCount(s) }))
+    .filter(r => r.name && r.hrs > 0)
+    .sort((a,b) => b.hrs - a.hrs);
 }
 
 // ── Fetch HR leaders for a date RANGE via /stats byDateRange ──
@@ -809,8 +834,26 @@ async function fetchHrByDateRange(startDate, endDate, limit=25) {
 // ── Fetch season HR totals for ALL players (for per-player lookup) ──
 // Returns Map: lowerCaseName → hrs
 async function fetchSeasonHrMap(season) {
-  // Use leaders endpoint — more reliable than season stats for current season
-  const leaders = await fetchHrLeaders(season, 200);
+  // Fetch ALL players with HRs this season using a high limit
+  // Using /stats?stats=season which returns more complete data early season
+  try {
+    const url = `https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&gameType=R&season=${season}&limit=500&sortStat=homeRuns`;
+    const r = await fetch(url);
+    if (r.ok) {
+      const json = await r.json();
+      const splits = json.stats?.[0]?.splits || [];
+      const map = new Map();
+      splits.forEach(s => {
+        const name = safePlayerName(s);
+        const hrs  = safeHRCount(s);
+        if (name && hrs > 0) map.set(name.toLowerCase(), hrs);
+      });
+      if (map.size > 0) return map;
+    }
+  } catch(e) { /* fall through */ }
+  
+  // Fallback: leaders endpoint
+  const leaders = await fetchHrLeaders(season, 500);
   const map = new Map();
   leaders.forEach(l => { if(l.name) map.set(l.name.toLowerCase(), l.hrs); });
   return map;
@@ -825,6 +868,9 @@ async function getSeasonHrMap(season) {
   }
   return seasonHrMapCache[season];
 }
+
+// Invalidate season cache (call when we know new data is available)
+function bustSeasonCache() { seasonHrMapCache = {}; playerStatsCache = {}; waiverCache = {}; }
 
 // ─────────────────────────────────────────────────────
 // WAIVER TABLE
@@ -949,7 +995,11 @@ async function loadPlayerStats(playerName){
   wrap.style.display='block';
   wrap.innerHTML=`<div class="stats-loading">Loading stats for ${playerName}…</div>`;
 
-  if(playerStatsCache[playerName]){renderStatsCard(playerStatsCache[playerName],playerName);return;}
+  // Use cached unless it was from pre-season and we're now in season
+  const cached = playerStatsCache[playerName];
+  if(cached && !(cached.ref2025 && !isPreseason())){
+    renderStatsCard(cached,playerName);return;
+  }
 
   const lower = playerName.toLowerCase();
 
@@ -1112,9 +1162,9 @@ function populateWeekSelects(){
   ['pick-week-sel','score-week-sel','ov-week-sel','os-week-sel','erase-week-sel'].forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
     el.innerHTML='';
-    // Pick submission defaults to NEXT (open) week; admin/scoring defaults to CURRENT (closed)
-    const nw=state.nextWeek||clientNextWeek()||cw;
-    const defaultW=id==='pick-week-sel'?nw:cw;
+    // Pick submission defaults to CURRENT week (most recently closed, for late submits/updates)
+    // Admin/scoring also defaults to CURRENT
+    const defaultW=cw;
     for(let w=1;w<=32;w++){
       const o=document.createElement('option');o.value=w;
       const lbl=weekLabel(w);
@@ -1270,13 +1320,26 @@ async function renderOneWeekPanel(w, slot){
     if(dl){
       const dlDate=new Date(dl); dlDate.setHours(23,59,59,999);
       const diff=dlDate-new Date(), days=Math.ceil(diff/86400000);
-      dlEl.textContent=`Deadline: ${fmtDate(dl)}`;
+      dlEl.textContent=`Deadline: ${new Date(dl+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}`;
       dlEl.className='week-dl'+(diff>0&&days<=2?' urgent':'');
       if(diff>0&&days<=2) dlEl.textContent+=` (${days}d left!)`;
       if(diff<0)           dlEl.textContent+=' · Closed';
       const prevDl=DEADLINES[w-1];
-      rangeEl.textContent=prevDl
-        ?`${new Date(prevDl).toLocaleDateString('en-US',{month:'short',day:'numeric'})} → ${new Date(dl).toLocaleDateString('en-US',{month:'short',day:'numeric'})}`:' ';
+      // Scoring window: deadline[N] → Sunday before deadline[N+1]
+      // Week 1: Mar 25 (Wed) → Mar 29 (Sun) — ends day before week 2 deadline
+      // Week 2+: deadline Mon → Sun before next Monday deadline
+      const startDate = new Date(dl + 'T00:00:00');
+      const nextDl = DEADLINES[w + 1];
+      let windowEnd;
+      if (nextDl) {
+        windowEnd = new Date(nextDl + 'T00:00:00');
+        windowEnd.setDate(windowEnd.getDate() - 1); // always: day before next deadline = Sunday
+      } else {
+        windowEnd = new Date(dl + 'T00:00:00');
+        windowEnd.setDate(windowEnd.getDate() + 6);
+      }
+      const fmt = d => d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      rangeEl.textContent = `${fmt(startDate)} → ${fmt(windowEnd)}`;
       noteEl.style.display=(!data.deadlinePassed&&diff>0)?'block':'none';
       noteEl.textContent=state.user
         ?'🔒 Your pick is visible to you. Others reveal after the deadline.'
@@ -1659,7 +1722,15 @@ async function adminScoreWeek(){
   try{
     const data=await api('scoreWeek',{week,pin:state.adminPin},btn);
     resEl.style.display='block';
-    resEl.innerHTML=data.results.map(r=>`<div class="sr-row"><span>${r.name} → ${r.player}</span><span class="${r.homered?'sr-homer':'sr-miss'}">${r.homered?`⚡ ${r.hrs} HR`:'💸 Miss'}</span></div>`).join('')+`<div style="margin-top:8px;color:var(--gold);font-weight:700">Pot: $${data.newPot} (+$${data.potAdded})</div>`;
+    const openNote = data.weekStillOpen
+      ? `<div style="background:rgba(224,124,42,0.1);border:1px solid rgba(224,124,42,0.3);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--late);margin-bottom:8px">⏳ Week still open — pending players scored through ${data.scoredThrough||'today'}. Run again after Sunday to finalize misses.</div>` : '';
+    const windowInfo = data.scoringWindow ? `<div style="font-size:11px;color:var(--muted);margin-bottom:8px">📅 Window: ${data.scoringWindow} | Scored through: ${data.scoredThrough||'?'}</div>` : '';
+    resEl.innerHTML=openNote+windowInfo+data.results.map(r=>{
+      const cls = r.pending ? 'sr-pending' : r.homered ? 'sr-homer' : 'sr-miss';
+      const lbl = r.pending ? '⏳ Pending' : r.homered ? `⚡ ${r.hrs} HR` : '💸 Miss';
+      const matchNote = r.matched&&r.matched!==r.player?.toLowerCase()?`<small style="opacity:.5"> (matched: ${r.matched})</small>`:'';
+      return `<div class="sr-row"><span>${r.name} → ${r.player}</span><span class="${cls}">${lbl}${matchNote}</span></div>`;
+    }).join('')+`<div style="margin-top:8px;color:var(--gold);font-weight:700">Pot: $${data.newPot} (+$${data.potAdded})</div>`;
     delete weekCache[+week];await refreshStandings();
   }catch(e){showAlert(errEl,e.message);}
 }
@@ -1733,6 +1804,207 @@ function copyRem(btn,id){
 function showAlert(el,msg){el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),7000);}
 
 boot();
+</script>
+<!-- ESPN Baseball Audio -->
+<audio id="espn-audio" preload="none" style="display:none">
+  <!-- ESPN Baseball Tonight theme - public domain/royalty free equivalent -->
+  <!-- We'll generate it with Web Audio API since external URLs may be blocked -->
+</audio>
+
+<!-- Easter Egg Overlay -->
+<div id="egg-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);backdrop-filter:blur(8px);flex-direction:column;align-items:center;justify-content:center;">
+  <button onclick="closeEgg()" style="position:absolute;top:20px;right:24px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:28px;cursor:pointer;line-height:1">✕</button>
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,6vw,52px);letter-spacing:3px;color:var(--gold);margin-bottom:4px">⚾ HOME RUN DERBY</div>
+  <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;letter-spacing:2px">CLICK THE BALL · BEAT THE CLOCK</div>
+  <canvas id="derby-canvas" width="420" height="340" style="border:2px solid rgba(240,180,41,0.3);border-radius:12px;background:#0a1a0a;cursor:crosshair;max-width:92vw"></canvas>
+  <div style="display:flex;gap:32px;margin-top:14px;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px">
+    <span>HRs: <span id="egg-score" style="color:var(--gold)">0</span></span>
+    <span>TIME: <span id="egg-timer" style="color:#ff9090">30</span>s</span>
+    <span>BEST: <span id="egg-best" style="color:#4fc66a">0</span></span>
+  </div>
+  <div id="egg-msg" style="font-size:14px;color:rgba(255,255,255,0.6);margin-top:8px;height:20px"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// ESPN BASEBALL TONIGHT THEME
+// Loads the actual theme, starts quiet, fades in
+// ═══════════════════════════════════════════════
+(function() {
+  let audioStarted = false;
+
+  // Multiple source attempts in order of reliability
+  const SOURCES = [
+    'https://ia800209.us.archive.org/17/items/ESPNBaseball/ESPN%20Baseball%20Tonight%20Theme.mp3',
+    'https://ia600209.us.archive.org/17/items/ESPNBaseball/ESPN%20Baseball%20Tonight%20Theme.mp3',
+    'https://archive.org/download/ESPNBaseball/ESPN%20Baseball%20Tonight%20Theme.mp3',
+  ];
+
+  function playBaseballTheme() {
+    if (audioStarted) return;
+    audioStarted = true;
+
+    const audio = document.getElementById('espn-audio');
+    if (!audio) return;
+
+    // Try sources in order
+    let sourceIndex = 0;
+    function tryNext() {
+      if (sourceIndex >= SOURCES.length) return; // all failed silently
+      audio.src = SOURCES[sourceIndex++];
+      audio.volume = 0;
+      audio.load();
+      audio.play().then(() => {
+        // Fade in from 0 to 0.12 over 3 seconds
+        let vol = 0;
+        const target = 0.12;
+        const steps = 60;
+        const interval = 3000 / steps;
+        const fade = setInterval(() => {
+          vol = Math.min(vol + target / steps, target);
+          audio.volume = vol;
+          if (vol >= target) clearInterval(fade);
+        }, interval);
+
+        // Fade out over 4 seconds starting at 25s
+        setTimeout(() => {
+          const fadeOut = setInterval(() => {
+            audio.volume = Math.max(audio.volume - 0.005, 0);
+            if (audio.volume <= 0) { clearInterval(fadeOut); audio.pause(); }
+          }, 100);
+        }, 25000);
+      }).catch(() => {
+        // This source failed, try next
+        tryNext();
+      });
+    }
+
+    audio.addEventListener('error', tryNext, { once: true });
+    tryNext();
+  }
+
+  // Play on first user interaction (browser autoplay policy)
+  document.addEventListener('click', playBaseballTheme, { once: true });
+  document.addEventListener('touchstart', playBaseballTheme, { once: true });
+})();
+
+// ═══════════════════════════════════════════════
+// EASTER EGG — Home Run Derby mini game
+// ═══════════════════════════════════════════════
+let eggInterval = null, eggTimer = 30, eggScore = 0, eggBest = +(localStorage.getItem('hrr_egg_best')||0);
+let balls = [], sparks = [], eggRunning = false;
+
+function launchEasterEgg() {
+  document.getElementById('egg-overlay').style.display='flex';
+  document.getElementById('egg-best').textContent = eggBest;
+  startDerby();
+}
+function closeEgg() {
+  clearInterval(eggInterval);
+  document.getElementById('egg-overlay').style.display='none';
+  eggRunning = false;
+  balls=[]; sparks=[];
+}
+
+function startDerby() {
+  eggScore=0; eggTimer=30; balls=[]; sparks=[]; eggRunning=true;
+  document.getElementById('egg-score').textContent='0';
+  document.getElementById('egg-timer').textContent='30';
+  document.getElementById('egg-msg').textContent='⚾ Hit the baseballs!';
+  spawnBall();
+  clearInterval(eggInterval);
+  eggInterval = setInterval(()=>{
+    eggTimer--;
+    document.getElementById('egg-timer').textContent=eggTimer;
+    if(eggTimer<=0){
+      eggRunning=false; clearInterval(eggInterval);
+      if(eggScore>eggBest){eggBest=eggScore;localStorage.setItem('hrr_egg_best',eggBest);document.getElementById('egg-best').textContent=eggBest;}
+      document.getElementById('egg-msg').textContent=eggScore>=15?'🏆 Hall of Famer!':eggScore>=10?'⚡ All-Star!':eggScore>=5?'⚾ Solid contact!':'😤 Swing and a miss!';
+      balls=[];
+    } else if(Math.random()<0.4) spawnBall();
+  }, 1000);
+  drawDerby();
+}
+
+function spawnBall() {
+  const c = document.getElementById('derby-canvas');
+  balls.push({
+    x: 30+Math.random()*(c.width-60),
+    y: 30+Math.random()*(c.height-80),
+    r: 18+Math.random()*10,
+    vx: (Math.random()-0.5)*1.5,
+    vy: (Math.random()-0.5)*1.5,
+    rot: Math.random()*Math.PI*2,
+    vr: (Math.random()-0.5)*0.08,
+    life: 1,
+    speed: 0.4+Math.random()*0.6,
+  });
+}
+
+function drawDerby() {
+  if(!document.getElementById('egg-overlay').style.display||document.getElementById('egg-overlay').style.display==='none') return;
+  const c=document.getElementById('derby-canvas'), ctx=c.getContext('2d');
+  // Background: baseball diamond
+  ctx.fillStyle='#0a1a0a'; ctx.fillRect(0,0,c.width,c.height);
+  // Draw grass lines
+  ctx.strokeStyle='rgba(30,80,30,0.5)'; ctx.lineWidth=1;
+  for(let i=0;i<c.width;i+=20){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,c.height);ctx.stroke();}
+  // Infield dirt
+  ctx.save();ctx.translate(c.width/2,c.height*0.7);ctx.rotate(Math.PI/4);
+  ctx.fillStyle='rgba(139,90,43,0.25)';ctx.fillRect(-70,-70,140,140);ctx.restore();
+
+  // Sparks
+  sparks=sparks.filter(s=>s.life>0);
+  sparks.forEach(s=>{
+    ctx.save();ctx.globalAlpha=s.life;
+    ctx.fillStyle=s.color;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();ctx.restore();
+    s.x+=s.vx;s.y+=s.vy;s.vy+=0.2;s.life-=0.06;s.r*=0.93;
+  });
+
+  // Balls
+  balls.forEach(b=>{
+    const c2=document.getElementById('derby-canvas');
+    b.x+=b.vx; b.y+=b.vy; b.rot+=b.vr;
+    if(b.x<b.r||b.x>c2.width-b.r) b.vx*=-1;
+    if(b.y<b.r||b.y>c2.height-b.r) b.vy*=-1;
+    // Draw baseball
+    ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.rot);ctx.globalAlpha=b.life;
+    // White ball
+    ctx.shadowBlur=12;ctx.shadowColor='rgba(255,255,255,0.4)';
+    ctx.fillStyle='#f0f0f0';ctx.beginPath();ctx.arc(0,0,b.r,0,Math.PI*2);ctx.fill();
+    ctx.shadowBlur=0;
+    // Stitches
+    ctx.strokeStyle='#cc2222';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(-b.r*0.3,0,b.r*0.5,Math.PI*1.1,Math.PI*1.9);ctx.stroke();
+    ctx.beginPath();ctx.arc(b.r*0.3,0,b.r*0.5,Math.PI*0.1,Math.PI*0.9);ctx.stroke();
+    ctx.restore();
+  });
+
+  if(eggRunning||balls.length>0) requestAnimationFrame(drawDerby);
+}
+
+document.getElementById('derby-canvas').addEventListener('click',function(e){
+  if(!eggRunning)return;
+  const rect=this.getBoundingClientRect();
+  const scaleX=this.width/rect.width, scaleY=this.height/rect.height;
+  const mx=(e.clientX-rect.left)*scaleX, my=(e.clientY-rect.top)*scaleY;
+  let hit=false;
+  balls=balls.filter(b=>{
+    const d=Math.hypot(mx-b.x,my-b.y);
+    if(d<b.r+8){
+      // Crack! spawn sparks
+      for(let i=0;i<12;i++) sparks.push({x:b.x,y:b.y,vx:(Math.random()-0.5)*6,vy:-Math.random()*6,r:4+Math.random()*4,life:1,color:['#f0b429','#ff6b35','#fff'][Math.floor(Math.random()*3)]});
+      eggScore++;document.getElementById('egg-score').textContent=eggScore;
+      // Play crack sound
+      try{const actx=new(window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator();const g=actx.createGain();o.connect(g);g.connect(actx.destination);o.frequency.setValueAtTime(180,actx.currentTime);o.frequency.exponentialRampToValueAtTime(80,actx.currentTime+0.15);g.gain.setValueAtTime(0.3,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.2);o.start();o.stop(actx.currentTime+0.2);}catch(e){}
+      hit=true;return false;
+    }
+    return true;
+  });
+  if(hit&&balls.length===0&&eggRunning) spawnBall();
+});
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('egg-overlay').style.display!=='none')closeEgg();});
 </script>
 </body>
 </html>
